@@ -2,11 +2,9 @@
 marp: true
 paginate: true
 theme: git
-header: 'Git勉強会 - 基本コマンド ＆ ハンズオン'
+# header: 'Git勉強会 - 基本コマンド ＆ ハンズオン'
 # footer: '![width:100](../../marp-themes/logo.png)'
 ---
-
-![width:200](../../marp-themes/logo.png)
 
 # Git 勉強会 3 日目
 

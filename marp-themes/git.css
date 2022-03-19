@@ -4,37 +4,41 @@
 @import "default";
 
 :root {
-    font-size: 25px;
+  font-size: 25px;
   color: #505050;
-    padding: 1rem;
-    font-family: "メイリオ","Meiryo","ヒラギノ角ゴ Pro W3","ＭＳ Ｐゴシック","Osaka" !important;
-    background-color: #F0F0E8;
-    background-image: url(./logo.png);
-    background-repeat: no-repeat;
-    background-position: right top;
-    background-size: 40%;
-    background-position-y: 10px;
+  padding: 1rem;
+  font-family: "メイリオ","Meiryo","ヒラギノ角ゴ Pro W3","ＭＳ Ｐゴシック","Osaka" !important;
+  background-color: #F0F0E8;
+  background-image: url(https://git-scm.com/images/logos/downloads/Git-Logo-2Color.png);
+  background-repeat: no-repeat;
+  background-position: right 1em top 1em;
+  background-size: 10%;
 }
 
 h1 {
-  font-size: 50px;
+  font-size: 3em;
   color: #F34F29;
 }
 
 h2 {
-  font-size: 40px
+  font-size: 2em;
 }
 
 h3 {
-  font-size: 30px
+  font-size: 1.5em;
+  color: #2788A6
+}
+
+h4 {
+  font-size: 1em;
 }
 
 h5 {
-  font-size: 20px;
+  font-size: 0.83em;
 }
 
 h6 {
-  font-size: 10px;
+  font-size: 0.67em;
 }
 
 pre {
@@ -44,6 +48,10 @@ pre {
 
 a {
   color: #2788A6
+}
+
+b, strong {
+  color: #F34F29;
 }
 
 header,
