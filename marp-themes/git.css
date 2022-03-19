@@ -1,0 +1,53 @@
+/* @theme git */
+/* references https://marpit.marp.app/theme-css */
+
+@import "default";
+
+:root {
+    font-size: 25px;
+  color: #505050;
+    padding: 1rem;
+    font-family: "メイリオ","Meiryo","ヒラギノ角ゴ Pro W3","ＭＳ Ｐゴシック","Osaka" !important;
+    background-color: #F0F0E8;
+    background-image: url(./logo.png);
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 40%;
+    background-position-y: 10px;
+}
+
+h1 {
+  font-size: 50px;
+  color: #F34F29;
+}
+
+h2 {
+  font-size: 40px
+}
+
+h3 {
+  font-size: 30px
+}
+
+h5 {
+  font-size: 20px;
+}
+
+h6 {
+  font-size: 10px;
+}
+
+pre {
+  font-size: 20px;
+  background-color: #FCFCFA;
+}
+
+a {
+  color: #2788A6
+}
+
+header,
+footer {
+  font-size: 24px;
+  color: #F34F29;
+}

@@ -1,12 +1,13 @@
 ---
 marp: true
 paginate: true
-theme: gaia
-header: '**Git勉強会 2-3日目 - 基本コマンド ＆ ハンズオン**'
-# footer: "by **＠hotchi_d**"
+theme: git
+header: 'Git勉強会 - 基本コマンド ＆ ハンズオン'
 ---
 
-# Git 勉強会 2-3 日目
+![width:200](../../marp-themes/logo.png)
+
+# Git 勉強会 3 日目
 
 〜基本コマンド ＆ ハンズオン ②〜
 2022/03/28
@@ -18,7 +19,7 @@ header: '**Git勉強会 2-3日目 - 基本コマンド ＆ ハンズオン**'
 - Git 基本コマンド ① 〜個人開発編〜
   - init
   - clone
-  - swich (checkout)
+  - switch (checkout)
   - remote
   - branch
   - status
