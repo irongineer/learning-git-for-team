@@ -377,7 +377,8 @@ $ git push --force-with-lease origin  <ブランチ名> # 強制プッシュ
 
 #### 主なオプション
 
-- `--online`: 各コミットのログを 1 行で表示する
+- `--online`: 各コミットのログを 1 行で表示
+- `--no-merges`: マージコミットを除いて表示
 
 #### コマンド例
 
@@ -387,6 +388,8 @@ $ git log --online
 # 以下は応用例（エイリアスに登録しておくと便利）
 $ git log --graph --pretty=format:'%x09%C(auto) %h %Cgreen %ar %Creset%x09by"%C(cyan ul)%an%Creset" %x09%C(auto)%s %d'
 ```
+
+// TODO: 文字列部分の色を変える
 
 ---
 
