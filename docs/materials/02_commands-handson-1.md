@@ -319,6 +319,7 @@ $ git commit --amend -m "<修正後のメッセージ>"
 #### 参考
 
 - [git-commit – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-commit/)
+- [コミットの修正には git commit --amend が便利](https://tech-blog.rakus.co.jp/entry/20191113/git)
 
 ---
 
@@ -348,7 +349,7 @@ $ git
 
 #### 参考
 
-- ***
+- [git-push – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-push/)
 
 ---
 
