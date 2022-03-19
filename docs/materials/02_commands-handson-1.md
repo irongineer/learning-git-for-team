@@ -74,7 +74,7 @@ $ git init
 
 #### 参考
 
-- ***
+- [git-init – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-init/)
 
 ---
 
@@ -90,7 +90,7 @@ $ git init
 
 #### 主なオプション
 
-- `-b`: 複製したいブランチを指定する（b: branch）
+- `-b | --branch`: 複製したいブランチを指定する
 
 #### コマンド例
 
@@ -105,7 +105,7 @@ $ git clone <リモートリポジトリの URL> -b <ブランチ>
 
 #### 参考
 
-- ***
+- [git-clone – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-clone/)
 
 ---
 
@@ -122,7 +122,7 @@ $ git clone <リモートリポジトリの URL> -b <ブランチ>
 
 #### 主なオプション
 
-- `-c`: ブランチを新規作成して切り替え（c: create）
+- `-c | --create`: ブランチを新規作成して切り替え
 
 #### コマンド例
 
@@ -161,7 +161,7 @@ $ git switch -c <ブランチ>  # git checkout -b <ブランチ> と同じ
 
 #### 主なオプション
 
-- `-v`: 詳細を表示（v: verbose）
+- `-v | --verbose`: 詳細を表示
 
 #### コマンド例
 
@@ -227,7 +227,7 @@ $ git branch -d <ブランチ名>  # git branch -D <ブランチ名> で強制�
 
 #### 主なオプション
 
-- `-s`: 短い形式で表示（s: short）
+- `-s | --short`: 短い形式で表示
 
 #### コマンド例
 
@@ -260,7 +260,7 @@ $ git status -s
 
 #### 主なオプション
 
-- `-p`: ファイル内の任意の変更行のみインデックスに追加（p: patch）
+- `-p | --patch`: ファイル内の任意の変更行のみインデックスに追加
 
 #### コマンド例
 
@@ -308,7 +308,7 @@ $ git commit --amend -m "<修正後のメッセージ>"
 
 #### 備考
 
-- 2 つ以上まえのコミットを修正したい場合、`git rebase -i` を利用する
+- 2 つ以上前のコミットを修正したい場合は `git rebase -i` を利用する
 
 ---
 
@@ -329,17 +329,26 @@ $ git commit --amend -m "<修正後のメッセージ>"
 
 #### ユースケース
 
--
+- ローカルリポジトリに記録した内容をリモートリポジトリに反映したい
 
 #### 主なオプション
 
--
+- `-u | --set-upstream`: 上流ブランチを設定する
+- `-f | --force`: プッシュを強制する **（非推奨）**
+- `--force-with-lease`: プッシュを強制する **（リモートと比較してローカルが最新のときだけ成功する）**
 
 #### コマンド例
 
 ```bash
-$ git
+$ git push -u origin <ブランチ名>  # 上流ブランチを設定
+$ git push origin <ブランチ名>  # 上流ブランチが設定されている状態なら git push でも可
+$ git push --force-with-lease origin  <ブランチ名> # 強制プッシュ
 ```
+
+#### 備考
+
+- 強制プッシュは過去のコミットを上書きする高リスクコマンド。極力使わない
+- 強制プッシュが発生しない運用にする。設定で保護する。どうしてもプッシュしないといけない場合はチームメンバーに確認したうえで `--force-with-lease` で強制プッシュする
 
 ---
 
@@ -348,6 +357,9 @@ $ git
 #### 参考
 
 - [git-push – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-push/)
+- [git push コマンドの使い方と、主要オプションまとめ](https://www-creators.com/archives/1472)
+- [Git 用語：上流ブランチとは？](https://www-creators.com/archives/4931)
+- [git push -f をやめて --force-with-lease を使おう - Qiita](https://qiita.com/wMETAw/items/5f47dcc7cf57af8e449f)
 
 ---
 
@@ -359,16 +371,21 @@ $ git
 
 #### ユースケース
 
--
+- コミット履歴を確認したい
+  - 自分のコミットが成功したか確認したい
+  - 他の人がこのブランチでどのようなコミットをしてきたのか知りたい
 
 #### 主なオプション
 
--
+- `--online`: 各コミットのログを 1 行で表示する
 
 #### コマンド例
 
 ```bash
-$ git
+$ git log
+$ git log --online
+# 以下は応用例（エイリアスに登録しておくと便利）
+$ git log --graph --pretty=format:'%x09%C(auto) %h %Cgreen %ar %Creset%x09by"%C(cyan ul)%an%Creset" %x09%C(auto)%s %d'
 ```
 
 ---
@@ -377,7 +394,8 @@ $ git
 
 #### 参考
 
-- ***
+- [git-log – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-log/)
+- [git log のオプションと綺麗にツリー表示するためのエイリアス - Qiita](https://qiita.com/kawasaki_dev/items/41afaafe477b877b5b73)
 
 ---
 
@@ -389,16 +407,18 @@ $ git
 
 #### ユースケース
 
--
-
-#### 主なオプション
-
--
+- push する前にリモートリポジトリとの変更点を確認したい
+- コミット同士を比較したい
 
 #### コマンド例
 
 ```bash
-$ git
+$ git diff # git add する前に変更点の比較
+$ git diff HEAD^ # 直前のコミットの差分を表示
+$ git diff リモート名/ブランチ名..HEAD # git push する前にリモートとの変更点の比較
+$ git diff <変更前のSHA>..<変更後のSHA> # コミット同士の比較（SHA は git log で表示される commit の右にある文字列）
+$ git diff <ブランチA>..<ブランチ名B> # ブランチ同士の比較
+$ git diff -- <ファイルパスA> <ファイルパスB> # 別ファイル同士の比較（-- の後はパスとして認識される）
 ```
 
 ---
@@ -407,16 +427,52 @@ $ git
 
 #### 参考
 
-- ***
-
-##
-
----
-
-<style scoped>
-  section { font-size: 190%; }
-</style>
+- [git-diff – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-diff/)
+- [忘れやすい人のための git diff チートシート](https://qiita.com/shibukk/items/8c9362a5bd399b9c56be)
+- [【やっとわかった！】git の HEAD^と HEAD~の違い - Qiita](https://qiita.com/chihiro/items/d551c14cb9764454e0b9)
 
 ---
 
-## Fin.
+### config
+
+#### 機能
+
+- 現在の設定を取得、変更する
+
+#### ユースケース
+
+- 複数の git アカウントを使い分けたい
+
+#### コマンド例
+
+```bash
+$ git config  # 現在いるリポジトリの Git 設定を表示
+// TODO: Windows の場合の設定ファイルはどこ？
+$ git config --global user.name "<メインアカウントのユーザー名>" # デフォルトのユーザー名を設定
+$ git config --global user.email "<メインアカウントのメールアドレス>"  # デフォルトのメールアドレスを設定
+
+$ cd ~/workspace/<リポジトリのルートディレクトリ>
+$ git config --local user.name "<サブアカウントのユーザー名>" # 特定リポジトリのユーザー名を設定
+$ git config --local user.email "<サブアカウントのメールアドレス>" # 特定リポジトリのメールアドレスを設定
+```
+
+#### 備考
+
+- `--global` の設定ファイルは `~/.gitconfig` にある
+- `--local` の設定ファイルは `<リポジトリのルートディレクトリ>/.git/config` にある
+
+---
+
+#### イメージ
+
+#### 参考
+
+- [git-config Documentation](https://git-scm.com/docs/git-config)
+- [Git をインストールしたら真っ先にやっておくべき初期設定 - Qiita](https://qiita.com/wnoguchi/items/f7358a227dfe2640cce3)
+- [複数の git アカウントを使い分ける - Qiita](https://qiita.com/0084ken/items/f4a8b0fbff135a987fea)
+
+---
+
+## ハンズオン
+
+// TODO: コンテンツ作成
