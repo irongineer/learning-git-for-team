@@ -198,20 +198,24 @@ $ git rebase -i HEAD~4  # 最新から 4 つ分のコミットを修正・統合
 
 #### 機能
 
--
+-　未コミットの変更を退避する
 
 #### ユースケース
 
--
+- 他ブランチに切り替えたいが、作業が中途半端なのでコミットはしたくない
 
 #### 主なオプション
 
--
+- `-u | --include-untracked`: 追跡対象に含まれていないファイル（新規作成ファイルなど）も含めて退避
 
 #### コマンド例
 
 ```bash
-$ git
+$ git stash -u  # 新規作成ファイルも含めて変更を退避
+$ git stash -u push "<メッセージ>"  # メッセージを付けて変更を退避
+$ git stash list  # 退避した作業の一覧を見る
+$ git stash apply stash@{0} # 退避した作業を戻す。stash@{N} を省略した場合は直前に stash した情報を戻す
+$ git stash show  stash@{0} -p # 退避した変更の詳細を見る
 ```
 
 ---
@@ -222,7 +226,6 @@ $ git
 
 - [git-stash Documentation](https://git-scm.com/docs/git-stash)
 - [【git stash】コミットはせずに変更を退避したいとき - Qiita](https://qiita.com/chihiro/items/f373873d5c2dfbd03250)
-- [色々な git stash - Qiita](https://qiita.com/akasakas/items/768c0b563b96f8a9be9d)
 
 ---
 
@@ -238,12 +241,16 @@ $ git
 
 #### 主なオプション
 
--
+- `-s| --source`: 指定したコミットの状態にワークツリーファイルを復元
 
 #### コマンド例
 
 ```bash
-$ git
+git restore # 保存前に戻す
+git restore -S # addされる前に戻す
+
+git restore -s <コミット識別子> <ファイル名>  # 特定のファイルを、特定のコミット時点に戻す
+
 ```
 
 ---
@@ -252,7 +259,10 @@ $ git
 
 #### 参考
 
-- a
+- [git-restore – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-restore/)
+
+- git switch と restore の役割と機能について - Qiita
+- [Git 初心者なら必ず覚えるべき git restore コマンド](https://iwb.jp/git-restore-s-head-commit-fix/)
 
 ---
 
