@@ -34,10 +34,10 @@ theme: git
 ## 3 日目アジェンダ
 
 - Git 基本コマンド ② 〜チーム開発編〜
-  - pull
   - fetch
   - merge
   - rebase
+  - pull
   - stash
   - restore (checkout)
   - reset
@@ -193,6 +193,9 @@ $ git remote remove <リモートリポジトリのURL>
 - ローカルリポジトリにあるブランチを確認したい
 - ローカルリポジトリにあるブランチの名前を変えたい
 - ローカルリポジトリにあるブランチを削除したい
+
+// TODO: 主なオプション
+// TODO: `-a`
 
 #### コマンド例
 
@@ -419,7 +422,7 @@ $ git log --graph --pretty=format:'%x09%C(auto) %h %Cgreen %ar %Creset%x09by"%C(
 $ git diff # git add する前に変更点の比較
 $ git diff HEAD^ # 直前のコミットの差分を表示
 $ git diff リモート名/ブランチ名..HEAD # git push する前にリモートとの変更点の比較
-$ git diff <変更前のSHA>..<変更後のSHA> # コミット同士の比較（SHA は git log で表示される commit の右にある文字列）
+$ git diff <変更前のコミットID>..<変更後のコミットID> # コミット同士の比較（ハッシュ は git log で表示される commit の右にある文字列）
 $ git diff <ブランチA>..<ブランチ名B> # ブランチ同士の比較
 $ git diff -- <ファイルパスA> <ファイルパスB> # 別ファイル同士の比較（-- の後はパスとして認識される）
 ```
