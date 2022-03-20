@@ -34,10 +34,10 @@ theme: git
 ## 3 日目アジェンダ（今日はこっち）
 
 - Git 基本コマンド ② 〜チーム開発編〜
-  - pull
   - fetch
   - merge
   - rebase
+  - pull
   - stash
   - restore (checkout)
   - reset
@@ -46,42 +46,6 @@ theme: git
   - blame
   - tag
   - reflog
-
----
-
-### pull
-
-#### 機能
-
-- リモートリポジトリの内容を取得し、現在のブランチに取り込む（`git fetch` + `git merge`）
-
-#### ユースケース
-
-- リモートリポジトリの最新情報をローカルリポジトリに取り込みたい
-
-#### 主なオプション
-
-- `-r | --rebase`: フェッチ後に現在のブランチを上流ブランチの上にリベース
-  - `git fetch` + `git rebase`
-
-#### コマンド例
-
-```bash
-$ git switch <ブランチ名> # まず pull したいブランチへ切り替える
-$ git pull origin <ブランチ名> # リモートリポジトリの内容を取得してマージ。上流ブランチを設定している場合は git pull で OK
-$ git pull -r origin <ブランチ名> # リモートリポジトリの内容を取得してリベース。
-```
-
----
-
-#### イメージ
-
-#### 参考
-
-- [git-pull – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-pull/)
-- [git pull コマンドの使い方と、主要オプションまとめ](https://www-creators.com/archives/2295)
-- 【初心者向け】git fetch、git merge、git pull の違いについて
-- [git pull と git pull –rebase の違いって？図を交えて説明します！](https://kray.jp/blog/git-pull-rebase/)
 
 ---
 
@@ -127,7 +91,7 @@ $ git fetch # リモートリポジトリの内容をローカルのリモート
 
 #### ユースケース
 
-- fetch した内容をワーキングツリーに反映したい
+- fetch した内容をワーキングツリーに反映したい（ブランチをマージした記録をログに残したい）
 - マージ時にコンフリクトしたので、競合を解決したい
 
 #### 主なオプション
@@ -162,7 +126,7 @@ $ git merge <マージ元のブランチ名>
 
 #### ユースケース
 
-- fetch した内容をワーキングツリーに反映したい（コミットログは一直線に保ちたい）
+- fetch した内容をワーキングツリーに反映したい（コミットログを一直線に保ちたい）
 - リベース時にコンフリクトしたので、競合を解決したい
 - 複数のコミットをひとつにまとめたい（2 つ以上前のコミットを修正したい）
 
@@ -191,6 +155,44 @@ $ git rebase -i HEAD~4  # 最新から 4 つ分のコミットを修正・統合
 - [git rebase を初めて使った際のまとめ - Qiita](https://qiita.com/310ma3/items/e0ec74b47c6c219f2a8b)
 - [rebase -i でコミットをまとめる - Qiita](https://qiita.com/takke/items/3400b55becfd72769214)
 - [【やっとわかった！】git の HEAD^と HEAD~の違い - Qiita](https://qiita.com/chihiro/items/d551c14cb9764454e0b9)
+- [git rebase 失敗した時の対処法 - Qiita](https://qiita.com/shuntaro_tamura/items/c505b76c1021a35ca9ff)
+
+---
+
+### pull
+
+#### 機能
+
+- リモートリポジトリの内容を取得し、現在のブランチに取り込む（`git fetch` + `git merge`）
+
+#### ユースケース
+
+- リモートリポジトリの最新情報をローカルリポジトリに取り込みたい
+
+#### 主なオプション
+
+- `-r | --rebase`: フェッチ後に現在のブランチを上流ブランチの上にリベース
+  - `git fetch` + `git rebase`
+
+#### コマンド例
+
+```bash
+$ git switch <ブランチ名> # まず pull したいブランチへ切り替える
+$ git pull origin <ブランチ名> # リモートリポジトリの内容を取得してマージ。上流ブランチを設定している場合は git pull で OK
+$ git pull -r origin <ブランチ名> # リモートリポジトリの内容を取得してリベース。
+```
+
+---
+
+#### イメージ
+
+#### 参考
+
+- [git-pull – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-pull/)
+- [git pull コマンドの使い方と、主要オプションまとめ](https://www-creators.com/archives/2295)
+- [【初心者向け】git fetch、git merge、git pull の違いについて - Qiita](https://qiita.com/wann/items/688bc17460a457104d7d)
+- [git pull と git pull –rebase の違いって？図を交えて説明します！](https://kray.jp/blog/git-pull-rebase/)
+- [Git のコミットメッセージを後から変更する方法をわかりやすく書いてみた](https://www.granfairs.com/blog/staff/git-commit-fix)
 
 ---
 
@@ -233,25 +235,32 @@ $ git stash show  stash@{0} -p # 退避した変更の詳細を見る
 
 #### 機能
 
--
+- ファイルを指定した状態に復元する
 
 #### ユースケース
 
--
+- add をしたけど取り消したい
+- 特定のコミットの時点に戻したい
 
 #### 主なオプション
 
-- `-s| --source`: 指定したコミットの状態にワークツリーファイルを復元
+- `-s | --source`: 指定したコミットの状態にワークツリーファイルを復元
+- `-S | --staged`: インデックスを復元
 
 #### コマンド例
 
+// TODO: checkout の例を追記
+
 ```bash
-git restore # 保存前に戻す
-git restore -S # addされる前に戻す
-
+git restore <ファイル名>  # 特定のファイルを保存前に戻す  // TODO: 動作確認
+git restore -S . # 対象ファイル全体を add される前に戻す  // TODO: 動作確認
 git restore -s <コミット識別子> <ファイル名>  # 特定のファイルを、特定のコミット時点に戻す
-
 ```
+
+#### 備考
+
+- switch は Git バージョン 2.23.0 でリリース (2019/08/16)
+- checkout は複数の役割を兼ね備えてしまっているため、こちらの方が理解しやすい
 
 ---
 
@@ -260,8 +269,7 @@ git restore -s <コミット識別子> <ファイル名>  # 特定のファイ�
 #### 参考
 
 - [git-restore – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-restore/)
-
-- git switch と restore の役割と機能について - Qiita
+- [git switch と restore の役割と機能について - Qiita](https://qiita.com/yukibear/items/4f88a5c0e4b1801ee952)
 - [Git 初心者なら必ず覚えるべき git restore コマンド](https://iwb.jp/git-restore-s-head-commit-fix/)
 
 ---
@@ -274,16 +282,23 @@ git restore -s <コミット識別子> <ファイル名>  # 特定のファイ�
 
 #### ユースケース
 
--
+- 直前のコミットを取り消したい **（push する前）**
+- 目的のブランチに切り替える前に誤って pull してしまったのを取り消したい
 
 #### 主なオプション
 
--
+- `--soft`: インデックスとワークツリーはそのままで、指定したコミットへリセット **（commit のみ取り消し）**
+- `--mixed`: ワークツリーはそのままで、インデックスを指定したコミットへリセット **（commit と add を取り消し。デフォルト）**
+- `--hard`: インデックスとワークツリーを指定したコミットへリセット **（現在のファイル変更も含めて全部取り消し）**
 
 #### コマンド例
 
 ```bash
-$ git
+$ git reset --soft HEAD^  # コミットのみ取り消す。現在のファイル変更はそのまま。HEAD^ は直前のコミットを意味する
+$ git reset --hard HEAD^  # commit, add, 現在のファイル変更も全部取り消す
+$ git reset --hard 昔のコミットのハッシュ値 # 指定したコミットの状態に戻す
+$ git reset --hard <ブランチ>  # 指定したブランチの状態に戻す（現在いるブランチに戻す場合は下と同じ）
+$ git reset --hard ORIG_HEAD  # 直前の reset を取り消す（最新の状態に戻る）
 ```
 
 ---
@@ -292,7 +307,9 @@ $ git
 
 #### 参考
 
-- a
+- [git-reset – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-reset/)
+- [[git reset (--hard/--soft)]ワーキングツリー、インデックス、HEAD を使いこなす方法](https://qiita.com/shuntaro_tamura/items/db1aef9cf9d78db50ffe)
+- [第 6 話 git reset 3 種類をどこよりもわかりやすい図解で解説！【連載】マンガでわかる Git ～コマンド編～](https://www.r-staffing.co.jp/engineer/entry/20191129_1)
 
 ---
 
@@ -300,20 +317,25 @@ $ git
 
 #### 機能
 
--
+- 指定したコミットの内容を打ち消すコミットを生成し、現在いるブランチに適用する
 
 #### ユースケース
 
--
+- 直前のコミットを取り消したい **（push した後）**
 
 #### 主なオプション
 
--
+- `-e | --edit`: コミットメッセージを編集する **（デフォルト）**
+- `--no-edit`: コミットメッセージを編集しない
+- `-n | --no-commit`: 打ち消しコミットを生成するが、適用しない
 
 #### コマンド例
 
 ```bash
-$ git
+$ git revert HEAD^ # 直前のコミットを打ち消すコミットを適用
+$ git revert -n <コミットID> # 特定のコミットを打ち消すコミットを生成（適用するときは git commit）
+$ git revert HEAD~{N}  # 直前から N 個前の範囲で複数コミットを打ち消すコミットを適用
+$ git revert <コミットID A>..<コミットID B>  # A から B の範囲で複数コミットを打ち消すコミットを適用
 ```
 
 ---
@@ -322,7 +344,9 @@ $ git
 
 #### 参考
 
-- a
+- [git-revert Documentation](https://git-scm.com/docs/git-revert)
+- [【git コマンド】いまさらの revert - Qiita](https://qiita.com/chihiro/items/2fa827d0eac98109e7ee)
+- [Git revert と reset について - Qiita](https://qiita.com/Sammy_U/items/e37c7242544fd1da81be)
 
 ---
 
@@ -330,20 +354,24 @@ $ git
 
 #### 機能
 
--
+- 指定したコミットの内容を現在いるブランチに取り込む
 
 #### ユースケース
 
--
+- 他のブランチの特定のコミットを現在のブランチに取り込みたい（複数 PR を並行してレビューしているときなど）
 
 #### 主なオプション
 
--
+- `-e | --edit`: コミットメッセージを編集する **（デフォルト）**
+- `--no-edit`: コミットメッセージを編集しない
+- `-n | --no-commit`: 指定したコミットを取得するが、適用しない
 
 #### コマンド例
 
 ```bash
-$ git
+$ git cherry-pick <コミットID>  # 特定のコミットを現在のブランチに取り込み、適用
+$ git cherry-pick -n <コミットID>  # 特定のコミットを現在のブランチに取り込む（適用するときは git commit）
+$ git cherry-pick <コミットID A>..<コミットID B>  # A から B の範囲で複数コミットを現在のブランチに取り込み、適用
 ```
 
 ---
@@ -352,7 +380,9 @@ $ git
 
 #### 参考
 
-- a
+- [git-cherry-pick Documentation](https://git-scm.com/docs/git-cherry-pick)
+- [git cherry-pick を完全マスター!特定コミットのみを取り込む方法](https://www.sejuku.net/blog/71544)
+- [git で他ブランチの特定のコミットを取り込む方法 - Qiita](https://qiita.com/Rock22/items/e53d6135c59099149592)
 
 ---
 
@@ -360,21 +390,27 @@ $ git
 
 #### 機能
 
--
+- 指定されたファイルの各行に最終更新者・日時などの情報を表示する
 
 #### ユースケース
 
--
+- この行は誰が変更したのか調べたい
 
 #### 主なオプション
 
--
+- `-L`: 最終コミットを表示する行の範囲を指定
 
 #### コマンド例
 
 ```bash
-$ git
+$ git blame <ファイル名>  # 特定のファイルについて各行ごとに最終コミット情報を表示する
+$ git blame -L 40,50 <ファイル名> # 40〜50行目の最終コミット情報を表示する
+$ git blame -L 40,+10 <ファイル名> # 40行目から10行分の最終コミット情報を表示する
 ```
+
+#### 備考
+
+- 最近のエディタでは拡張機能を入れると blame の結果が表示される（Visual Studio Code では [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens#current-line-blame-)）
 
 ---
 
@@ -382,7 +418,9 @@ $ git
 
 #### 参考
 
-- a
+- [git-blame Documentation](https://git-scm.com/docs/git-blame)
+- [インデントコミットで真犯人がわからなくなった場合の git blame - Qiita](https://qiita.com/sonots/items/b6852db6638cda233bc8)
+- [GitLens — Git supercharged - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens#current-line-blame-)
 
 ---
 
@@ -394,16 +432,22 @@ $ git
 
 #### ユースケース
 
--
+- リリースした時点のソースコードに名前を付けたい
 
 #### 主なオプション
 
--
+- `-a | --annotate`: 注釈付きのタグを作成
+- `-m | --message`: メッセージを付与
+- `-l | --list`: タグを一覧表示
 
 #### コマンド例
 
 ```bash
-$ git
+$ git tag <タグ名>  # コメント（注釈）なしでタグを作成する
+$ git tag -a <タグ名> -m '<タグのコメント>' # コメント（注釈）付きでタグを作成
+$ git tag -a タグ -m 'コメント' <コミットID>  # 過去のコミットにタグを作成
+$ git push origin <タグ名>  # タグをリモートリポジトリに反映する
+$ git tag -l  # タグを一覧表示する
 ```
 
 ---
@@ -412,7 +456,8 @@ $ git
 
 #### 参考
 
-- a
+- [git-tag – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-tag/)
+- [git tag の使い方まとめ - Qiita](https://qiita.com/growsic/items/ed67e03fda5ab7ef9d08)
 
 ---
 
