@@ -21,10 +21,10 @@ theme: git
   - switch (checkout)
   - remote
   - branch
-  - mv
-  - rm
   - status
   - add
+  - mv
+  - rm
   - commit
   - push
   - log
@@ -245,6 +245,74 @@ $ git branch -d <ブランチ名>  # 指定したブランチを削除。-D で�
 - [git-branch – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-branch/)
 - [git branch コマンド - Qiita](https://qiita.com/chihiro/items/e178e45a7fd5a2fb4599)
 
+### status
+
+#### 機能
+
+- ワークツリーにあるファイルの状態を表示する
+
+#### ユースケース
+
+- どのファイルを変更したのか、add, commit 済かどうかを知りたい
+- コンフリクトしたのでどうすればいいか知りたい
+- よく分からないけどエラーになったから対処方法を知りたい
+
+#### 主なオプション
+
+- `-s | --short`: 短い形式で表示
+
+#### コマンド例
+
+```bash
+$ git status
+$ git status -s
+```
+
+---
+
+#### イメージ
+
+#### 参考
+
+- [git-status – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-status/)
+- [git status -s でちょっと幸せになれる - Qiita](https://qiita.com/tommy_aka_jps/items/af536a7c20747f99aa42)
+
+---
+
+### add
+
+#### 機能
+
+- ファイルをインデックスに追加（ステージング）する（コミットの対象にする）
+
+#### ユースケース
+
+- 変更したファイルの一部をコミットしたい // TODO: もっといい表現がありそう
+- コンフリクトを解決したファイルをコンフリクト解決済の状態に変更したい
+
+#### 主なオプション
+
+- `-p | --patch`: ファイル内の任意の変更行のみインデックスに追加
+
+#### コマンド例
+
+```bash
+$ git add ./src/index.html  # ./src/index.html のみインデックスに追加
+$ git add ./src/  # ./src ディレクトリ以下の全てのファイルをインデックスに追加
+$ git add .  # 変更済の全てのファイルをインデックスに追加
+$ git add -p ./src/index.html  # ./src/index.html の一部の変更行をインデックスに追加（インタラクティブモードで選択する）
+```
+
+---
+
+#### イメージ
+
+#### 参考
+
+- [git-add – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-add/)
+- [【 git add 】コマンド――変更内容をインデックスに追加してコミット対象にする](https://atmarkit.itmedia.co.jp/ait/articles/2003/13/news031.html)
+- [git add -p 使ってますか？](https://qiita.com/cotton_desu/items/bf08ac57d59b37dd5188)
+
 ---
 
 ### mv
@@ -320,76 +388,6 @@ $ git rm -r --cached .  # ファイル全体キャッシュ削除
 - [git-rm – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-rm/)
 - [【Git 初心者入門】いちいちステージングエリアに add しなくても削除できる git rm](https://hirocorpblog.com/git-rm/)
 - [.gitignore に記載したのに反映されない件 - Qiita](https://qiita.com/fuwamaki/items/3ed021163e50beab7154)
-
----
-
-### status
-
-#### 機能
-
-- ワークツリーにあるファイルの状態を表示する
-
-#### ユースケース
-
-- どのファイルを変更したのか、add, commit 済かどうかを知りたい
-- コンフリクトしたのでどうすればいいか知りたい
-- よく分からないけどエラーになったから対処方法を知りたい
-
-#### 主なオプション
-
-- `-s | --short`: 短い形式で表示
-
-#### コマンド例
-
-```bash
-$ git status
-$ git status -s
-```
-
----
-
-#### イメージ
-
-#### 参考
-
-- [git-status – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-status/)
-- [git status -s でちょっと幸せになれる - Qiita](https://qiita.com/tommy_aka_jps/items/af536a7c20747f99aa42)
-
----
-
-### add
-
-#### 機能
-
-- ファイルをインデックスに追加（ステージング）する（コミットの対象にする）
-
-#### ユースケース
-
-- 変更したファイルの一部をコミットしたい // TODO: もっといい表現がありそう
-- コンフリクトを解決したファイルをコンフリクト解決済の状態に変更したい
-
-#### 主なオプション
-
-- `-p | --patch`: ファイル内の任意の変更行のみインデックスに追加
-
-#### コマンド例
-
-```bash
-$ git add ./src/index.html  # ./src/index.html のみインデックスに追加
-$ git add ./src/  # ./src ディレクトリ以下の全てのファイルをインデックスに追加
-$ git add .  # 変更済の全てのファイルをインデックスに追加
-$ git add -p ./src/index.html  # ./src/index.html の一部の変更行をインデックスに追加（インタラクティブモードで選択する）
-```
-
----
-
-#### イメージ
-
-#### 参考
-
-- [git-add – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-add/)
-- [【 git add 】コマンド――変更内容をインデックスに追加してコミット対象にする](https://atmarkit.itmedia.co.jp/ait/articles/2003/13/news031.html)
-- [git add -p 使ってますか？](https://qiita.com/cotton_desu/items/bf08ac57d59b37dd5188)
 
 ---
 

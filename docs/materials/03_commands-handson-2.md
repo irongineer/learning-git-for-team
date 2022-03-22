@@ -21,10 +21,10 @@ theme: git
   - switch (checkout)
   - remote
   - branch
-  - mv
-  - rm
   - status
   - add
+  - mv
+  - rm
   - commit
   - push
   - log
