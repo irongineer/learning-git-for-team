@@ -255,8 +255,8 @@ $ git stash show  stash@{0} -p # 退避した変更の詳細を見る
 
 ```bash
 git restore <ファイル名>  # 特定のファイルを保存前に戻す  // TODO: 動作確認
-git restore -staged . # 対象ファイル全体を add される前に戻す。git reset . 同じ挙動  // TODO: 動作確認
-git restore -source <コミット識別子> <ファイル名>  # 特定のファイルを、特定のコミット時点に戻す
+git restore --staged . # 対象ファイル全体を add される前に戻す。git reset . 同じ挙動  // TODO: 動作確認
+git restore --source <コミット識別子> <ファイル名>  # 特定のファイルを、特定のコミット時点に戻す
 ```
 
 #### 備考
