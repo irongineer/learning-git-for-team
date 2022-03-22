@@ -51,7 +51,13 @@ theme: git
 
 ---
 
-## スライドの基本構成
+## コマンド説明
+
+---
+
+### スライドの基本構成
+
+---
 
 ### Git サブコマンド名（ex. clone）
 
@@ -63,6 +69,10 @@ theme: git
 
 - どんなときに使うか（逆引き用）
 
+#### 主なオプション
+
+- よく使うオプション
+
 #### コマンド例
 
 - よく使うコマンドの例
@@ -73,7 +83,7 @@ theme: git
 
 #### 参考
 
-- 公式リファレンス + 分かりやすい記事
+- 公式リファレンス + 分かりやすい記事 （理解を深めたい人へのおすすめ記事）
 
 ---
 
@@ -586,4 +596,132 @@ $ git config --local user.email "<サブアカウントのメールアドレス>
 
 ## ハンズオン
 
-// TODO: コンテンツ作成
+---
+
+### 【参考】ターミナルでよく使うコマンド ①
+
+#### cd
+
+- ディレクトリを移動します。
+
+#### ls
+
+- ディレクトリの内容を表示します。 ls -a コマンドで、隠しファイルを含めたディレクトリ全内容を表示します。
+
+#### mkdir
+
+- ディレクトリを新規作成します。
+
+#### touch
+
+- ファイルを作成します
+
+#### rm
+
+- ファイルを削除します。
+
+---
+
+### 【参考】ターミナルでよく使うコマンド ②
+
+#### cp
+
+- ファイルをコピーします。
+
+#### mv
+
+- ファイルの移動とファイル名の変更を行います。
+
+#### cat
+
+- ファイルの中身を表示します。
+
+---
+
+### Git の設定
+
+```bash
+$ git config --global user.name "<メインアカウントのユーザー名>" # デフォルトのユーザー名を設定
+$ git config --global user.email "<メインアカウントのメールアドレス>"  # デフォルトのメールアドレスを設定
+$ git config --global core.editor 'code --wait' # メインエディタを　Visual Studio Code に設定。他のエディタでも OK（vim など）
+
+# 設定の確認
+$ git config user.name
+$ git config user.email
+$ git config core.editor
+$ cat ~/.gitconfig  # global の設定ファイルを確認（local の設定ファイルは <ローカルリポジトリのパス>/.git/config）
+```
+
+---
+
+### リポジトリの作成
+
+```bash
+$ cd <リポジトリを保管しているディレクトリ> # どこでも OK
+$ mkdir git-exercise  # ハンズオン用ディレクトリを作成
+$ cd git-exercise
+$ git init  # Git ローカルリポジトリを作成
+$ ls -la  # .git ディレクトリが作成されていることを確認
+$ ls .git # .git の中身を確認
+```
+
+---
+
+### 既にリモートリポジトリにあるリポジトリをコピー
+
+```bash
+$ cd git-exercise
+$ git clone <リポジトリの URL>
+$ ls -a
+```
+
+---
+
+### ブランチの作成・移動・名前変更
+
+```bash
+$ cd git-exercise
+$ git branch main-<社員番号>
+$ git switch main-<社員番号>
+$ git branch -m develop-<社員番号>
+$ git switch -c temp-<社員番号>
+$ git branch -a
+$ git switch develop-<社員番号>
+$ git branch -d temp-<社員番号>
+```
+
+---
+
+### 変更をステージに追加
+
+```bash
+$ cd git-exercise # 既に該当ディレクトリにいれば省略
+$ git switch develop-<社員番号>  # 既に該当ブランチにいれば省略
+$ touch index.html  # index.html ファイルを作成
+$ code git-exercise # Visual Studio Code でリポジトリを開く
+
+（index.html に「develop での変更」と追記）
+
+# Changes not staged for commit に modified: git-exercise/index.html がある
+$ git status
+$ git add .
+# Changes to be committed に modified: git-exercise/index.html がある
+$ git status
+```
+
+---
+
+// TODO: 使ってないコマンド
+
+- status
+- add
+- mv
+- rm
+- commit
+- push
+- log
+- diff
+
+```
+
+```
