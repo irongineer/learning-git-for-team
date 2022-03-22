@@ -21,6 +21,8 @@ theme: git
   - switch (checkout)
   - remote
   - branch
+  - mv
+  - rm
   - status
   - add
   - commit
