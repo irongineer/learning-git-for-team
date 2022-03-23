@@ -704,23 +704,28 @@ $ code git-exercise # Visual Studio Code でリポジトリを開く
 
 # Changes not staged for commit に modified: git-exercise/index.html がある
 $ git status
+$ git diff
+
 $ git add .
 # Changes to be committed に modified: git-exercise/index.html がある
 $ git status
+$ git diff --staged
+```
+
+---
+
+### 変更を記録
+
+```bash
+$ git commit -m "develop を追記"
+$ git status  #
+$ git log
+$ git push origin develop_<社員番号>
 ```
 
 ---
 
 // TODO: 使ってないコマンド
-
-- status
-- add
-- mv
-- rm
-- commit
-- push
-- log
-- diff
 
 ```
 
