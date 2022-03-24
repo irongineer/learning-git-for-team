@@ -16,8 +16,8 @@ theme: git
 ## 2 日目アジェンダ
 
 - Git 基本コマンド ① 〜個人開発編〜
-  - config
   - init
+  - config
   - remote
   - clone
   - branch

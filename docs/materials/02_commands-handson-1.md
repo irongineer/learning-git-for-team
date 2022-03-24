@@ -20,8 +20,8 @@ theme: git
 ## 2 日目アジェンダ（今日はこっち）
 
 - Git 基本コマンド ① 〜個人開発編〜
-  - config
   - init
+  - config
   - remote
   - clone
   - branch
@@ -93,46 +93,6 @@ theme: git
 
 ---
 
-### config
-
-#### 機能
-
-- 現在の Git の設定を取得、変更する
-
-#### ユースケース
-
-- git を利用し始める際に、ユーザー名やメールアドレス等を設定したい
-- プロジェクトごとに複数の git アカウントを使い分けたい
-- 現在の Git の設定がどうなっているのかを確認したい
-
----
-
-#### コマンド例
-
-```bash
-$ git config  # 現在いるリポジトリの Git 設定を表示
-$ git config --global user.name "<メインアカウントのユーザー名>" # デフォルトのユーザー名を設定
-$ git config --global user.email "<メインアカウントのメールアドレス>"  # デフォルトのメールアドレスを設定
-
-$ cd /path/to/local/repository # 特定のプロジェクトのローカルリポジトリへ移動
-$ git config --local user.name "<サブアカウントのユーザー名>" # 特定リポジトリのユーザー名を設定
-$ git config --local user.email "<サブアカウントのメールアドレス>" # 特定リポジトリのメールアドレスを設定
-```
-
-#### 備考
-
-- `/path/to/local/repository` の箇所はユーザーごとにパスが異なるので、そのままコピペしないように注意
-- `--global` の設定ファイルは `~/.gitconfig` にある
-- `--local` の設定ファイルは `/path/to/my/codebase/.git/config` にある
-
-#### 参考
-
-- [git-config Documentation](https://git-scm.com/docs/git-config)
-- [Git をインストールしたら真っ先にやっておくべき初期設定 - Qiita](https://qiita.com/wnoguchi/items/f7358a227dfe2640cce3)
-- [複数の git アカウントを使い分ける - Qiita](https://qiita.com/0084ken/items/f4a8b0fbff135a987fea)
-
----
-
 ### init
 
 #### 機能
@@ -170,6 +130,46 @@ $ git init  # git でバージョン管理を開始
 - [git-init – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-init/)
 - [Git リポジトリの取得 – Git コマンドリファレンス（日本語版）](https://git-scm.com/book/ja/v2/Git-%E3%81%AE%E5%9F%BA%E6%9C%AC-Git-%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E5%8F%96%E5%BE%97)
 - [.git ディレクトリの中身を見てみる 👀 - Qiita](https://qiita.com/tatane616/items/dbad66179754be57d2e2)
+
+---
+
+### config
+
+#### 機能
+
+- 現在の Git の設定を取得、変更する
+
+#### ユースケース
+
+- git を利用し始める際に、ユーザー名やメールアドレス等を設定したい
+- プロジェクトごとに複数の git アカウントを使い分けたい
+- 現在の Git の設定がどうなっているのかを確認したい
+
+---
+
+#### コマンド例
+
+```bash
+$ git config  # 現在いるリポジトリの Git 設定を表示
+$ git config --global user.name "<メインアカウントのユーザー名>" # デフォルトのユーザー名を設定
+$ git config --global user.email "<メインアカウントのメールアドレス>"  # デフォルトのメールアドレスを設定
+
+$ cd /path/to/local/repository # 特定のプロジェクトのローカルリポジトリへ移動
+$ git config --local user.name "<サブアカウントのユーザー名>" # 特定リポジトリのユーザー名を設定
+$ git config --local user.email "<サブアカウントのメールアドレス>" # 特定リポジトリのメールアドレスを設定
+```
+
+#### 備考
+
+- `/path/to/local/repository` の箇所はユーザーごとにパスが異なるので、そのままコピペしないように注意
+- `--global` の設定ファイルは `~/.gitconfig` にある
+- `--local` の設定ファイルは `/path/to/my/codebase/.git/config` にある
+
+#### 参考
+
+- [git-config Documentation](https://git-scm.com/docs/git-config)
+- [Git をインストールしたら真っ先にやっておくべき初期設定 - Qiita](https://qiita.com/wnoguchi/items/f7358a227dfe2640cce3)
+- [複数の git アカウントを使い分ける - Qiita](https://qiita.com/0084ken/items/f4a8b0fbff135a987fea)
 
 ---
 
