@@ -44,8 +44,9 @@ h6 {
 
 pre {
   font-size: 20px;
-  color: #FCFCFA;
-  background-color: #364649;
+  /* color: #FCFCFA; */
+  /* background-color: #364649; */
+  background-color: #FCFCFA;
 }
 
 a {
