@@ -104,13 +104,13 @@ theme: git
 #### コマンド例 <!-- omit in toc -->
 
 ```bash
-$ cd /path/to/my/codebase # 特定のプロジェクトのルートディレクトリへ移動
+$ cd /path/to/repository # 特定のプロジェクトのルートディレクトリへ移動
 $ git init  # git でバージョン管理を開始
 ```
 
 #### 備考 <!-- omit in toc -->
 
-- `/path/to/my/codebase` の箇所はユーザーごとにパスが異なるので、そのままコピペしないように注意
+- `/path/to/repository` の箇所はユーザーごとにパスが異なるので、そのままコピペしないように注意
 - .git ディレクトリにはリポジトリを Git でバージョン管理するために必要なすべてのファイル (Git リポジトリのスケルトン) が格納されている
   - 中身の詳細については [.git ディレクトリの中身を見てみる 👀 - Qiita](https://qiita.com/tatane616/items/dbad66179754be57d2e2) を参照
 
@@ -143,16 +143,16 @@ $ git config  # 現在いるリポジトリの Git 設定を表示
 $ git config --global user.name "<メインアカウントのユーザー名>" # デフォルトのユーザー名を設定
 $ git config --global user.email "<メインアカウントのメールアドレス>"  # デフォルトのメールアドレスを設定
 
-$ cd /path/to/local/repository # 特定のプロジェクトのローカルリポジトリへ移動
+$ cd /path/to/repository # 特定のプロジェクトのローカルリポジトリへ移動
 $ git config --local user.name "<サブアカウントのユーザー名>" # 特定リポジトリのユーザー名を設定
 $ git config --local user.email "<サブアカウントのメールアドレス>" # 特定リポジトリのメールアドレスを設定
 ```
 
 #### 備考 <!-- omit in toc -->
 
-- `/path/to/local/repository` の箇所はユーザーごとにパスが異なるので、そのままコピペしないように注意
+- `/path/to/repository` の箇所はユーザーごとにパスが異なるので、そのままコピペしないように注意
 - `--global` の設定ファイルは `~/.gitconfig` にある
-- `--local` の設定ファイルは `/path/to/my/codebase/.git/config` にある
+- `--local` の設定ファイルは `/path/to/repository/.git/config` にある
 
 #### 参考 <!-- omit in toc -->
 
@@ -244,6 +244,7 @@ $ git clone <リモートリポジトリの URL> -b <ブランチ>
 
 #### ユースケース <!-- omit in toc -->
 
+- ローカルリポジトリにブランチを作成したい
 - ローカルリポジトリにあるブランチを確認したい
 - ローカルリポジトリにあるブランチの名前を変えたい
 - ローカルリポジトリにあるブランチを削除したい
@@ -284,12 +285,12 @@ $ git branch -d <ブランチ名>  # 指定したブランチを削除。-D で�
 
 #### 機能 <!-- omit in toc -->
 
-- 作業ツリーを異なるブランチに切り替える
+- ワークツリーを異なるブランチに切り替える
 
 #### ユースケース <!-- omit in toc -->
 
 - 既に存在するブランチに移動したい
-- 新しいブランチを作成したい
+- 新しいブランチを作成したい（そのまま移動したい）
 
 ---
 
@@ -623,12 +624,13 @@ $ git log --graph --pretty=format:'%x09%C(auto) %h %Cgreen %ar %Creset%x09by"%C(
 
 #### 機能 <!-- omit in toc -->
 
-- コミット同士やコミットと作業ツリーの内容を比較する
+- コミット同士やコミットとワークツリーの内容を比較する
 
 #### ユースケース <!-- omit in toc -->
 
 - push する前にリモートリポジトリとの変更点を確認したい
 - コミット同士を比較したい
+- ブランチ間の差分を比較したい
 
 ---
 
@@ -723,15 +725,16 @@ $ git diff -- <ファイルパスA> <ファイルパスB> # 別ファイル同�
 ### Git の設定
 
 ```bash
-$ git config --global user.name "<メインアカウントのユーザー名>" # デフォルトのユーザー名を設定
-$ git config --global user.email "<メインアカウントのメールアドレス>"  # デフォルトのメールアドレスを設定
-$ git config --global core.editor 'code --wait' # メインエディタを　Visual Studio Code に設定。他のエディタでも OK（vim など）
+$ cd /path/to/repository  # 自身のプロジェクトのルートディレクトリへ移動
+$ git config --local user.name "<メインアカウントのユーザー名>" # デフォルトのユーザー名を設定
+$ git config --local user.email "<メインアカウントのメールアドレス>"  # デフォルトのメールアドレスを設定
+$ git config --local core.editor 'code --wait' # メインエディタを　Visual Studio Code に設定。他のエディタでも OK（vim など）
 
 # 設定の確認
 $ git config user.name
 $ git config user.email
 $ git config core.editor
-$ cat ~/.gitconfig  # global の設定ファイルを確認（local の設定ファイルは <ローカルリポジトリのパス>/.git/config）
+$ cat /path/to/repository/.git/config  # local の設定ファイルを確認（global の設定ファイルは ~/.gitconfig）
 ```
 
 ---
@@ -739,7 +742,7 @@ $ cat ~/.gitconfig  # global の設定ファイルを確認（local の設定フ
 ### リポジトリの作成
 
 ```bash
-$ cd <リポジトリを保管しているディレクトリ> # どこでも OK
+$ cd /path/to/repository  # 自身のプロジェクトのルートディレクトリへ移動
 $ mkdir git-exercise  # ハンズオン用ディレクトリを作成
 $ cd git-exercise
 $ git init  # Git ローカルリポジトリを作成
