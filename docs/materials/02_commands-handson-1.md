@@ -421,7 +421,7 @@ $ git add -p ./src/index.html  # ./src/index.html の一部の変更行をイン
 
 #### イメージ
 
-// TODO: 図を作成する
+![](../../assets/image/Git勉強会_コマンドイメージ図-mv.drawio.png)
 
 ---
 
@@ -466,7 +466,7 @@ $ git rm <変更前のファイル名>
 
 #### イメージ
 
-// TODO: 図を作成する
+![](../../assets/image/Git勉強会_コマンドイメージ図-rm.drawio.png)
 
 ---
 
