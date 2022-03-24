@@ -73,6 +73,8 @@ theme: git
 
 - どんなときに使うか（逆引き用）
 
+---
+
 #### イメージ
 
 - 内部構造を理解するため図で説明
@@ -103,29 +105,23 @@ theme: git
 
 ---
 
-#### イメージ
-
-（省略）
-
----
-
 #### コマンド例
 
 ```bash
 $ git config  # 現在いるリポジトリの Git 設定を表示
-// TODO: Windows の場合の設定ファイルはどこ？
 $ git config --global user.name "<メインアカウントのユーザー名>" # デフォルトのユーザー名を設定
 $ git config --global user.email "<メインアカウントのメールアドレス>"  # デフォルトのメールアドレスを設定
 
-$ cd ~/workspace/<リポジトリのルートディレクトリ>
+$ cd /path/to/local/repository # 特定のプロジェクトのローカルリポジトリへ移動
 $ git config --local user.name "<サブアカウントのユーザー名>" # 特定リポジトリのユーザー名を設定
 $ git config --local user.email "<サブアカウントのメールアドレス>" # 特定リポジトリのメールアドレスを設定
 ```
 
 #### 備考
 
+- `/path/to/local/repository` の箇所はユーザーごとにパスが異なるので、そのままコピペしないように注意
 - `--global` の設定ファイルは `~/.gitconfig` にある
-- `--local` の設定ファイルは `<リポジトリのルートディレクトリ>/.git/config` にある
+- `--local` の設定ファイルは `/path/to/my/codebase/.git/config` にある
 
 #### 参考
 
@@ -157,12 +153,21 @@ $ git config --local user.email "<サブアカウントのメールアドレス>
 #### コマンド例
 
 ```bash
-$ git init
+$ cd /path/to/my/codebase # 特定のプロジェクトのルートディレクトリへ移動
+$ git init  # git でバージョン管理を開始
 ```
+
+#### 備考
+
+- `/path/to/my/codebase` の箇所はユーザーごとにパスが異なるので、そのままコピペしないように注意
+- .git ディレクトリにはリポジトリを Git でバージョン管理するために必要なすべてのファイル (Git リポジトリのスケルトン) が格納されている
+  - 中身の詳細については [.git ディレクトリの中身を見てみる 👀 - Qiita](https://qiita.com/tatane616/items/dbad66179754be57d2e2) を参照
 
 #### 参考
 
 - [git-init – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-init/)
+- [Git リポジトリの取得 – Git コマンドリファレンス（日本語版）](https://git-scm.com/book/ja/v2/Git-%E3%81%AE%E5%9F%BA%E6%9C%AC-Git-%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E5%8F%96%E5%BE%97)
+- [.git ディレクトリの中身を見てみる 👀 - Qiita](https://qiita.com/tatane616/items/dbad66179754be57d2e2)
 
 ---
 
@@ -193,9 +198,9 @@ $ git init
 #### コマンド例
 
 ```bash
-$ git remote add origin <リモートリポジトリのURL>
-$ git remote -v
-$ git remote remove <リモートリポジトリのURL>
+$ git remote add origin <リモートリポジトリのURL> # 指定したリモートリポジトリを origin という名前で管理（関連付け）する
+$ git remote -v # 関連付け設定されているリモートリポジトリとその詳細を一覧表示する
+$ git remote remove <リモートリポジトリのURL> # リモートリポジトリの関連付け設定を削除する
 ```
 
 #### 参考
@@ -264,7 +269,9 @@ $ git clone <リモートリポジトリの URL> -b <ブランチ>
 
 - `-a | --all`: リモートブランチを含んだブランチの一覧を表示
 - `-m | --move`: 現在チェックアウトしているブランチ名を指定したブランチ名で変更
-- `-d | --delete`: 指定したブランチを削除（`-D で強制削除）
+- `-d | --delete`: 指定したブランチを削除（`-D`で強制削除）
+  - 指定したブランチに push していないコミットが残っている場合はエラーとなり削除できない
+  - その場合は push するか、`-D`で強制削除
 
 #### コマンド例
 
@@ -339,12 +346,6 @@ $ git switch -c <ブランチ>  # git checkout -b <ブランチ> と同じ
 
 ---
 
-#### イメージ
-
-（省略）
-
----
-
 #### 主なオプション
 
 - `-s | --short`: 短い形式で表示
@@ -378,7 +379,7 @@ $ git status -s
 
 #### イメージ
 
-![](../../assets/image/Git勉強会_コマンドイメージ図-add.drawio.png)
+## ![](../../assets/image/Git勉強会_コマンドイメージ図-add.drawio.png)
 
 ---
 
@@ -392,6 +393,7 @@ $ git status -s
 $ git add ./src/index.html  # ./src/index.html のみインデックスに追加
 $ git add ./src/  # ./src ディレクトリ以下の全てのファイルをインデックスに追加
 $ git add .  # 変更済の全てのファイルをインデックスに追加
+$ git add *.java  # *（ワイルドカード）で特定の文字列にマッチするファイルをインデックスに追加（この場合は .java ファイル）
 $ git add -p ./src/index.html  # ./src/index.html の一部の変更行をインデックスに追加（インタラクティブモードで選択する）
 ```
 
@@ -432,7 +434,10 @@ $ git mv <変更前のファイル名> <変更後のファイル名>  # ファ�
 - mv コマンドでファイル名を変更しても、その後 git add, git rm をすれば同じ挙動になる
 
 ```bash
+# git mv ではなく mv でファイル名変更をしてしまっても
 $ mv <変更前のファイル名> <変更後のファイル名>
+
+# 以下のコマンドを実行すればファイルが移動したことをインデックスにも反映できる（結果的に git mv と同じ操作になる）
 $ git add <変更後のファイル名>
 $ git rm <変更前のファイル名>
 ```
@@ -586,12 +591,6 @@ $ git push --force-with-lease origin  <ブランチ名> # 強制プッシュ
 - コミット履歴を確認したい
   - 自分のコミットが成功したか確認したい
   - 他の人がこのブランチでどのようなコミットをしてきたのか知りたい
-
----
-
-#### イメージ
-
-（省略）
 
 ---
 
