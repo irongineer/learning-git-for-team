@@ -878,6 +878,8 @@ $ git diff --staged # インデックスとローカルリポジトリの差分�
    1. `Your branch is ahead of 'origin/<ブランチ名>' by 1 commit. nothing to commit, working tree clean` と表示される
 3. 変更履歴を確認
 4. 記録した変更をリモートリポジトリに送信
+5. 状態を確認
+   1. `Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean` と表示される
 
 ---
 
@@ -888,6 +890,7 @@ $ git commit -m "develop を追記"  # 変更をローカルリポジトリに�
 $ git status  # 状態を確認。Your branch is ahead of 'origin/<ブランチ名>' by 1 commit. nothing to commit, working tree clean と表示される
 $ git log # 変更履歴を確認（エディタで vim が開いた場合は `:q` で終了）
 $ git push origin develop  # 記録した変更をリモートリポジトリに送信
+$ git statu  # 状態を確認。Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean と表示される
 ```
 
 ---
