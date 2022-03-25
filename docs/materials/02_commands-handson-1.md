@@ -25,10 +25,10 @@ theme: git
 ---
 
 - [コマンド説明（★ 付きコマンドのみ当日説明します）](#コマンド説明-付きコマンドのみ当日説明します)
-  - [init ★](#init-)
-  - [config ★](#config-)
-  - [remote](#remote)
   - [clone ★](#clone-)
+  - [config ★](#config-)
+  - [init ★](#init-)
+  - [remote](#remote)
   - [branch ★](#branch-)
   - [switch (checkout) ★](#switch-checkout-)
   - [status ★](#status-)
@@ -42,11 +42,10 @@ theme: git
 - [ハンズオン](#ハンズオン)
   - [【参考】ターミナルでよく使うコマンド ①](#参考ターミナルでよく使うコマンド-)
   - [【参考】ターミナルでよく使うコマンド ②](#参考ターミナルでよく使うコマンド--1)
-  - [ローカルリポジトリの作成](#ローカルリポジトリの作成)
-  - [Git の設定](#git-の設定)
-  - [既にリモートリポジトリにあるリポジトリをコピー](#既にリモートリポジトリにあるリポジトリをコピー)
-  - [ブランチの作成・移動・名前変更](#ブランチの作成移動名前変更)
-  - [変更をステージに追加](#変更をステージに追加)
+  - [ハンズオン ①：既にリモートリポジトリにあるリポジトリをコピー](#ハンズオン-既にリモートリポジトリにあるリポジトリをコピー)
+  - [ハンズオン ②：Git の設定](#ハンズオン-git-の設定)
+  - [ハンズオン ③：ブランチの作成・移動・名前変更・削除](#ハンズオン-ブランチの作成移動名前変更削除)
+  - [ハンズオン ④：変更をステージに追加](#ハンズオン-変更をステージに追加)
   - [変更を記録](#変更を記録)
 
 ---
@@ -93,43 +92,46 @@ theme: git
 
 ---
 
-### init ★
+### clone ★
 
 #### 機能 <!-- omit in toc -->
 
-- Git ローカルリポジトリを作成する
-  - `.git` ディレクトリ（フォルダ）が作成される
+- リモートリポジトリの複製をローカルに作成する
 
 #### ユースケース <!-- omit in toc -->
 
-- Git でバージョン管理を始めたい
+- 既に存在するリモートリポジトリ（GitHub/GitLab）のソースコードをローカルに複製したい
 
 ---
 
 #### イメージ <!-- omit in toc -->
 
-![](../../assets/image/Git勉強会_コマンドイメージ図-init.drawio.png)
+![](../../assets/image/Git勉強会_コマンドイメージ図-clone.drawio.png)
 
 ---
+
+#### 主なオプション <!-- omit in toc -->
+
+- `-b | --branch`: 複製したいブランチを指定する
 
 #### コマンド例 <!-- omit in toc -->
 
 ```bash
-$ cd /path/to/repository # 特定のプロジェクトのルートディレクトリへ移動
-$ git init  # git でバージョン管理を開始
+$ git clone <リモートリポジトリの URL>  # リモートリポジトリをローカルに複製
+$ git clone <リモートリポジトリの URL> -b <ブランチ>   # ブランチを指定してリモートリポジトリをローカルに複製
+$ git clone <変更後のディレクトリ名>  # リモートリポジトリをローカルに複製し、ディレクトリ名を変更
+$ git clone .  # 現在いるディレクトリをルートディレクトリとして複製（git clone でディレクトリを作成しない）
 ```
 
 #### 備考 <!-- omit in toc -->
 
-- `/path/to/repository` の箇所はユーザーごとにパスが異なるので、そのままコピペしないように注意
-- .git ディレクトリにはリポジトリを Git でバージョン管理するために必要なすべてのファイル (Git リポジトリのスケルトン) が格納されている
-  - 中身の詳細については [.git ディレクトリの中身を見てみる 👀 - Qiita](https://qiita.com/tatane616/items/dbad66179754be57d2e2) を参照
+- git clone をした場合は git init は不要
+  - 複製して生成されたローカルリポジトリには既に .git ディレクトリが存在する
 
 #### 参考 <!-- omit in toc -->
 
-- [git-init – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-init/)
-- [Git リポジトリの取得 – Git コマンドリファレンス（日本語版）](https://git-scm.com/book/ja/v2/Git-%E3%81%AE%E5%9F%BA%E6%9C%AC-Git-%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E5%8F%96%E5%BE%97)
-- [.git ディレクトリの中身を見てみる 👀 - Qiita](https://qiita.com/tatane616/items/dbad66179754be57d2e2)
+- [git-clone – Git コマンドリファレンス（日本語版）]()
+- [git clone でディレクトリを作らない](https://orfool.com/programing/git-clone-without-dir/)
 
 ---
 
@@ -173,6 +175,48 @@ $ git config --local user.email "<サブアカウントのメールアドレス>
 
 ---
 
+### init ★
+
+#### 機能 <!-- omit in toc -->
+
+- Git ローカルリポジトリを作成する
+  - `.git` ディレクトリ（フォルダ）が作成される
+
+#### ユースケース <!-- omit in toc -->
+
+- Git でバージョン管理を始めたい
+
+---
+
+#### イメージ <!-- omit in toc -->
+
+![](../../assets/image/Git勉強会_コマンドイメージ図-init.drawio.png)
+
+---
+
+#### コマンド例 <!-- omit in toc -->
+
+```bash
+$ cd /path/to/repository # 特定のプロジェクトのルートディレクトリへ移動
+$ git init  # git でバージョン管理を開始
+```
+
+#### 備考 <!-- omit in toc -->
+
+- git clone をした場合は git init は不要
+  - 複製して生成されたローカルリポジトリには既に .git ディレクトリが存在する
+- `/path/to/repository` の箇所はユーザーごとにパスが異なるので、そのままコピペしないように注意
+- .git ディレクトリにはリポジトリを Git でバージョン管理するために必要なすべてのファイル (Git リポジトリのスケルトン) が格納されている
+  - 中身の詳細については [.git ディレクトリの中身を見てみる 👀 - Qiita](https://qiita.com/tatane616/items/dbad66179754be57d2e2) を参照
+
+#### 参考 <!-- omit in toc -->
+
+- [git-init – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-init/)
+- [Git リポジトリの取得 – Git コマンドリファレンス（日本語版）](https://git-scm.com/book/ja/v2/Git-%E3%81%AE%E5%9F%BA%E6%9C%AC-Git-%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E5%8F%96%E5%BE%97)
+- [.git ディレクトリの中身を見てみる 👀 - Qiita](https://qiita.com/tatane616/items/dbad66179754be57d2e2)
+
+---
+
 ### remote
 
 #### 機能 <!-- omit in toc -->
@@ -209,41 +253,6 @@ $ git remote remove <リモートリポジトリのURL> # リモートリポジ�
 
 - [git-remote Documentation](https://git-scm.com/docs/git-remote)
 - [【 git remote 】コマンド（基礎編）――リモートリポジトリを追加、削除する](https://atmarkit.itmedia.co.jp/ait/articles/2005/08/news017.html)
-
----
-
-### clone ★
-
-#### 機能 <!-- omit in toc -->
-
-- リモートリポジトリの複製をローカルに作成する
-
-#### ユースケース <!-- omit in toc -->
-
-- 既に存在するリモートリポジトリ（GitHub/GitLab）のソースコードをローカルに複製したい
-
----
-
-#### イメージ <!-- omit in toc -->
-
-![](../../assets/image/Git勉強会_コマンドイメージ図-clone.drawio.png)
-
----
-
-#### 主なオプション <!-- omit in toc -->
-
-- `-b | --branch`: 複製したいブランチを指定する
-
-#### コマンド例 <!-- omit in toc -->
-
-```bash
-$ git clone <リモートリポジトリの URL>
-$ git clone <リモートリポジトリの URL> -b <ブランチ>
-```
-
-#### 参考 <!-- omit in toc -->
-
-- [git-clone – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-clone/)
 
 ---
 
@@ -730,34 +739,32 @@ $ git diff -- <ファイルパスA> <ファイルパスB> # 別ファイル同�
 
 ---
 
-### ローカルリポジトリの作成
+### ハンズオン ①：既にリモートリポジトリにあるリポジトリをコピー
 
-自身のプロジェクトで Git のローカルリポジトリを作成してみましょう（バージョン管理を始めましょう）
+リモートリポジトリをローカルに複製してみましょう
 （次頁に解答例があります）
 
-1. 自身のプロジェクトのルートディレクトリへ移動（移動済の人は省略）
-2. ハンズオン用ディレクトリを作成（作成済の人は省略）
-3. ハンズオン用ディレクトリへ移動
-4. Git ローカルリポジトリを作成
-5. .git ディレクトリが作成されていることを確認
-6. .git の中身を確認
+1. 自身のプロジェクト置き場（リモートリポジトリを複製する場所）へ移動
+2. リモートリポジトリをローカルに複製
+   1. 事前準備で用意した個人リモートリポジトリがない場合は、以下の本勉強会用のリモートリポジトリを複製してください
+      1. `git@github.com:irongineer/git-exercise.git`
+3. リモートリポジトリがローカルに複製されていることを確認
+4. 複製してきたリポジトリに .git ディレクトリがあることを確認
 
 ---
 
-### ローカルリポジトリの作成（解答例） <!-- omit in toc -->
+### ハンズオン ①：既にリモートリポジトリにあるリポジトリをコピー（解答例） <!-- omit in toc -->
 
 ```bash
-$ cd /path/to/repository  # 自身のプロジェクトのルートディレクトリへ移動
-$ mkdir git-exercise  # ハンズオン用ディレクトリを作成
-$ cd git-exercise # ハンズオン用ディレクトリへ移動
-$ git init  # Git ローカルリポジトリを作成
-$ ls -la  # .git ディレクトリが作成されていることを確認
-$ ls .git # .git の中身を確認
+$ cd workspace # 自身のプロジェクト置き場（リモートリポジトリを複製する場所）へ移動（※ workspace は例です）
+$ git clone git@github.com:irongineer/git-exercise.git  # リモートリポジトリをローカルに複製（※ git-exercise は例です）
+$ ls -a # リモートリポジトリがローカルに複製されていることを確認
+$ ls -a　git-exercise # 複製してきたリポジトリに .git ディレクトリがあることを確認（※ git-exercise は例です）
 ```
 
 ---
 
-### Git の設定
+### ハンズオン ②：Git の設定
 
 自身のプロジェクトで Git のローカル設定を行ってみましょう
 （次頁に解答例があります）
@@ -770,10 +777,10 @@ $ ls .git # .git の中身を確認
 
 ---
 
-### Git の設定（解答例） <!-- omit in toc -->
+### ハンズオン ②：Git の設定（解答例） <!-- omit in toc -->
 
 ```bash
-$ cd /path/to/repository  # ハンズオン用ディレクトリへ移動
+$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
 $ git config --local user.name "<メインアカウントのユーザー名>" # ローカルリポジトリのユーザー名を設定
 $ git config --local user.email "<メインアカウントのメールアドレス>"  # ローカルリポジトリのメールアドレスを設定
 $ git config --local core.editor 'code --wait' # メインエディタを　Visual Studio Code に設定。他のエディタでも OK（vim など）
@@ -782,66 +789,62 @@ $ git config --local core.editor 'code --wait' # メインエディタを　Visu
 $ git config user.name
 $ git config user.email
 $ git config core.editor
-$ cat /path/to/repository/.git/config  # local の設定ファイルを確認（global の設定ファイルは ~/.gitconfig）
+$ cat git-exercise /.git/config  # local の設定ファイルを確認（global の設定ファイルは ~/.gitconfig）
 ```
 
 ---
 
-### 既にリモートリポジトリにあるリポジトリをコピー
+### ハンズオン ③：ブランチの作成・移動・名前変更・削除
 
-リモートリポジトリをローカルに複製してみましょう
+ローカルリポジトリにブランチを作成し、移動や名前変更などを行ってみましょう
 （次頁に解答例があります）
+**なお、ハンズオン ① で本勉強会用のリモートリポジトリを複製している場合は、他の人との重複防止のため、作成するすべてのブランチ名に `-<社員番号>` を付けてください (ex: develop-1234)**
 
 1. ハンズオン用ディレクトリへ移動
-2. リモートリポジトリをローカルに複製
-   1. 自分用の個人リモートリポジトリがない場合は以下のリモートリポジトリを複製してください
-      1. git@github.com:irongineer/git-exercise.git
-3. リモートリポジトリがローカルに複製されていることを確認
+2. develop ブランチを作成
+3. develop ブランチに切り替え
+4. temp ブランチを作成して切り替え
+5. temp ブランチを temp2 ブランチに名前変更
+6. ローカルとリモートリポジトリにあるブランチ一覧を確認（エディタで vim が開いた場合は `:q` で終了
+7. develop ブランチへ切り替え
+8. temp2 ブランチを削除
 
 ---
 
-### 既にリモートリポジトリにあるリポジトリをコピー（解答例） <!-- omit in toc -->
+### ハンズオン ③：ブランチの作成・移動・名前変更・削除（解答例） <!-- omit in toc -->
 
 ```bash
 $ cd git-exercise # ハンズオン用ディレクトリへ移動
-$ git clone git@github.com:irongineer/git-exercise.git  # リモートリポジトリをローカルに複製
-$ ls -a # リモートリポジトリがローカルに複製されていることを確認
+$ git branch develop # develop ブランチを作成
+$ git switch develop # develop ブランチに切り替え
+$ git switch -c temp # temp ブランチを作成して切り替え
+$ git branch -m temp2 # temp ブランチを temp2 ブランチに名前変更
+$ git branch -a # ローカルとリモートリポジトリにあるブランチ一覧を確認（エディタで vim が開いた場合は `:q` で終了
+$ git switch develop # develop ブランチへ切り替え
+$ git branch -d temp2 # temp2 ブランチを削除
 ```
 
 ---
 
-### ブランチの作成・移動・名前変更
-
-```bash
-$ cd git-exercise # ハンズオン用ディレクトリへ移動
-$ git branch main-<社員番号> # main-<社員番号> ブランチを作成
-$ git switch main-<社員番号> # main-<社員番号> ブランチに切り替え
-$ git branch -m develop-<社員番号> # main-<社員番号> ブランチを develop-<社員番号> ブランチに名前変更
-$ git switch -c temp-<社員番号> # temp-<社員番号> ブランチを作成して切り替え
-$ git branch -a # ローカルとリモートリポジトリにあるブランチ一覧を確認
-$ git switch develop-<社員番号> # develop-<社員番号> ブランチへ切り替え
-$ git branch -d temp-<社員番号> # temp-<社員番号> ブランチを削除
-```
+### ハンズオン ④：変更をステージに追加
 
 ---
 
-### 変更をステージに追加
+### ハンズオン ④：変更をステージに追加（解答例） <!-- omit in toc -->
 
 ```bash
 $ cd git-exercise # ハンズオン用ディレクトリへ移動
-$ git switch develop-<社員番号>  # develop-<社員番号> ブランチへ切り替え
+$ git switch develop  # develop ブランチへ切り替え
 $ touch index.html  # index.html ファイルを作成
 $ code git-exercise # Visual Studio Code でリポジトリを開く
 
-（index.html に「develop での変更」と追記）
+（index.html に「<h1>develop での変更</h1>」と追記）
 
-
-$ git status # Changes not staged for commit に modified: git-exercise/index.html がある
+$ git status # 状態を確認。Changes not staged for commit に modified: git-exercise/index.html と表示される
 $ git diff  # ワークツリーとインデックスの差分を比較
 
-$ git add .
-$ git status  # 変更したファイルをインデックスに追加
-# Changes to be committed に modified: git-exercise/index.html がある
+$ git add . # ワークツリーの全ての変更ファイルをインデックスに追加
+$ git status  # 状態を確認。Changes to be committed に modified: git-exercise/index.html と表示される
 $ git diff --staged # インデックスとローカルリポジトリの差分を比較
 ```
 
