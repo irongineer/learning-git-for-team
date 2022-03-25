@@ -46,7 +46,7 @@ theme: git
   - [ハンズオン ②：Git の設定](#ハンズオン-git-の設定)
   - [ハンズオン ③：ブランチの作成・移動・名前変更・削除](#ハンズオン-ブランチの作成移動名前変更削除)
   - [ハンズオン ④：変更をステージに追加](#ハンズオン-変更をステージに追加)
-  - [変更を記録](#変更を記録)
+  - [ハンズオン ⑤：変更を記録してリモートリポジトリへ送信](#ハンズオン-変更を記録してリモートリポジトリへ送信)
 
 ---
 
@@ -789,7 +789,7 @@ $ git config --local core.editor 'code --wait' # メインエディタを　Visu
 $ git config user.name
 $ git config user.email
 $ git config core.editor
-$ cat git-exercise /.git/config  # local の設定ファイルを確認（global の設定ファイルは ~/.gitconfig）
+$ cat git-exercise /.git/config  # local の設定ファイルを確認（global の設定ファイルは ~/.gitconfig。※ git-exercise は例です）
 ```
 
 ---
@@ -805,7 +805,7 @@ $ cat git-exercise /.git/config  # local の設定ファイルを確認（global
 3. develop ブランチに切り替え
 4. temp ブランチを作成して切り替え
 5. temp ブランチを temp2 ブランチに名前変更
-6. ローカルとリモートリポジトリにあるブランチ一覧を確認（エディタで vim が開いた場合は `:q` で終了
+6. ローカルとリモートリポジトリにあるブランチ一覧を確認（エディタで vim が開いた場合は `:q` で終了）
 7. develop ブランチへ切り替え
 8. temp2 ブランチを削除
 
@@ -814,7 +814,7 @@ $ cat git-exercise /.git/config  # local の設定ファイルを確認（global
 ### ハンズオン ③：ブランチの作成・移動・名前変更・削除（解答例） <!-- omit in toc -->
 
 ```bash
-$ cd git-exercise # ハンズオン用ディレクトリへ移動
+$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
 $ git branch develop # develop ブランチを作成
 $ git switch develop # develop ブランチに切り替え
 $ git switch -c temp # temp ブランチを作成して切り替え
@@ -828,35 +828,66 @@ $ git branch -d temp2 # temp2 ブランチを削除
 
 ### ハンズオン ④：変更をステージに追加
 
+ファイルを変更し、ステージに追加してみましょう
+（次頁に解答例があります）
+
+1. ハンズオン用ディレクトリへ移動
+2. develop ブランチへ切り替え
+3. touch index.html
+4. index.html ファイルを作成
+5. Visual Studio Code でリポジトリを開く
+6. index.html に `<h1>develop での変更</h1>` と追記
+7. 状態を確認
+   1. `Changes not staged for commit に modified: <ブランチ名>/index.html` と表示される
+8. ワークツリーとインデックスの差分を比較
+9. ワークツリーの全ての変更ファイルをインデックスに追加
+10. 状態を確認
+    1. `Changes to be committed に modified: <ブランチ名>/index.html` と表示される
+11. インデックスとローカルリポジトリの差分を比較
+
 ---
 
 ### ハンズオン ④：変更をステージに追加（解答例） <!-- omit in toc -->
 
 ```bash
-$ cd git-exercise # ハンズオン用ディレクトリへ移動
+$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
 $ git switch develop  # develop ブランチへ切り替え
 $ touch index.html  # index.html ファイルを作成
-$ code git-exercise # Visual Studio Code でリポジトリを開く
+$ code git-exercise # Visual Studio Code でリポジトリを開く（※ git-exercise は例です）
 
 （index.html に「<h1>develop での変更</h1>」と追記）
 
-$ git status # 状態を確認。Changes not staged for commit に modified: git-exercise/index.html と表示される
-$ git diff  # ワークツリーとインデックスの差分を比較
+$ git status # 状態を確認。Changes not staged for commit に modified: <ブランチ名>/index.html と表示される
+$ git diff  # ワークツリーとインデックスの差分を比較（エディタで vim が開いた場合は `:q` で終了）
 
 $ git add . # ワークツリーの全ての変更ファイルをインデックスに追加
-$ git status  # 状態を確認。Changes to be committed に modified: git-exercise/index.html と表示される
-$ git diff --staged # インデックスとローカルリポジトリの差分を比較
+$ git status  # 状態を確認。Changes to be committed に modified: <ブランチ名>/index.html と表示される
+$ git diff --staged # インデックスとローカルリポジトリの差分を比較（エディタで vim が開いた場合は `:q` で終了）
 ```
 
 ---
 
-### 変更を記録
+### ハンズオン ⑤：変更を記録してリモートリポジトリへ送信
+
+ハンズオン ④ で変更したファイルをローカルリポジトリに記録し、リモートリポジトリに送信してみましょう
+（次頁に解答例があります）
+
+0. （ハンズオン ④ の続きから）
+1. 変更をローカルリポジトリに記録
+2. 状態を確認
+   1. `Your branch is ahead of 'origin/<ブランチ名>' by 1 commit. nothing to commit, working tree clean` と表示される
+3. 変更履歴を確認
+4. 記録した変更をリモートリポジトリに送信
+
+---
+
+### ハンズオン ⑤：変更を記録してリモートリポジトリへ送信（解答例） <!-- omit in toc -->
 
 ```bash
 $ git commit -m "develop を追記"  # 変更をローカルリポジトリに記録
-$ git status  # 状態を確認
-$ git log # 変更履歴を確認
-$ git push origin develop_<社員番号>  # 記録した変更をリモートリポジトリに送信
+$ git status  # 状態を確認。Your branch is ahead of 'origin/<ブランチ名>' by 1 commit. nothing to commit, working tree clean と表示される
+$ git log # 変更履歴を確認（エディタで vim が開いた場合は `:q` で終了）
+$ git push origin develop  # 記録した変更をリモートリポジトリに送信
 ```
 
 ---
