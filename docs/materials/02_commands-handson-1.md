@@ -42,8 +42,8 @@ theme: git
 - [ハンズオン](#ハンズオン)
   - [【参考】ターミナルでよく使うコマンド ①](#参考ターミナルでよく使うコマンド-)
   - [【参考】ターミナルでよく使うコマンド ②](#参考ターミナルでよく使うコマンド--1)
+  - [ローカルリポジトリの作成](#ローカルリポジトリの作成)
   - [Git の設定](#git-の設定)
-  - [リポジトリの作成](#リポジトリの作成)
   - [既にリモートリポジトリにあるリポジトリをコピー](#既にリモートリポジトリにあるリポジトリをコピー)
   - [ブランチの作成・移動・名前変更](#ブランチの作成移動名前変更)
   - [変更をステージに追加](#変更をステージに追加)
@@ -730,20 +730,52 @@ $ git diff -- <ファイルパスA> <ファイルパスB> # 別ファイル同�
 
 ---
 
-// TODO: クイズ形式にする
+### ローカルリポジトリの作成
 
-- 手順だけ 1, 2, ... と書いておく
-- それを考えながら実行してもらう
-- 次のページに解答コマンド例を載せる
+自身のプロジェクトで Git のローカルリポジトリを作成してみましょう（バージョン管理を始めましょう）
+（次頁に解答例があります）
+
+1. 自身のプロジェクトのルートディレクトリへ移動（移動済の人は省略）
+2. ハンズオン用ディレクトリを作成（作成済の人は省略）
+3. ハンズオン用ディレクトリへ移動
+4. Git ローカルリポジトリを作成
+5. .git ディレクトリが作成されていることを確認
+6. .git の中身を確認
+
+---
+
+### ローカルリポジトリの作成（解答例） <!-- omit in toc -->
+
+```bash
+$ cd /path/to/repository  # 自身のプロジェクトのルートディレクトリへ移動
+$ mkdir git-exercise  # ハンズオン用ディレクトリを作成
+$ cd git-exercise # ハンズオン用ディレクトリへ移動
+$ git init  # Git ローカルリポジトリを作成
+$ ls -la  # .git ディレクトリが作成されていることを確認
+$ ls .git # .git の中身を確認
+```
 
 ---
 
 ### Git の設定
 
+自身のプロジェクトで Git のローカル設定を行ってみましょう
+（次頁に解答例があります）
+
+1. 自身のプロジェクトのルートディレクトリへ移動
+2. ローカルリポジトリのユーザー名を設定
+3. ローカルリポジトリのメールアドレスを設定
+4. メインエディタを　 Visual Studio Code に設定。他のエディタでも OK（vim など）
+5. 上記設定を確認
+
+---
+
+### Git の設定（解答例） <!-- omit in toc -->
+
 ```bash
-$ cd /path/to/repository  # 自身のプロジェクトのルートディレクトリへ移動
-$ git config --local user.name "<メインアカウントのユーザー名>" # デフォルトのユーザー名を設定
-$ git config --local user.email "<メインアカウントのメールアドレス>"  # デフォルトのメールアドレスを設定
+$ cd /path/to/repository  # ハンズオン用ディレクトリへ移動
+$ git config --local user.name "<メインアカウントのユーザー名>" # ローカルリポジトリのユーザー名を設定
+$ git config --local user.email "<メインアカウントのメールアドレス>"  # ローカルリポジトリのメールアドレスを設定
 $ git config --local core.editor 'code --wait' # メインエディタを　Visual Studio Code に設定。他のエディタでも OK（vim など）
 
 # 設定の確認
@@ -755,25 +787,25 @@ $ cat /path/to/repository/.git/config  # local の設定ファイルを確認（
 
 ---
 
-### リポジトリの作成
+### 既にリモートリポジトリにあるリポジトリをコピー
 
-```bash
-$ cd /path/to/repository  # 自身のプロジェクトのルートディレクトリへ移動
-$ mkdir git-exercise  # ハンズオン用ディレクトリを作成
-$ cd git-exercise
-$ git init  # Git ローカルリポジトリを作成
-$ ls -la  # .git ディレクトリが作成されていることを確認
-$ ls .git # .git の中身を確認
-```
+リモートリポジトリをローカルに複製してみましょう
+（次頁に解答例があります）
+
+1. ハンズオン用ディレクトリへ移動
+2. リモートリポジトリをローカルに複製
+   1. 自分用の個人リモートリポジトリがない場合は以下のリモートリポジトリを複製してください
+      1. git@github.com:irongineer/git-exercise.git
+3. リモートリポジトリがローカルに複製されていることを確認
 
 ---
 
-### 既にリモートリポジトリにあるリポジトリをコピー
+### 既にリモートリポジトリにあるリポジトリをコピー（解答例） <!-- omit in toc -->
 
 ```bash
-$ cd git-exercise
-$ git clone <リポジトリの URL>
-$ ls -a
+$ cd git-exercise # ハンズオン用ディレクトリへ移動
+$ git clone git@github.com:irongineer/git-exercise.git  # リモートリポジトリをローカルに複製
+$ ls -a # リモートリポジトリがローカルに複製されていることを確認
 ```
 
 ---
@@ -781,14 +813,14 @@ $ ls -a
 ### ブランチの作成・移動・名前変更
 
 ```bash
-$ cd git-exercise
-$ git branch main-<社員番号>
-$ git switch main-<社員番号>
-$ git branch -m develop-<社員番号>
-$ git switch -c temp-<社員番号>
-$ git branch -a
-$ git switch develop-<社員番号>
-$ git branch -d temp-<社員番号>
+$ cd git-exercise # ハンズオン用ディレクトリへ移動
+$ git branch main-<社員番号> # main-<社員番号> ブランチを作成
+$ git switch main-<社員番号> # main-<社員番号> ブランチに切り替え
+$ git branch -m develop-<社員番号> # main-<社員番号> ブランチを develop-<社員番号> ブランチに名前変更
+$ git switch -c temp-<社員番号> # temp-<社員番号> ブランチを作成して切り替え
+$ git branch -a # ローカルとリモートリポジトリにあるブランチ一覧を確認
+$ git switch develop-<社員番号> # develop-<社員番号> ブランチへ切り替え
+$ git branch -d temp-<社員番号> # temp-<社員番号> ブランチを削除
 ```
 
 ---
@@ -796,21 +828,21 @@ $ git branch -d temp-<社員番号>
 ### 変更をステージに追加
 
 ```bash
-$ cd git-exercise # 既に該当ディレクトリにいれば省略
-$ git switch develop-<社員番号>  # 既に該当ブランチにいれば省略
+$ cd git-exercise # ハンズオン用ディレクトリへ移動
+$ git switch develop-<社員番号>  # develop-<社員番号> ブランチへ切り替え
 $ touch index.html  # index.html ファイルを作成
 $ code git-exercise # Visual Studio Code でリポジトリを開く
 
 （index.html に「develop での変更」と追記）
 
-# Changes not staged for commit に modified: git-exercise/index.html がある
-$ git status
-$ git diff
+
+$ git status # Changes not staged for commit に modified: git-exercise/index.html がある
+$ git diff  # ワークツリーとインデックスの差分を比較
 
 $ git add .
+$ git status  # 変更したファイルをインデックスに追加
 # Changes to be committed に modified: git-exercise/index.html がある
-$ git status
-$ git diff --staged
+$ git diff --staged # インデックスとローカルリポジトリの差分を比較
 ```
 
 ---
@@ -818,10 +850,10 @@ $ git diff --staged
 ### 変更を記録
 
 ```bash
-$ git commit -m "develop を追記"
-$ git status  #
-$ git log
-$ git push origin develop_<社員番号>
+$ git commit -m "develop を追記"  # 変更をローカルリポジトリに記録
+$ git status  # 状態を確認
+$ git log # 変更履歴を確認
+$ git push origin develop_<社員番号>  # 記録した変更をリモートリポジトリに送信
 ```
 
 ---
