@@ -24,7 +24,7 @@ theme: git
 
 ---
 
-- [コマンド説明](#コマンド説明)
+- [コマンド説明（★ 付きコマンドのみ当日説明します）](#コマンド説明-付きコマンドのみ当日説明します)
   - [init ★](#init-)
   - [config ★](#config-)
   - [remote](#remote)
@@ -33,10 +33,10 @@ theme: git
   - [switch (checkout) ★](#switch-checkout-)
   - [status ★](#status-)
   - [add ★](#add-)
-  - [mv](#mv)
-  - [rm](#rm)
   - [commit ★](#commit-)
   - [push ★](#push-)
+  - [mv](#mv)
+  - [rm](#rm)
   - [log ★](#log-)
   - [diff](#diff)
 - [ハンズオン](#ハンズオン)
@@ -51,7 +51,7 @@ theme: git
 
 ---
 
-## コマンド説明
+## コマンド説明（★ 付きコマンドのみ当日説明します）
 
 ---
 
@@ -85,7 +85,7 @@ theme: git
 
 #### 備考 <!-- omit in toc -->
 
-- 注意点等
+- 注意点等（あれば）
 
 #### 参考 <!-- omit in toc -->
 
@@ -325,7 +325,7 @@ $ git switch -c <ブランチ>  # <ブランチ>  で指定したブランチを
 #### 備考 <!-- omit in toc -->
 
 - switch は Git バージョン 2.23.0 でリリース (2019/08/16)
-- checkout は複数の役割を兼ね備えてしまっているため、こちらの方が理解しやすい
+- checkout は複数の役割を兼ね備えてしまっているため、こちらの方が直感的に理解しやすい
 
 #### 参考 <!-- omit in toc -->
 
@@ -400,106 +400,16 @@ $ git add *.java  # *（ワイルドカード）で特定の文字列にマッ�
 $ git add -p ./src/index.html  # ./src/index.html の一部の変更行をインデックスに追加（インタラクティブモードで選択する）
 ```
 
+#### 備考 <!-- omit in toc -->
+
+- `add -p` による部分ステージングは Visual Studio Code などのエディタ機能を使ってやるのがおすすめ
+
 #### 参考 <!-- omit in toc -->
 
 - [git-add – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-add/)
 - [【 git add 】コマンド――変更内容をインデックスに追加してコミット対象にする](https://atmarkit.itmedia.co.jp/ait/articles/2003/13/news031.html)
 - [git add -p 使ってますか？](https://qiita.com/cotton_desu/items/bf08ac57d59b37dd5188)
-
----
-
-### mv
-
-#### 機能 <!-- omit in toc -->
-
-- ファイルやディレクトリの名前を変更し、インデックスに反映する
-
-#### ユースケース <!-- omit in toc -->
-
-- Git 管理しているファイルの名前を変更したい
-
----
-
-#### イメージ <!-- omit in toc -->
-
-![](../../assets/image/Git勉強会_コマンドイメージ図-mv.drawio.png)
-
----
-
-#### コマンド例 <!-- omit in toc -->
-
-```bash
-$ git mv <変更前のファイル名> <変更後のファイル名>  # ファイル名を変更し、インデックスに反映
-```
-
-#### 備考 <!-- omit in toc -->
-
-- mv コマンドでファイル名を変更しても、その後 git add, git rm をすれば同じ挙動になる
-
-```bash
-# git mv ではなく mv でファイル名変更をしてしまっても
-$ mv <変更前のファイル名> <変更後のファイル名>
-
-# 以下のコマンドを実行すればファイル移動したことをインデックスにも反映できる（結果的に git mv と同じ操作になる）
-$ git add <変更後のファイル名>
-$ git rm <変更前のファイル名>
-```
-
-#### 参考 <!-- omit in toc -->
-
-- [git-mv – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-mv/)
-- [Git で管理しているファイルのリネームを git mv でなく mv してしまったときにどうなるのか調べてみた - Qiita](https://qiita.com/zonkyy/items/7705844c5e255b8fa3ae)
-
----
-
-### rm
-
-#### 機能 <!-- omit in toc -->
-
-- ファイルを削除し、インデックスに反映する
-
-#### ユースケース <!-- omit in toc -->
-
-- Git 管理しているファイルを削除したい
-- `.gitignore` ファイルを編集したけど反映されない
-
----
-
-#### イメージ <!-- omit in toc -->
-
-![](../../assets/image/Git勉強会_コマンドイメージ図-rm.drawio.png)
-
----
-
-#### 主なオプション <!-- omit in toc -->
-
-- `-r`: 先頭のディレクトリが指定されている場合、ディレクトリ以下にあるファイルも再帰的に削除
-- `--cached`: インデックスからのみ削除（ワークツリーにあるファイル自体は削除されず、Git 管理のみ止める）
-
-#### コマンド例 <!-- omit in toc -->
-
-```bash
-$ git rm <ファイル名> # 指定したファイルを削除（Git 管理も止める）
-$ git rm -r --cached .  # ファイル全体キャッシュ削除
-```
-
-#### 備考 <!-- omit in toc -->
-
-- rm コマンドでファイル名を変更しても、その後 git add をすれば同じ挙動になる
-
-```bash
-# git rm ではなく rm でファイル削除をしてしまっても
-$ rm <ファイル名>
-
-# 以下のコマンドを実行すればファイル削除したことをインデックスにも反映できる（結果的に git rm と同じ操作になる）
-$ git add <ファイル名>
-```
-
-#### 参考 <!-- omit in toc -->
-
-- [git-rm – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-rm/)
-- [【Git 初心者入門】いちいちステージングエリアに add しなくても削除できる git rm](https://hirocorpblog.com/git-rm/)
-- [.gitignore に記載したのに反映されない件 - Qiita](https://qiita.com/fuwamaki/items/3ed021163e50beab7154)
+- [VSCode で git add -p を快適に行う](https://qiita.com/shotana/items/3690d1c913fc0d8fdb4d)
 
 ---
 
@@ -566,7 +476,7 @@ $ git commit --amend -m "<修正後のメッセージ>"
 #### 主なオプション <!-- omit in toc -->
 
 - `-u | --set-upstream`: 上流ブランチを設定する
-- `-f | --force`: プッシュを強制する **（非推奨）**
+- `-f | --force`: プッシュを強制する **（できるだけ使わない！）**
 - `--force-with-lease`: プッシュを強制する **（リモートと比較してローカルが最新のときだけ成功する）**
 
 #### コマンド例 <!-- omit in toc -->
@@ -574,13 +484,13 @@ $ git commit --amend -m "<修正後のメッセージ>"
 ```bash
 $ git push -u origin <ブランチ名>  # 上流ブランチを設定
 $ git push origin <ブランチ名>  # 上流ブランチが設定されている状態なら git push でも可
-$ git push --force-with-lease origin  <ブランチ名> # 強制プッシュ
+$ git push --force-with-lease origin <ブランチ名> # 強制プッシュ
 ```
 
 #### 備考 <!-- omit in toc -->
 
 - 強制プッシュは過去のコミットを上書きする高リスクコマンド。極力使わない
-- 強制プッシュが発生しない運用にする。設定で保護する。どうしてもプッシュしないといけない場合はチームメンバーに確認したうえで `--force-with-lease` で強制プッシュする
+- 強制プッシュが極力発生しない運用にする。設定で保護する。どうしてもプッシュしないといけない場合はチームメンバーに確認したうえで `--force-with-lease` で強制プッシュする
 
 #### 参考 <!-- omit in toc -->
 
@@ -588,6 +498,101 @@ $ git push --force-with-lease origin  <ブランチ名> # 強制プッシュ
 - [git push コマンドの使い方と、主要オプションまとめ](https://www-creators.com/archives/1472)
 - [Git 用語：上流ブランチとは？](https://www-creators.com/archives/4931)
 - [git push -f をやめて --force-with-lease を使おう - Qiita](https://qiita.com/wMETAw/items/5f47dcc7cf57af8e449f)
+
+---
+
+### mv
+
+#### 機能 <!-- omit in toc -->
+
+- ファイルやディレクトリの名前を変更し、インデックスに反映する (move)
+
+#### ユースケース <!-- omit in toc -->
+
+- Git 管理しているファイルの名前を変更したい
+
+---
+
+#### イメージ <!-- omit in toc -->
+
+![](../../assets/image/Git勉強会_コマンドイメージ図-mv.drawio.png)
+
+---
+
+#### コマンド例 <!-- omit in toc -->
+
+```bash
+$ git mv <変更前のファイル名> <変更後のファイル名>  # ファイル名を変更し、インデックスに反映
+```
+
+#### 備考 <!-- omit in toc -->
+
+- mv コマンドでファイル名を変更しても、その後 git add, git rm をすれば同じ挙動になる
+
+```bash
+# git mv ではなく mv でファイル名変更をしてしまっても
+$ mv <変更前のファイル名> <変更後のファイル名>
+
+# 以下のコマンドを実行すればファイル移動したことをインデックスにも反映できる（結果的に git mv と同じ操作になる）
+$ git add <変更後のファイル名>
+$ git rm <変更前のファイル名>
+```
+
+#### 参考 <!-- omit in toc -->
+
+- [git-mv – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-mv/)
+- [Git で管理しているファイルのリネームを git mv でなく mv してしまったときにどうなるのか調べてみた - Qiita](https://qiita.com/zonkyy/items/7705844c5e255b8fa3ae)
+
+---
+
+### rm
+
+#### 機能 <!-- omit in toc -->
+
+- ファイルを削除し、インデックスに反映する (remove)
+
+#### ユースケース <!-- omit in toc -->
+
+- Git 管理しているファイルを削除したい
+- `.gitignore` ファイルを編集したけど反映されない
+
+---
+
+#### イメージ <!-- omit in toc -->
+
+![](../../assets/image/Git勉強会_コマンドイメージ図-rm.drawio.png)
+
+---
+
+#### 主なオプション <!-- omit in toc -->
+
+- `-r`: 先頭のディレクトリが指定されている場合、ディレクトリ以下にあるファイルも再帰的に削除
+- `--cached`: インデックスからのみ削除（ワークツリーにあるファイル自体は削除されず、Git 管理のみ止める）
+
+#### コマンド例 <!-- omit in toc -->
+
+```bash
+$ git rm <ファイル名> # 指定したファイルを削除（Git 管理も止める）
+$ git rm -r --cached .  # ファイル全体キャッシュ削除
+```
+
+#### 備考 <!-- omit in toc -->
+
+- rm コマンドでファイル名を変更しても、その後 git add をすれば同じ挙動になる
+
+```bash
+# git rm ではなく rm でファイル削除をしてしまっても
+$ rm <ファイル名>
+
+# 以下のコマンドを実行すればファイル削除したことをインデックスにも反映できる（結果的に git rm と同じ操作になる）
+$ git add <ファイル名>
+```
+
+#### 参考 <!-- omit in toc -->
+
+- [git-rm – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-rm/)
+- [【Git 初心者入門】いちいちステージングエリアに add しなくても削除できる git rm](https://hirocorpblog.com/git-rm/)
+- [.gitignore に記載したのに反映されない件 - Qiita](https://qiita.com/fuwamaki/items/3ed021163e50beab7154)
 
 ---
 
