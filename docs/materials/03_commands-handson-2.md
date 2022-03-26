@@ -13,11 +13,49 @@ theme: git
 
 ---
 
-// TODO: 前回までのまとめ
+### ここまでのまとめ：リポジトリの構成（1 日目）
+
+![width:1100](../../assets/image/Git勉強会1日目_Git基礎概念_リポジトリの構成.png)
+
+---
+
+### ここまでのまとめ：ブランチ・HEAD の実態（1 日目）
+
+![width:1100](../../assets/image/Git勉強会1日目_Git基礎概念_ブランチ・HEADとは.png)
+
+---
+
+### ここまでのまとめ：Git コマンド 〜個人開発編〜（2 日目）
+
+- [clone ★](#clone-)
+- [config ★](#config-)
+- [init](#init)
+- [remote](#remote)
+- [branch ★](#branch-)
+- [switch (checkout) ★](#switch-checkout-)
+- [status ★](#status-)
+- [add ★](#add-)
+- [commit ★](#commit-)
+- [push ★](#push-)
+- [mv](#mv)
+- [rm](#rm)
+- [log ★](#log-)
+- [diff](#diff)
+
+---
 
 // TODO: クイズ
 
-// TODO: 今日のゴール
+---
+
+## 本日のゴール <!-- omit in toc -->
+
+### 頭の中に「こんなときはこうする」というインデックスをぼんやりと作ること <!-- omit in toc -->
+
+- Git の各サブコマンドの存在を知ること
+- 各サブコマンドのユースケースを知り、Git で躓いたときに本資料を見返そうと思い付けること
+
+**→ この資料は辞書として使っていってほしいので、完全に理解しようとしないで OK です！**
 
 ---
 
@@ -107,19 +145,23 @@ $ git merge develop
 
 ### 復習：origin とリモート追跡ブランチ（１日目より）
 
-// TODO: 図を貼る
-
-#### origin develop <!-- omit in toc -->
-
-- origin という名前で管理しているリモートリポジトリの develop ブランチ
-
-#### origin/develop <!-- omit in toc -->
-
-- リモートリポジトリ origin develop を追跡する、ローカルリポジトリ内にあるリモート追跡ブランチ
+![width:1100](../../assets/image/Git勉強会1日目_Git基礎概念_リモート追跡ブランチと上流ブランチについて.png)
 
 ---
 
-// TODO: 一日目の fetch と pull の違いの頁
+#### origin develop <!-- omit in toc -->
+
+- **origin という名前で管理しているリモートリポジトリの develop ブランチ**
+
+#### origin/develop <!-- omit in toc -->
+
+- **リモートリポジトリ origin develop を追跡する、ローカルリポジトリ内にあるリモート追跡ブランチ**
+
+---
+
+### 復習：pull と fetch + merge の違い（１日目より）
+
+![width:1100](../../assets/image/Git勉強会1日目_Git基礎概念_リモート追跡ブランチの役割.png)
 
 ---
 
@@ -140,6 +182,8 @@ $ git merge develop
 ---
 
 #### イメージ <!-- omit in toc -->
+
+![width:1000](../../assets/image/Git勉強会_コマンドイメージ図-pull.drawio.png)
 
 ---
 
@@ -182,6 +226,8 @@ $ git pull -r origin <ブランチ名> # リモートリポジトリの内容を
 
 #### イメージ <!-- omit in toc -->
 
+![width:1000](../../assets/image/Git勉強会_コマンドイメージ図-fetch.drawio.png)
+
 ---
 
 #### 主なオプション <!-- omit in toc -->
@@ -216,7 +262,15 @@ $ git fetch # リモートリポジトリの内容をローカルのリモート
 
 ---
 
-#### イメージ <!-- omit in toc -->
+#### イメージ （リモート追跡ブランチをマージ） <!-- omit in toc -->
+
+![width:1000](../../assets/image/Git勉強会_コマンドイメージ図-merge.drawio.png)
+
+---
+
+#### イメージ （ブランチをマージ） <!-- omit in toc -->
+
+![width:900](<../../assets/image/Git勉強会_コマンドイメージ図-merge%20(branch).drawio.png>)
 
 ---
 
@@ -257,6 +311,8 @@ $ git merge <マージ元のブランチ名>
 ---
 
 #### イメージ <!-- omit in toc -->
+
+![width:900](../../assets/image/Git勉強会_コマンドイメージ図-rebase.drawio.png)
 
 ---
 
@@ -303,6 +359,8 @@ $ git rebase -i HEAD~4  # 最新から 4 つ分のコミットを修正・統合
 
 #### イメージ <!-- omit in toc -->
 
+![width:1000](../../assets/image/Git勉強会_コマンドイメージ図-stash.drawio.png)
+
 ---
 
 #### 主なオプション <!-- omit in toc -->
@@ -342,6 +400,8 @@ $ git stash drop  stash@{N} -p # 直前からN番目に退避していたデー�
 ---
 
 #### イメージ <!-- omit in toc -->
+
+![width:1000](../../assets/image/Git勉強会_コマンドイメージ図-restore.drawio.png)
 
 ---
 
@@ -389,6 +449,8 @@ git restore --source HEAD~2 .  # 対象ファイル全体を2つ前のコミッ�
 
 #### イメージ <!-- omit in toc -->
 
+![width:900](../../assets/image/Git勉強会_コマンドイメージ図-reset.drawio.png)
+
 ---
 
 #### 主なオプション <!-- omit in toc -->
@@ -430,6 +492,8 @@ $ git reset --hard ORIG_HEAD  # 直前の reset を取り消す（最新の状�
 
 #### イメージ <!-- omit in toc -->
 
+![width:900](../../assets/image/Git勉強会_コマンドイメージ図-revert.drawio.png)
+
 ---
 
 #### 主なオプション <!-- omit in toc -->
@@ -469,6 +533,8 @@ $ git revert <コミットID A>..<コミットID B>  # A から B の範囲で�
 
 #### イメージ <!-- omit in toc -->
 
+![width:900](../../assets/image/Git勉強会_コマンドイメージ図-cherry-pick.drawio.png)
+
 ---
 
 #### 主なオプション <!-- omit in toc -->
@@ -503,10 +569,6 @@ $ git cherry-pick <コミットID A>..<コミットID B>  # AからBの範囲の
 #### ユースケース <!-- omit in toc -->
 
 - この行は誰が変更したのか調べたい
-
----
-
-#### イメージ <!-- omit in toc -->
 
 ---
 
@@ -548,6 +610,8 @@ $ git blame -L 40,+10 <ファイル名> # 40行目から10行分の最終コミ�
 
 #### イメージ <!-- omit in toc -->
 
+![width:1000](../../assets/image/Git勉強会_コマンドイメージ図-tag.drawio.png)
+
 ---
 
 #### 主なオプション <!-- omit in toc -->
@@ -586,10 +650,6 @@ $ git tag -l  # タグを一覧表示する
 
 ---
 
-#### イメージ <!-- omit in toc -->
-
----
-
 #### 主なオプション <!-- omit in toc -->
 
 - `--date=default`: 操作日時を絶対時刻で表示
@@ -614,3 +674,16 @@ $ git reset HEAD@{1} --hard # reflog で元に戻したいコミットを指定�
 ## ハンズオン
 
 // TODO: コンテンツ作成
+
+---
+
+---
+
+## 本日のゴール（再掲） <!-- omit in toc -->
+
+### 頭の中に「こんなときはこうする」というインデックスをぼんやりと作ること <!-- omit in toc -->
+
+- Git の各サブコマンドの存在を知ること
+- 各サブコマンドのユースケースを知り、Git で躓いたときに本資料を見返そうと思い付けること
+
+**→ この資料は辞書として使っていってほしいので、完全に理解しようとしないで OK です！**
