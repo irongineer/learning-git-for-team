@@ -27,7 +27,7 @@ theme: git
 - [コマンド説明（★ 付きコマンドのみ当日説明します）](#コマンド説明-付きコマンドのみ当日説明します)
   - [clone ★](#clone-)
   - [config ★](#config-)
-  - [init ★](#init-)
+  - [init](#init)
   - [remote](#remote)
   - [branch ★](#branch-)
   - [switch (checkout) ★](#switch-checkout-)
@@ -175,7 +175,7 @@ $ git config --local user.email "<サブアカウントのメールアドレス>
 
 ---
 
-### init ★
+### init
 
 #### 機能 <!-- omit in toc -->
 
