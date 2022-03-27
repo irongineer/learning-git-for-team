@@ -86,6 +86,35 @@ $ git commit --amend -m "修正後のメッセージ"
 
 ---
 
+- [クイズ](#クイズ)
+- [復習&予習タイム　〜今日のコマンドをより理解するために〜](#復習予習タイム今日のコマンドをより理解するために)
+  - [クイズ：origin develop と origin/develop の違い](#クイズorigin-develop-と-origindevelop-の違い)
+  - [復習：origin（リモートリポジトリ）と origin/develop（リモート追跡ブランチ）](#復習originリモートリポジトリと-origindevelopリモート追跡ブランチ)
+  - [復習：pull と fetch + merge の違い](#復習pull-と-fetch--merge-の違い)
+  - [ブランチとは](#ブランチとは)
+  - [マージとは](#マージとは)
+  - [手を動かしてイメージを掴んでみよう （Learn Git Branching にチャレンジ）](#手を動かしてイメージを掴んでみよう-learn-git-branching-にチャレンジ)
+- [コマンド説明（★ 付きコマンドのみ当日説明します）](#コマンド説明-付きコマンドのみ当日説明します)
+  - [pull ★](#pull-)
+  - [fetch ★](#fetch-)
+  - [merge ★](#merge-)
+  - [rebase ★](#rebase-)
+  - [コラム：merge と rebase の違い](#コラムmerge-と-rebase-の違い)
+  - [コラム：merge と rebase はどっちがいい？](#コラムmerge-と-rebase-はどっちがいい)
+  - [コラム：Fast-forward merge と Non Fast-forward merge](#コラムfast-forward-merge-と-non-fast-forward-merge)
+  - [stash ★](#stash-)
+  - [restore (checkout)](#restore-checkout)
+  - [reset ★](#reset-)
+  - [revert ★](#revert-)
+  - [cherry-pick ★](#cherry-pick-)
+  - [blame](#blame)
+  - [tag](#tag)
+  - [reflog](#reflog)
+- [ハンズオン](#ハンズオン)
+  - [ハンズオン ⑥：リモートリポジトリの内容を取得し、現在のブランチに取り込む](#ハンズオン-リモートリポジトリの内容を取得し現在のブランチに取り込む)
+
+---
+
 ## 3 日目アジェンダ（今日はこっち） <!-- omit in toc -->
 
 - Git 基本コマンド ② 〜チーム開発編〜
@@ -104,10 +133,12 @@ $ git commit --amend -m "修正後のメッセージ"
 
 ---
 
-## 復習タイム　〜今日のコマンドをより理解するために〜
+## 復習&予習タイム　〜今日のコマンドをより理解するために〜
 
 - origin develop と origin/develop の違い
 - pull と fetch + merge の違い
+- ブランチとは
+-
 
 #### 参考記事： <!-- omit in toc -->
 
@@ -119,26 +150,23 @@ $ git commit --amend -m "修正後のメッセージ"
 
 ### クイズ：origin develop と origin/develop の違い
 
-以下で指定している対象ブランチ、何が違うか分かりますか？
+以下のコマンドで指定している対象ブランチ、何が違うか分かりますか？
 
-#### 1. fetch + merge で指定する対象ブランチ <!-- omit in toc -->
+#### ケース 1. fetch + merge で指定する対象ブランチ <!-- omit in toc -->
 
 ```bash
-$ git fetch origin develop
+$ git fetch origin develop  # fetch では origin develop を指定してるけど
+$ git merge origin/develop  # merge では origin/develop を指定している・・・？
+```
+
+#### ケース 2. merge で指定する対象ブランチ <!-- omit in toc -->
+
+```bash
+$ git merge origin/develop  # このコマンドと
 ```
 
 ```bash
-$ git merge origin/develop
-```
-
-#### 2. merge で指定する対象ブランチ <!-- omit in toc -->
-
-```bash
-$ git merge origin/develop
-```
-
-```bash
-$ git merge develop
+$ git merge develop # このコマンドの意味の違いは・・・？
 ```
 
 **違い分かりますか？**
@@ -150,6 +178,8 @@ $ git merge develop
 ![width:1100](../../assets/image/Git勉強会1日目_Git基礎概念_originとは（確認）.png)
 
 ---
+
+### クイズ：origin develop と origin/develop の違い（解答） <!-- omit in toc -->
 
 #### origin develop <!-- omit in toc -->
 
@@ -167,7 +197,44 @@ $ git merge develop
 
 ---
 
-// TODO: Fast-forward merge と Auto merge の違いについて（不要？）
+### ブランチとは
+
+- コミット履歴を分岐する機能。1 つのプロジェクトからブランチを分岐させることにより、プロジェクト本体に影響を与えずに複数機能を安全に並行開発することが可能となる
+
+#### ブランチの実態 <!-- omit in toc -->
+
+- 「コミットを指すポインタ」のこと。ただ単に特定のコミット ID を指差しているだけ
+
+![](../../assets/image/Git勉強会_ブランチのイメージ.png)
+
+---
+
+### マージとは
+
+- 分岐したコミット履歴を統合する機能
+
+#### マージの種類 <!-- omit in toc -->
+
+統合の手段には merge と rebase がある（後述）
+
+![](../../assets/image/Git勉強会_コマンドイメージ図-merge_vs_rebase.drawio.png)
+
+---
+
+### 手を動かしてイメージを掴んでみよう （Learn Git Branching にチャレンジ）
+
+ブランチの枝分かれ・統合やコミットの動きをイメージするため、以下をみんなでやってみましょう！
+
+- [Learn Git Branching](https://learngitbranching.js.org/?locale=ja)
+  - 「1: Git のコミット」の 1~4 までみんなでやりましょう
+
+ここでは、下記の種類の git コマンドを学ぶことができます。
+
+- commit
+- branch
+- checkout (switch)
+- merge
+- rebase
 
 ---
 
@@ -175,7 +242,7 @@ $ git merge develop
 
 ---
 
-### pull <!-- omit in toc -->
+### pull ★
 
 #### 機能 <!-- omit in toc -->
 
@@ -216,7 +283,7 @@ $ git pull -r origin <ブランチ名> # リモートリポジトリの内容を
 
 ---
 
-### fetch
+### fetch ★
 
 #### 機能 <!-- omit in toc -->
 
@@ -257,7 +324,7 @@ $ git fetch # リモートリポジトリの内容をローカルのリモート
 
 ---
 
-### merge
+### merge ★
 
 #### 機能 <!-- omit in toc -->
 
@@ -265,8 +332,8 @@ $ git fetch # リモートリポジトリの内容をローカルのリモート
 
 #### ユースケース <!-- omit in toc -->
 
-- fetch した内容をワークツリーに反映したい（ブランチをマージしたという記録をコミット履歴に残したい）
-- 2 つのブランチを 1 つに統合したい
+- 2 つのブランチを 1 つに統合したい。どのブランチでどんな変更があったかという記録はコミット履歴に残したい
+- fetch した内容をワークツリーに反映したい。どのブランチでどんな変更があったかという記録はコミット履歴に残したい
 - マージ時にコンフリクトしたので、競合を解決したい
 
 ---
@@ -285,25 +352,27 @@ $ git fetch # リモートリポジトリの内容をローカルのリモート
 
 #### 主なオプション <!-- omit in toc -->
 
-- `--no-ff`: fast-forward であっても必ずマージコミットを作成
+- `--no-ff`: fast-forward merge が発生する条件であっても必ずマージコミットを作成
 - `--continue`: コンフリクト解決後、マージを続行
 - `--abort`: コンフリクト解決を中止し、マージ前の状態に再構築
 
 #### コマンド例 <!-- omit in toc -->
 
 ```bash
-$ git switch <マージ先のブランチ名>
-$ git merge <マージ元のブランチ名>
+$ git switch <マージ先のブランチ名> # マージ先のブランチに移動
+$ git merge <マージ元のブランチ名>  # 指定したブランチを現在いるブランチに取り込み
+$ git merge --no-ff <マージ元のブランチ名>  # fast-forward merge が発生する条件であっても必ずマージコミットを作成
 ```
 
 #### 参考 <!-- omit in toc -->
 
 - [git-merge – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-merge/)
 - [git pull と git pull –rebase の違いって？図を交えて説明します！](https://kray.jp/blog/git-pull-rebase/)
+- [git の merge --no-ff のススメ](https://qiita.com/nog/items/c79469afbf3e632f10a1)
 
 ---
 
-### rebase
+### rebase ★
 
 #### 機能 <!-- omit in toc -->
 
@@ -312,10 +381,10 @@ $ git merge <マージ元のブランチ名>
 
 #### ユースケース <!-- omit in toc -->
 
-- 2 つのブランチを 1 つに統合したいが、コミットログはきれいに（一直線に）保ちたい（マージコミットを作りたくない）
-- fetch した内容をワークツリーに反映したいが、コミットログはきれいに（一直線に）保ちたい
+- 2 つのブランチを 1 つに統合したい。コミットログはきれいに（一直線に）保ちたい（マージコミットを作りたくない）
+- fetch した内容をワークツリーに反映したい。コミットログはきれいに（一直線に）保ちたい
 - リベース時にコンフリクトしたので、競合を解決したい
-- 複数のコミットを編集したい
+- 過去のコミットを編集したい
   - 複数のコミットをひとつにまとめたい
   - 2 つ以上前のコミットを修正したい
 
@@ -352,6 +421,17 @@ $ git rebase -i HEAD~4  # 最新から 4 つ分のコミットを修正・統合
 
 ---
 
+### コラム：merge と rebase の違い
+
+![](../../assets/image/Git勉強会_コマンドイメージ図-merge_vs_rebase.drawio.png)
+
+#### イメージ <!-- omit in toc -->
+
+- merge: 現在のブランチの上に他のブランチの内容を取り込む
+- rebase: 取り込みたいブランチの上に今のブランチの内容を乗せる
+
+---
+
 ### コラム：merge と rebase はどっちがいい？
 
 **A. チームの運用方針次第。あなたはどっち？**
@@ -361,17 +441,56 @@ $ git rebase -i HEAD~4  # 最新から 4 つ分のコミットを修正・統合
   | **メリット**   | - どのブランチからどんなコミットを取り込んだのか履歴を追える（merge no-ff を強制する運用の場合） <br> - PR レビューの文脈が残る（// TODO: スカッシュ時はどうか確認） | - 履歴を一直線に保つことができる                                                                                                                                                                                                                                            |
   | **デメリット** | - マージコミットがあると履歴が見づらい <br> (`git log --no-merges` でマージコミットを除いて履歴表示すれば解決？)                                                     | - リモートに push 済の変更を rebase した場合は force-push が必須 <br> - コミッター・コミット ID が変わってしまう <br> - コンフリクトの解決が煩雑（コミットを 1 つずつ適用し、それぞれで解決が必要なため。小さい単位でコンフリクト解決する方が分かりやすいという意見もある） |
 
-#### 参考
+#### 参考 <!-- omit in toc -->
 
 - [あなたは merge 派？rebase 派？綺麗な Git ログで実感したメリット](https://style.biglobe.co.jp/entry/2022/03/22/090000)
   - [上記記事に対する @kazuho さんのコメント](https://twitter.com/kazuho/status/1506216632103841792?s=21)
-- [git の merge --no-ff のススメ](https://qiita.com/nog/items/c79469afbf3e632f10a1)
+- [Git の rebase と merge の挙動の違いを GitHub を用いて検証してみた - Qiita](https://qiita.com/minakawa-daiki/items/c8a939b5d529ee39eac1)
 - [なぜ git rebase をやめるべきか](https://frasco.io/why-you-should-stop-using-git-rebase-535fa30d7e25)
 - [【Git】将来の自分を救うのは、rebase だと僕は思うよ](https://blog.dalt.me/2883)
 
 ---
 
-### stash
+### コラム：Fast-forward merge と Non Fast-forward merge
+
+#### Fast-forward merge <!-- omit in toc -->
+
+- 早送りマージ
+- **「マージされるブランチがマージの基点にいるとき」** に発生する
+- Git はマージ作業を省略し、マージされるブランチのポインタをマージするブランチに移動するだけとなる
+  - つまり、マージする際に新しいコミット(=マージコミット)を作成しない
+- メリットは、**絶対にコンフリクトが起きない**（マージ作業をしていないので）
+- デメリットとして、**「ブランチをマージした」という履歴が残らない。** （マージを間違えて元に戻すときに苦労する）
+- `--no-ff` オプションを付けると Fast-forward が発生する条件でも後述の Non Fast-forward となる
+
+![width:1300](../../assets/image/Git勉強会_コマンドイメージ図-merge_ff.drawio.png)
+
+（[Git の rebase と merge の挙動の違いを GitHub を用いて検証してみた - Qiita](https://qiita.com/minakawa-daiki/items/c8a939b5d529ee39eac1) より引用）
+
+---
+
+#### Non Fast-forward merge <!-- omit in toc -->
+
+- 早送りじゃないマージ（マージコミットを作成）
+- **「マージされるブランチがマージの基点にいないとき（既に枝分かれしているとき）」** に発生する
+- **「どのブランチからどんな変更（どのコミット）をマージしたか」をコミット履歴として持つ**
+- 間違えて意図せぬブランチをマージしてしまった場合、マージコミットを取り消すだけで戻せる
+- マージ対象のそれぞれのコミットで同じ箇所の修正がなければ Auto merge, あれば Conflict となる
+
+![width:1300](../../assets/image/Git勉強会_コマンドイメージ図-merge_non-ff.drawio.png)
+
+（[Git の rebase と merge の挙動の違いを GitHub を用いて検証してみた - Qiita](https://qiita.com/minakawa-daiki/items/c8a939b5d529ee39eac1) より引用）
+
+#### 参考 <!-- omit in toc -->
+
+- [3.2 Git のブランチ機能 - ブランチとマージの基本](https://git-scm.com/book/ja/v2/Git-%E3%81%AE%E3%83%96%E3%83%A9%E3%83%B3%E3%83%81%E6%A9%9F%E8%83%BD-%E3%83%96%E3%83%A9%E3%83%B3%E3%83%81%E3%81%A8%E3%83%9E%E3%83%BC%E3%82%B8%E3%81%AE%E5%9F%BA%E6%9C%AC)
+- [git merge の動作仕様と、主要オプションのまとめ](https://www-creators.com/archives/4996)
+- [Git の rebase と merge の挙動の違いを GitHub を用いて検証してみた - Qiita](https://qiita.com/minakawa-daiki/items/c8a939b5d529ee39eac1)
+- [こわくない Git](https://www.slideshare.net/kotas/git-15276118)
+
+---
+
+### stash ★
 
 #### 機能 <!-- omit in toc -->
 
@@ -458,7 +577,7 @@ git restore --source HEAD~2 .  # 対象ファイル全体を2つ前のコミッ�
 
 ---
 
-### reset
+### reset ★
 
 #### 機能 <!-- omit in toc -->
 
@@ -502,7 +621,7 @@ $ git reset --hard ORIG_HEAD  # 直前の reset を取り消す（最新の状�
 
 ---
 
-### revert
+### revert ★
 
 #### 機能 <!-- omit in toc -->
 
@@ -543,7 +662,7 @@ $ git revert <コミットID A>..<コミットID B>  # A から B の範囲で�
 
 ---
 
-### cherry-pick
+### cherry-pick ★
 
 #### 機能 <!-- omit in toc -->
 
@@ -608,7 +727,7 @@ $ git blame -L 40,50 <ファイル名> # 40〜50行目の最終コミット情�
 $ git blame -L 40,+10 <ファイル名> # 40行目から10行分の最終コミット情報を表示する
 ```
 
-#### 備考
+#### 備考 <!-- omit in toc -->
 
 - 最近のエディタでは拡張機能を入れると blame の結果が表示される（Visual Studio Code では [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens#current-line-blame-)）
 
@@ -743,6 +862,8 @@ $ ls -a # リモートリポジトリの内容がローカルに反映されて�
 ```
 
 ---
+
+（現在ハンズオン作成中）
 
 ---
 
