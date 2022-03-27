@@ -640,6 +640,7 @@ $ git log --graph --pretty=format:'%x09%C(auto) %h %Cgreen %ar %Creset%x09by"%C(
 #### 参考 <!-- omit in toc -->
 
 - [git-log – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-log/)
+- [git log よく使うオプションまとめ - Qiita](https://qiita.com/take4s5i/items/15d8648405f4e7ea3039)
 - [git log のオプションと綺麗にツリー表示するためのエイリアス - Qiita](https://qiita.com/kawasaki_dev/items/41afaafe477b877b5b73)
 - [GitHub 上（ブラウザ上）でコミット履歴を確認する方法](https://chico-shikaku.com/2019/08/github-commit-log/)
 

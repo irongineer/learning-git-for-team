@@ -359,7 +359,7 @@ $ git rebase -i HEAD~4  # 最新から 4 つ分のコミットを修正・統合
 - | **merge**      | **rebase**                                                                                                                                                           |
   | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
   | **メリット**   | - どのブランチからどんなコミットを取り込んだのか履歴を追える（merge no-ff を強制する運用の場合） <br> - PR レビューの文脈が残る（// TODO: スカッシュ時はどうか確認） | - 履歴を一直線に保つことができる                                                                                 |
-  | **デメリット** | - マージコミットがあると履歴が見づらい                                                                                                                               | - リモートに push 済の変更を rebase した場合は force-push が必須 <br> - コミッター・コミット ID が変わってしまう |
+  | **デメリット** | - マージコミットがあると履歴が見づらい <br> (`git log --no-merges` でマージコミットを除いて履歴表示すれば解決？)                                                     | - リモートに push 済の変更を rebase した場合は force-push が必須 <br> - コミッター・コミット ID が変わってしまう |
 
 ※ よく聴く merge のメリットで「コンフリクトの解決が比較的簡単」（rebase だとコミットを 1 つずつ適用し、それぞれで解消が必要なため）というものがあるが、個人的には rebase の方がコンフリクト解消は簡単な気もする。巨大なマージコミットを相手にコンフリクト解消するのは文脈の理解がしづらいので。
 
@@ -368,6 +368,7 @@ $ git rebase -i HEAD~4  # 最新から 4 つ分のコミットを修正・統合
 - [あなたは merge 派？rebase 派？綺麗な Git ログで実感したメリット](https://style.biglobe.co.jp/entry/2022/03/22/090000)
   - [上記記事に対する @kazuho さんのコメント](https://twitter.com/kazuho/status/1506216632103841792?s=21)
 - [git の merge --no-ff のススメ](https://qiita.com/nog/items/c79469afbf3e632f10a1)
+- [なぜ git rebase をやめるべきか](https://frasco.io/why-you-should-stop-using-git-rebase-535fa30d7e25)
 - [【Git】将来の自分を救うのは、rebase だと僕は思うよ](https://blog.dalt.me/2883)
 
 ---
@@ -672,7 +673,7 @@ $ git tag -l  # タグを一覧表示する
 #### ユースケース <!-- omit in toc -->
 
 - コミット履歴だけでなく HEAD やブランチの動きなど細かいところまで確認したい
-- 間違えて `git reset --hard` をしてしまったので戻したい
+- 誤って意図と異なるコミットへ `git reset --hard` をしてしまったので戻したい
 
 ---
 
@@ -691,7 +692,7 @@ $ git reset HEAD@{1} --hard # reflog で元に戻したいコミットを指定�
 #### 参考 <!-- omit in toc -->
 
 - [git-reflog Documentation](https://git-scm.com/docs/git-reflog)
-- [いざという時のための git reflog - Qiita](https://qiita.com/yaotti/items/e37c707938847aee671b)
+- [git reflog についてまとめてみる](https://gist.github.com/kymmt90/9c997726b638b316f9be07aa4e3eea5e)
 - [【git reflog】ブランチの復元やリセットしたコミットを元に戻す方法](https://toronavi.com/git-reflog)
 - [git reflog を日時で参照する](https://zenn.dev/yoichi/articles/git-refer-reflog-by-datetime)
 
