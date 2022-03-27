@@ -44,7 +44,34 @@ theme: git
 
 ---
 
-// TODO: クイズ
+## クイズ
+
+Q. 次のユースケースではどんなコマンドを実行すればいいでしょうか？
+
+1. 新しいブランチ feature を作成し、そのまま移動したい
+2. git merge を実行したらコンフリクトしてしまった。状況を確認し、次に取るべき行動の選択肢を知りたい
+3. 変更した内容を記録（コミット）したい。同時にコミットメッセージも付けたい
+4. 直前のコミットメッセージを修正したい（やや難）
+
+---
+
+## クイズ（解答例） <!-- omit in toc -->
+
+Q. 次のユースケースではどんなコマンドを実行すればいいでしょうか？
+
+```bash
+# 1. 新しいブランチを作成し、そのまま移動したい
+$ git switch -c feature
+
+# 2. git merge を実行したらコンフリクトしてしまった。状況を確認し、次に取るべき行動の選択肢を知りたい
+$ git status
+
+# 3. 変更した内容を記録（コミット）したい。同時にコミットメッセージも付けたい
+$ git commit -m "任意のメッセージ"
+
+# 4. 直前のコミットメッセージを修正したい（やや難）
+$ git commit --amend -m "修正後のメッセージ"
+```
 
 ---
 
@@ -97,21 +124,16 @@ theme: git
 
 ---
 
-// TODO: 復習
+## 復習タイム　〜今日のコマンドをより理解するために〜
 
-- リモート追跡ブランチの話
-- origin main と origin/main の違い
+- origin develop と origin/develop の違い
+- pull と fetch + merge の違い
 
----
+#### 参考記事： <!-- omit in toc -->
 
-// TODO: 今日のポイント
-
-おすすめ記事：
-
-- [git pull と git pull –rebase の違いって？図を交えて説明します！](https://kray.jp/blog/git-pull-rebase/)
+- [git pull と git pull –rebase の違いって？図を交えて説明します！](https://kray.jp/blog/git-pull-rebase/) **★ とても分かりやすいのでおすすめ**
 - [Git で「追跡ブランチ」って言うのやめましょう - Qiita](https://qiita.com/uasi/items/69368c17c79e99aaddbf)
 - [origin master と origin/master の違い - Qiita](https://qiita.com/bitarx/items/4558f86e43a2c3493fa9)
-  （これ読めばだいたい不要）
 
 ---
 
@@ -165,7 +187,7 @@ $ git merge develop
 
 ---
 
-// TODO: ff vs non-ff
+// TODO: Fast-forward merge と Auto merge の違いについて（不要？）
 
 ---
 
@@ -673,7 +695,16 @@ $ git reset HEAD@{1} --hard # reflog で元に戻したいコミットを指定�
 
 ## ハンズオン
 
-// TODO: コンテンツ作成
+// TODO: コンテンツ作成（★ は一緒にやる予定）
+
+1. pull ★
+2. fetch + merge
+3. merge (branch) ★
+4. rebase ★
+5. stash ★
+6. reset ★
+7. revert
+8. cherry-pick ★
 
 ---
 
