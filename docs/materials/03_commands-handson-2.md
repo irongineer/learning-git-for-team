@@ -851,8 +851,13 @@ $ git reset HEAD@{1} --hard # reflog で元に戻したいコミットを指定�
 リモートリポジトリの内容を取得し、現在チェックアウトしているブランチに取り込んでみましょう。
 （次頁に解答例があります）
 
-1. ハンズオン用ディレクトリへ移動
-2. ...// TODO: リモートブランチとローカルブランチの差分をどうやって作るか
+#### 事前準備 <!-- omit in toc -->
+
+1. GitHub/GitLab で事前準備したハンズオン用リポジトリを開く
+2. 自分がどのブランチにいるかを確認（ハンズオンでは main を例にします）
+3. ファイル index.html を作成してコミット（中身は `<h1>好きな文字列</h1>` を書く）
+   1. "Add file", もしくは "+" ボタンをクリックして追加
+   2. コミットメッセージに "Add index.html" と記載してコミット
 
 ---
 
@@ -860,15 +865,30 @@ $ git reset HEAD@{1} --hard # reflog で元に戻したいコミットを指定�
 
 ```bash
 $ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
-$ git switch <ブランチ名> # pull したいブランチへ切り替える
-$ git pull origin <ブランチ名> # リモートリポジトリの内容を取得してマージ。上流ブランチを設定している場合は git pull で OK
+$ git switch main # リモートの変更内容を取得したいブランチへ切り替える
+$ git fetch # リモートリポジトリの内容をリモート追跡ブランチに反映
+$ git merge origin/main # リモート追跡ブランチの内容をローカルリポジトリに反映（fetch + merge は git pull origin main でも可）
 $ git log # リモートリポジトリのコミット履歴がローカルに反映されていることを確認
-$ ls -a # リモートリポジトリの内容がローカルに反映されていることを確認
+$ ls # リモートリポジトリの内容がローカルに反映されていることを確認
 ```
 
 ---
 
-（現在ハンズオン作成中）
+### ハンズオン ⑦：feature ブランチを作成してローカル内でマージ（解答例） <!-- omit in toc -->
+
+```bash
+$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
+$ git switch develop # ベースとしたいブランチへ切り替える（※ develop は例です）
+$ git switch -c feature # feature ブランチを作成して切り替える
+$ touch feature.html  # index.html というファイルを作成する（エディタ上でファイルを新規作成しても OK）
+$ echo "<h1>feature</h1>" >> feature.html # "<h1>feature</h1>" という内容を feature.html に追記（エディタ上で追記しても OK）
+$ git add . # 変更内容をインデックスに追加
+$ git commit -m "feature.htmlを追加"  # インデックスに追加した内容をコミット
+$ git switch develop  # ベースとしたいブランチへ切り替える（※ develop は例です）
+$ git merge feature # feature ブランチを統合（エディタで vim が開いた場合は `:q` で終了）
+$ git log # feature ブランチでのコミットとマージコミットの2つが追加されていることを確認
+$ ls # feature ブランチの内容がベースブランチに反映されていることを確認
+```
 
 ---
 
