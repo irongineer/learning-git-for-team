@@ -400,7 +400,7 @@ $ git merge --no-ff <マージ元のブランチ名>  # fast-forward merge が�
 
 - `--continue`: コンフリクト解決後、リベースを続行
 - `--abort`: コンフリクト解決を中止し、リベース前の状態に再構築
-- `-i | --interactive`: 複数のコミットを統合
+- `-i | --interactive`: 対話モードで過去のコミットを編集（コミットメッセージの修正やコミットの統合など）
 
 #### コマンド例 <!-- omit in toc -->
 
@@ -461,7 +461,8 @@ $ git rebase -i HEAD~4  # 最新から 4 つ分のコミットを修正・統合
   - つまり、マージする際に新しいコミット(=マージコミット)を作成しない
 - メリットは、**絶対にコンフリクトが起きない**（マージ作業をしていないので）
 - デメリットとして、**「ブランチをマージした」という履歴が残らない。** （マージを間違えて元に戻すときに苦労する）
-- `--no-ff` オプションを付けると Fast-forward が発生する条件でも後述の Non Fast-forward となる
+- `git merge --no-ff` オプションを付けると Fast-forward が発生する条件でも Non Fast-forward となる
+  - （オプション付け忘れ防止のため `git config --global --add merge.ff false` と設定するといい）
 
 ![width:1300](../../assets/image/Git勉強会_コマンドイメージ図-merge_ff.drawio.png)
 
