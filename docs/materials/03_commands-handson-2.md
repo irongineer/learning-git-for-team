@@ -97,6 +97,7 @@ $ git commit --amend -m "修正後のメッセージ"
 - [コマンド説明（★ 付きコマンドのみ当日説明します）](#コマンド説明-付きコマンドのみ当日説明します)
   - [pull ★](#pull-)
   - [fetch ★](#fetch-)
+    - [主なオプション](#主なオプション)
   - [merge ★](#merge-)
   - [rebase ★](#rebase-)
   - [コラム：merge と rebase の違い](#コラムmerge-と-rebase-の違い)
@@ -303,17 +304,18 @@ $ git pull -r origin <ブランチ名> # リモートリポジトリの内容を
 
 ---
 
-<!--
 #### 主なオプション
 
+- `-p | --prune`: リモートリポジトリで削除されたブランチをローカルリポジトリのリモート追跡ブランチに反映
+  - 常に `--prune` を有効にする場合は `git config --global fetch.prune true` を実行して設定を更新
 - `--all`: すべてのリモートリポジトリの内容を取得
   - リモートリポジトリが origin しかない場合は使うことはない
--->
 
 #### コマンド例 <!-- omit in toc -->
 
 ```bash
 $ git fetch # リモートリポジトリの内容をローカルのリモート追跡ブランチに反映
+$ git fetch --prune # リモートリポジトリで削除されたブランチをローカルリポジトリに反映
 ```
 
 #### 参考 <!-- omit in toc -->
@@ -321,6 +323,8 @@ $ git fetch # リモートリポジトリの内容をローカルのリモート
 - [git-fetch – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-fetch/)
 - [git pull と git pull –rebase の違いって？図を交えて説明します！](https://kray.jp/blog/git-pull-rebase/)
 - [Git で「追跡ブランチ」って言うのやめましょう - Qiita](https://qiita.com/uasi/items/69368c17c79e99aaddbf)
+- [リモートで消されたブランチが手元で残ってしまう件を解消する - Qiita](https://qiita.com/yuichielectric/items/84cd61915a1236f19221)
+- [git pull のとき常に prune するための設定 - Qiita](https://qiita.com/suin/items/27a559ab678bc054747e)
 
 ---
 
