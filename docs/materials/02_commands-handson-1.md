@@ -495,7 +495,7 @@ $ git commit --amend -m "<修正後のメッセージ>"
 $ git push -u origin <ブランチ名>  # 上流ブランチを設定
 $ git push origin <ブランチ名>  # 上流ブランチが設定されている状態なら git push でも可
 $ git push --force-with-lease origin <ブランチ名> # 強制プッシュ
-$ git push --delete origin <ブランチ名> # 指定したリモートリポジトリのブランチを削除
+$ git push --delete origin <ブランチ名> # 指定したリモートリポジトリのブランチを削除。git push origin :<ブランチ名> でも可
 ```
 
 #### 備考 <!-- omit in toc -->
