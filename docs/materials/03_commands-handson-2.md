@@ -110,6 +110,7 @@ $ git commit --amend -m "修正後のメッセージ"
   - [コラム：reset と revert の違い](#コラムreset-と-revert-の違い)
   - [コラム：reset と revert はどっちがいい？](#コラムreset-と-revert-はどっちがいい)
     - [参考](#参考)
+  - [コラム：HEAD^ と HEAD~ の違い](#コラムhead-と-head-の違い)
   - [cherry-pick ★](#cherry-pick-)
   - [blame](#blame)
   - [tag](#tag)
@@ -715,6 +716,23 @@ $ $ git revert -m 1 <マージコミットID>  # マージコミットを打ち�
 #### 参考
 
 - [Git revert と reset について - Qiita](https://qiita.com/Sammy_U/items/e37c7242544fd1da81be)
+
+---
+
+### コラム：HEAD^ と HEAD~ の違い
+
+![width:600](../../assets/image/Git勉強会_HEAD^とHEAD~.png)
+
+- HEAD: 今自分が作業しているブランチ（コミット）を示すポインタ
+- ^（キャレット）: 複数ある親コミットのなかからコミットを指定 （マージコミットの分岐元コミットを指定するときに使用）
+- ~（チルダ）: ~世代前のコミットを指定。`HEAD~N` で N 世代前のコミットを指定
+  - `HEAD~~` と `HEAD~2` は同じコミットを指すが、`HEAD^^` と `HEAD^2` はそれぞれ違うコミットを指す
+    - `HEAD^2` は `HEAD` の 2 つ目の親を指すが、`HEAD^^` は `HEAD` の 1 つ目の親を指す
+
+#### 参考 <!-- omit in toc -->
+
+- [Git の HEAD とは何者なのか - Qiita](https://qiita.com/ymzkjpx/items/00ff664da60c37458aaa)
+- [【やっとわかった！】git の HEAD^と HEAD~の違い - Qiita](https://qiita.com/chihiro/items/d551c14cb9764454e0b9)
 
 ---
 
