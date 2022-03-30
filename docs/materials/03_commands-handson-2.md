@@ -116,6 +116,11 @@ $ git commit --amend -m "修正後のメッセージ"
   - [reflog](#reflog)
 - [ハンズオン](#ハンズオン)
   - [ハンズオン ⑥：リモートリポジトリの内容を取得し、現在のブランチに取り込む](#ハンズオン-リモートリポジトリの内容を取得し現在のブランチに取り込む)
+  - [ハンズオン ⑦：トピックブランチを作成してローカル内でマージ](#ハンズオン-トピックブランチを作成してローカル内でマージ)
+  - [ハンズオン ⑧：ローカルの変更内容を一時退避](#ハンズオン-ローカルの変更内容を一時退避)
+  - [ハンズオン ⑨：ローカルで誤ってコミットした内容を元に戻す](#ハンズオン-ローカルで誤ってコミットした内容を元に戻す)
+  - [ハンズオン ⑨：ローカルで誤ってコミットした内容を元に戻す（応用編）](#ハンズオン-ローカルで誤ってコミットした内容を元に戻す応用編)
+  - [ハンズオン ⑩：別ブランチの特定のコミットを取り込む](#ハンズオン-別ブランチの特定のコミットを取り込む)
 - [次回](#次回)
 
 ---
@@ -527,9 +532,9 @@ $ git stash -u  # 新規作成ファイルも含めて変更を退避
 $ git stash push -m "<メッセージ>" -u  # メッセージを付けて変更を退避
 $ git stash list  # 退避した作業の一覧を見る
 $ git stash pop # 直前に退避した変更を戻す。退避していたデータは削除する。
-$ git stash apply stash@{N} # 直前からN番目に退避した変更を戻す。stash@{N} を省略した場合は直前に stash した情報を戻す
-$ git stash show stash@{N} -p # 直前からN番目に退避した変更の詳細を見る
-$ git stash drop stash@{N} # 直前からN番目に退避していたデータを削除する
+$ git stash apply stash@{N} # 直前の次から数えてN番目に退避した変更を戻す。直前の変更は N=0。stash@{N} を省略した場合は直前に stash した情報（N=0）を戻す
+$ git stash show stash@{N} -p # 直前の次から数えてN番目に退避した変更の詳細を見る。
+$ git stash drop stash@{N} # 直前の次から数えてN番目に退避していたデータを削除する
 ```
 
 #### 参考 <!-- omit in toc -->
@@ -590,6 +595,8 @@ git restore --source HEAD~2 .  # 対象ファイル全体を2つ前のコミッ�
 #### 機能 <!-- omit in toc -->
 
 - 指定したファイルを特定のコミットの状態まで戻す
+  - 実際の挙動としては HEAD の位置を変更することで、特定のコミット時点の状態へと移動している
+  - オプションによってインデックス、ワークツリーの内容も変更できる
 
 #### ユースケース <!-- omit in toc -->
 
@@ -606,16 +613,16 @@ git restore --source HEAD~2 .  # 対象ファイル全体を2つ前のコミッ�
 
 #### 主なオプション <!-- omit in toc -->
 
-- `--soft`: インデックスとワークツリーはそのままで、指定したコミットの状態へ戻す **（commit のみ取り消し）**
+- `--soft`: インデックスとワークツリーはそのままで、指定したコミットの状態へリセット **（commit のみ取り消し）**
 - `--mixed`: ワークツリーはそのままで、インデックスを指定したコミットの状態へリセット **（commit と add を取り消し。デフォルト）**
 - `--hard`: インデックスとワークツリーを指定したコミットの状態へリセット **（現在のファイル変更も含めて取り消し）**
 
 #### コマンド例 <!-- omit in toc -->
 
 ```bash
-$ git reset --soft HEAD^  # commit のみ取り消す。現在のファイル変更はそのまま。HEAD^ は直前のコミットを意味する
-$ git reset --mixed HEAD^  # commit, add を取り消す。現在のファイル変更はそのまま。
-$ git reset --hard HEAD^  # commit, add, 現在のファイル変更も全部取り消す（破壊的操作）
+$ git reset --soft HEAD^  # 直前の commit のみ取り消す。現在のファイル変更はそのまま。HEAD^ は直前のコミットを意味する
+$ git reset --mixed HEAD^  # 直前の commit, add を取り消す。現在のファイル変更はそのまま。
+$ git reset --hard HEAD^  # 直前の commit, add, 現在のファイル変更も全部取り消す（破壊的操作）
 $ git reset --hard <コミットID> # 指定したコミットの状態に戻す
 $ git reset --hard <ブランチ>  # 指定したブランチの状態に戻す（現在いるブランチに戻す場合は下と同じ）
 $ git reset --hard ORIG_HEAD  # 直前の reset を取り消す（最新の状態に戻る）
@@ -630,6 +637,7 @@ $ git reset --hard ORIG_HEAD  # 直前の reset を取り消す（最新の状�
 - [git-reset – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-reset/)
 - [[git reset (--hard/--soft)]ワークツリー、インデックス、HEAD を使いこなす方法](https://qiita.com/shuntaro_tamura/items/db1aef9cf9d78db50ffe)
 - [第 6 話 git reset 3 種類をどこよりもわかりやすい図解で解説！【連載】マンガでわかる Git ～コマンド編～](https://www.r-staffing.co.jp/engineer/entry/20191129_1)
+- [git reset についてもまとめてみる](https://murank.hatenadiary.org/entry/20110327/1301224770)
 
 ---
 
@@ -878,20 +886,34 @@ $ git reset HEAD@{N} --hard # reflog 確認した元に戻したいコミット�
 - 勉強会２日目スライドのハンズオン ①（git clone）を完了させておいてください。
 - 勉強会２日目スライドのハンズオン ②（git config）を完了させておいてください。
 
+**利用するコマンドの説明スライドを復習しながら進めましょう！**
+
 ---
 
 ### ハンズオン ⑥：リモートリポジトリの内容を取得し、現在のブランチに取り込む
 
 リモートリポジトリの内容を取得し、現在チェックアウトしているブランチに取り込んでみましょう。
+pull でもできますが、今回は fetch + merge を使ってやってみましょう。
 （次頁に解答例があります）
 
 #### 事前準備 <!-- omit in toc -->
 
-1. GitHub/GitLab で事前準備したハンズオン用リポジトリを開く
-2. 自分がどのブランチにいるかを確認（ハンズオンでは main を例にします）
-3. ファイル index.html を作成してコミット（中身は `<h1>好きな文字列</h1>` を書く）
+1. GitHub/GitLab で事前準備したハンズオン用リポジトリをブラウザで表示
+2. 自分がどのブランチのコードを開いているかを確認（ハンズオンでは main を例にします）
+3. ファイル index.html を作成してコミット（中身は `<h1>Git Exercise</h1>` を書く）
    1. "Add file", もしくは "+" ボタンをクリックして追加
-   2. コミットメッセージに "Add index.html" と記載してコミット
+   2. "Edit file" でファイル内本文に `<h1>Git Exercise</h1>` を追記
+   3. コミットメッセージに "Add index.html" と記載してコミット
+
+#### 操作手順例 <!-- omit in toc -->
+
+1. ハンズオン用ディレクトリへ移動
+2. リモートの変更内容を取得したいブランチへ切り替え
+3. リモートリポジトリの内容をリモート追跡ブランチに反映
+4. ローカルブランチとリモート追跡ブランチの差分を確認 （`ヒント： diff <ブランチ名> origin/<ブランチ名>`）
+5. リモート追跡ブランチの内容をローカルリポジトリに反映
+6. リモートリポジトリから取り込んだコミットとマージコミットがコミット履歴に反映されていることを確認
+7. リモートリポジトリの内容がローカルに反映されていることを確認
 
 ---
 
@@ -899,87 +921,258 @@ $ git reset HEAD@{N} --hard # reflog 確認した元に戻したいコミット�
 
 ```bash
 $ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
-$ git switch main # リモートの変更内容を取得したいブランチへ切り替える
+$ git switch main # リモートの変更内容を取得したいブランチへ切り替え
+
 $ git fetch # リモートリポジトリの内容をリモート追跡ブランチに反映
-$ git merge origin/main # リモート追跡ブランチの内容をローカルリポジトリに反映（fetch + merge は git pull origin main でも可）
-$ git log # リモートリポジトリのコミット履歴がローカルに反映されていることを確認
+$ git diff main origin/main # ローカルブランチとリモート追跡ブランチの差分を確認（エディタで vim が開いた場合は `:q` で終了）
+$ git merge origin/main # リモート追跡ブランチの内容をローカルリポジトリに反映（エディタで vim が開いた場合は `:x` で保存して終了）
+# 上記 fetch + merge の手順は git pull origin main でも可
+
+$ git log # リモートリポジトリから取り込んだコミットとマージコミットがコミット履歴に反映されていることを確認（エディタで vim が開いた場合は `:q` で終了）
 $ ls # リモートリポジトリの内容がローカルに反映されていることを確認
 ```
 
 ---
 
-### ハンズオン ⑦：feature ブランチを作成してローカル内でマージ（解答例） <!-- omit in toc -->
+### ハンズオン ⑦：トピックブランチを作成してローカル内でマージ
+
+ローカルリポジトリで統合ブランチ（ex. develop）からトピックブランチ（ex. feature1）を作成し、トピックブランチで適当な修正を行ってコミットしてみましょう。
+その後、統合ブランチに戻ってトピックブランチをマージしてみましょう。
+（次頁に解答例があります）
+
+#### 操作手順例 <!-- omit in toc -->
+
+1. ハンズオン用ディレクトリへ移動
+2. ベースブランチとする develop ブランチへ切り替え（未作成の場合は git switch -c develop で作成）
+3. feature1 ブランチを作成して切り替え
+4. feature1.html というファイルを作成
+5. "<h1>feature1</h1>" という内容を feature1.html に追記
+6. 変更内容をインデックスに追加
+7. "Add feature1.html" というメッセージを付けてインデックスに追加した内容をコミット
+8. ベースブランチへ切り替え
+9. ベースブランチと feature1 ブランチの差分を確認 （`ヒント： diff <ブランチ名 A> <ブランチ名 B>`）
+10. feature1 ブランチを統合
+11. feature1 ブランチでのコミットとマージコミットがコミット履歴に反映されていることを確認
+12. feature1 ブランチの内容がベースブランチに反映されていることを確認
+
+---
+
+### ハンズオン ⑦：トピックブランチを作成してローカル内でマージ（解答例） <!-- omit in toc -->
 
 ```bash
 $ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
-$ git switch develop # ベースとしたいブランチへ切り替える（※ develop は例です。未作成の場合は git switch -c develop で作成）
-$ git switch -c feature # feature ブランチを作成して切り替える
-$ touch feature.html  # feature.html というファイルを作成する（エディタ上でファイルを新規作成しても OK）
-$ echo "<h1>feature</h1>" >> feature.html # "<h1>feature</h1>" という内容を feature.html に追記（エディタ上で追記しても OK）
+$ git switch develop # ベースブランチとする develop ブランチへ切り替え（未作成の場合は git switch -c develop で作成）
+
+$ git switch -c feature1 # feature1 ブランチを作成して切り替え
+$ touch feature1.html  # feature1.html というファイルを作成（エディタ上でファイルを新規作成しても OK）
+$ echo "<h1>feature1</h1>" >> feature1.html # "<h1>feature1</h1>" という内容を feature1.html に追記（エディタ上で追記しても OK）
+
 $ git add . # 変更内容をインデックスに追加
-$ git commit -m "feature.htmlを追加"  # インデックスに追加した内容をコミット
-$ git switch develop  # ベースとしたいブランチへ切り替える（※ develop は例です）
-$ git merge feature # feature ブランチを統合（エディタで vim が開いた場合は `:q` で終了）
-$ git log # feature ブランチでのコミットとマージコミットの2つが追加されていることを確認
-$ ls # feature ブランチの内容がベースブランチに反映されていることを確認
+$ git commit -m "Add feature1.html"  # "Add feature1.html" というメッセージを付けてインデックスに追加した内容をコミット
+
+$ git switch develop  # develop ブランチへ切り替え（※ develop は例です）
+$ git diff develop feature1  # develop ブランチと feature1 ブランチの差分を確認
+$ git merge feature1 # feature1 ブランチを統合（エディタで vim が開いた場合は `:x` で保存して終了）
+
+$ git log # feature1 ブランチでのコミットとマージコミットがコミット履歴に反映されていることを確認（エディタで vim が開いた場合は `:q` で終了）
+$ ls # feature1 ブランチの内容が develop ブランチに反映されていることを確認
 ```
 
 ---
 
-### ハンズオン ⑧：ローカルの変更内容を一時退避してブランチ切り替え（解答例） <!-- omit in toc -->
+### ハンズオン ⑧：ローカルの変更内容を一時退避
+
+ローカルリポジトリで適当な修正を行った後に変更を一時退避してみましょう （次頁に解答例があります）
+
+#### 操作手順例 <!-- omit in toc -->
+
+1. ハンズオン用ディレクトリへ移動
+2. develop ブランチへ切り替え
+3. stash-test ブランチを作成して切り替え
+4. "<p>stash test</p>" という内容を既存の feature1.html に追記
+5. 変更を一時退避
+6. stash.html というファイルを作成
+7. 新規作成ファイルも含めて変更を一時退避
+8. 現在の状態を確認する。 `nothing to commit, working tree clean` となっていることを確認
+9. 退避した作業の一覧を確認
+10. 直前から 2 番目に退避した変更の詳細を確認（※ 直前の変更は N=0）
+11. 直前から 2 番目に退避した変更を復元（※ 直前の変更は N=0）
+12. 現在の状態を確認。 `Changes not staged for commit: modified: feature1.html` となっていることを確認
+13. feature1.html の内容に "<p>stash test</p>" があることを確認
+14. 直前に退避した変更を復元。その際に退避していたデータは削除する
+15. ディレクトリ内のファイルを確認
+16. 退避した作業の一覧を確認。直前の退避データが削除されていることを確認
+17. stash.html を削除
+
+---
+
+### ハンズオン ⑧：ローカルの変更内容を一時退避（解答例） <!-- omit in toc -->
 
 ```bash
 $ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
-$ git switch develop # ベースとしたいブランチへ切り替える（※ develop は例です。未作成の場合は git switch -c develop で作成）
-$ git switch -c stash-test # stash-test ブランチを作成して切り替える
-$ touch stash.html  # stash.html というファイルを作成する（エディタ上でファイルを新規作成しても OK）
-$ echo "<h1>stash</h1>" >> stash.html # "<h1>stash</h1>" という内容を stash.html に追記（エディタ上で追記しても OK）
-$ git stash -u  # 新規作成ファイルも含めて変更を退避
-$ echo "stash 1" >> README.md # "stash test" という内容を既存の README.md に追記（エディタ上で追記しても OK）
-$ git stash push -m "Add stash 1" -u  # メッセージ付きで変更を退避
-$ echo "stash 2" >> README.md # "stash test" という内容を既存の README.md に追記（エディタ上で追記しても OK）
-$ git stash push -m "Add stash 2" -u  # メッセージ付きで変更を退避
-$ git stash list  # 退避した作業の一覧を見る
-$ git stash pop # 直前に退避した変更を戻す。退避していたデータは削除する
-$ git stash list  # 退避した作業の一覧を見る。直前の退避データが削除されていることを確認
-$ git stash apply stash@{1} # 直前から1番目に退避した変更を戻す
-$ git status  # 現在の状態を確認する。`Changes not staged for commit: modified: README.md Untracked files: stash.html` となっていることを確認
-$ ls  # 既存の README.md の他に stash.html が作成されていることを確認
-$ cat README.md # README.md の内容に "stash 2" があって "stash 1" がないことを確認
-$ git stash show stash@{0} -p # 直前から0番目に退避した変更の詳細を見る。"stash 1" の差分が表示されている
-$ git stash drop stash@{0} # 直前から0番目に退避していたデータを削除する
-$ git stash list  # 退避した作業の一覧を見る。直前から0番目の退避データが削除されていることを確認
+$ git switch develop # develop ブランチへ切り替え（※ develop は例です。未作成の場合は git switch -c develop で作成）
+
+$ git switch -c stash-test # stash-test ブランチを作成して切り替え
+$ echo "<p>stash test</p>" >> feature1.html # "<p>stash test</p>" という内容を既存の feature1.html に追記（エディタ上で追記しても OK）
+$ git stash  # 変更を一時退避
+
+$ touch stash.html  # stash.html というファイルを作成（エディタ上でファイルを新規作成しても OK）
+$ git stash -u  # 新規作成ファイルも含めて変更を一時退避
+$ git status  # 現在の状態を確認。`nothing to commit, working tree clean` となっていることを確認
+$ git stash list  # 退避した作業の一覧を確認
+
+$ git stash show stash@{1} -p # 直前から2番目に退避した変更の詳細を確認（直前の変更は N=0）。"<p>stash test</p>" という差分が表示されている
+$ git stash apply stash@{1} # 直前から2番目に退避した変更を復元（直前の変更は N=0）
+$ git status  # 現在の状態を確認。`Changes not staged for commit: modified: feature1.html` となっていることを確認
+$ cat feature1.html # feature1.html の内容に "<p>stash test</p>" があることを確認
+
+$ git stash pop # 直前に退避した変更を復元。その際に退避していたデータは削除する
+$ ls  # ディレクトリ内のファイルを確認。stash.html が作成されていることを確認
+$ git stash list  # 退避した作業の一覧を確認。直前の退避データが削除されていることを確認
+$ rm stash.html # stash.html を削除（エディタ上でファイルを削除しても OK）
 ```
 
 ---
 
-### ハンズオン ⑨：ローカルに誤ってコミットした内容を元に戻す（解答例） <!-- omit in toc -->
+### ハンズオン ⑨：ローカルで誤ってコミットした内容を元に戻す
+
+ローカルリポジトリで誤ってコミットした内容を元に戻してみましょう （次頁に解答例があります）
+
+#### 操作手順例 <!-- omit in toc -->
+
+1. ハンズオン用ディレクトリへ移動
+2. develop ブランチへ切り替え
+3. reset-test ブランチを作成して切り替え
+4. feature2.html というファイルを作成
+5. 変更内容をインデックスに追加
+6. "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
+7. commit のみ取り消し。現在のファイル変更はそのまま
+8. 現在の状態を確認
+   1. `Changes to be committed: new file: feature2.html` となっていることを確認
+9. "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
+10. commit, add, 現在のファイル変更も全部取り消し
+11. 現在の状態を確認
+    1. `nothing to commit, working tree clean` となっていることを確認
+
+---
+
+### ハンズオン ⑨：ローカルで誤ってコミットした内容を元に戻す（解答例） <!-- omit in toc -->
 
 ```bash
 $ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
-$ git switch develop # ベースとしたいブランチへ切り替える（※ develop は例です。未作成の場合は git switch -c develop で作成）
-$ git switch -c reset-test # reset-test ブランチを作成して切り替える
-$ touch feature1.html  # feature1.html というファイルを作成する（エディタ上でファイルを新規作成しても OK）
+$ git switch develop # develop ブランチへ切り替え（※ develop は例です。未作成の場合は git switch -c develop で作成）
+
+$ git switch -c reset-test # reset-test ブランチを作成して切り替え
+$ touch feature2.html  # feature2.html というファイルを作成（エディタ上でファイルを新規作成しても OK）
 $ git add . # 変更内容をインデックスに追加
-$ git commit -m "Add feature1"  # インデックスに追加した内容をコミット
-$ git reset --soft HEAD^ # commit のみ取り消す。現在のファイル変更はそのまま。HEAD^ は直前のコミットを意味する
-$ git status  # 現在の状態を確認
-$ git commit -m "Add feature1"  # インデックスに追加した内容をコミット
-$ git reset --mixed HEAD^ # commit, add を取り消す。現在のファイル変更はそのまま。
-$ git status  # 現在の状態を確認
+$ git commit -m "Add feature2.html"  # "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
+$ git reset --soft HEAD^ # commit のみ取り消し。現在のファイル変更はそのまま。HEAD^ は直前のコミットを意味する
+$ git status  # 現在の状態を確認。`Changes to be committed:	new file:   feature2.html` となっていることを確認
+
+$ git commit -m "Add feature2.html"  # "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
+$ git reset --hard HEAD^ # commit, add, 現在のファイル変更も全部取り消し（破壊的操作）
+$ git status  # 現在の状態を確認。`nothing to commit, working tree clean` となっていることを確認
+```
+
+---
+
+### ハンズオン ⑨：ローカルで誤ってコミットした内容を元に戻す（応用編）
+
+ローカルリポジトリで２つ以上前のコミット状態に戻したり、戻す操作自体を取り消したりしてみましょう
+（次頁に解答例があります）
+
+#### 操作手順例 <!-- omit in toc -->
+
+（ハンズオン ⑨ の基本編が終わった状態から）
+
+1.  feature2.html というファイルを作成
+2.  変更内容をインデックスに追加
+3.  "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
+4.  feature3.html というファイルを作成
+5.  変更内容をインデックスに追加
+6.  "Add feature3.html" というメッセージを付けてインデックスに追加した内容をコミット
+7.  コミット履歴を確認
+    1.  2 つのコミットがコミット履歴に反映されていることを確認
+8.  2 つ前のコミットの状態へリセット
+9.  コミット履歴を確認
+    1.  2 つのコミットがコミット履歴から消えていることを確認
+10. 直前の reset を取り消し
+11. コミット履歴を確認
+    1.  2 つのコミットがコミット履歴に反映されていることを確認
+12. develop ブランチの状態へリセット
+13. develop ブランチ に切り替え
+
+---
+
+### ハンズオン ⑨：ローカルで誤ってコミットした内容を元に戻す（応用編）（解答例） <!-- omit in toc -->
+
+```bash
+# （ハンズオン ⑨ の基本編が終わった状態から）
+$ touch feature2.html  # feature2.html というファイルを作成（エディタ上でファイルを新規作成しても OK）
 $ git add . # 変更内容をインデックスに追加
-$ git commit -m "Add feature1"  # インデックスに追加した内容をコミット
-$ git reset --hard HEAD^ # commit, add, 現在のファイル変更も全部取り消す（破壊的操作）
-$ git status  # 現在の状態を確認
-$ touch feature1.html  # feature1.html というファイルを作成する（エディタ上でファイルを新規作成しても OK）
+$ git commit -m "Add feature2.html"  # "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
+$ touch feature3.html  # feature3.html というファイルを作成（エディタ上でファイルを新規作成しても OK）
 $ git add . # 変更内容をインデックスに追加
-$ git commit -m "Add feature1"  # インデックスに追加した内容をコミット
-$ touch feature2.html  # feature2.html というファイルを作成する（エディタ上でファイルを新規作成しても OK）
+$ git commit -m "Add feature3.html"  # "Add feature3.html" というメッセージを付けてインデックスに追加した内容をコミット
+$ git log # コミット履歴を確認。2つのコミットがコミット履歴に反映されていることを確認（エディタで vim が開いた場合は `:q` で終了）
+
+$ git reset --hard HEAD~2 # 2つ前のコミットの状態へリセット
+$ git log # コミット履歴を確認。2つのコミットがコミット履歴から消えていることを確認（エディタで vim が開いた場合は `:q` で終了）
+
+$ git reset --hard ORIG_HEAD # 直前の reset を取り消し
+$ git log # コミット履歴を確認。2つのコミットがコミット履歴に反映されていることを確認（エディタで vim が開いた場合は `:q` で終了）
+
+$ git reset --hard develop  # develop ブランチの状態へリセット
+$ git switch develop  # develop ブランチ に切り替え
+```
+
+---
+
+### ハンズオン ⑩：別ブランチの特定のコミットを取り込む
+
+ローカルリポジトリで別ブランチにある特定のコミットを取り込んでみましょう （次頁に解答例があります）
+
+#### 操作手順例 <!-- omit in toc -->
+
+1. ハンズオン用ディレクトリへ移動
+2. develop ブランチへ切り替え
+3. cherry-test ブランチを作成して切り替え
+4. feature4.html というファイルを作成
+5. 変更内容をインデックスに追加
+6. "Add feature4.html" というメッセージを付けてインデックスに追加した内容をコミット
+7. feature5.html というファイルを作成
+8. 変更内容をインデックスに追加
+9. "Add feature5.html" というメッセージを付けてインデックスに追加した内容をコミット
+10. コミット履歴を確認。"Add feature5.html" のコミット ID をコピーして控えおく
+11. develop ブランチへ切り替え
+12. pick-test ブランチを作成して切り替え
+13. "Add feature5.html" のコミットを現在のブランチに取り込み
+14. コミット履歴を確認。"Add feature5.html" のコミットが反映されていることを確認
+15. ディレクトリ内のファイルを確認。feature5.html が作成されていることを確認
+
+---
+
+### ハンズオン ⑩：別ブランチの特定のコミットを取り込む（解答例） <!-- omit in toc -->
+
+```bash
+$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
+$ git switch develop # develop ブランチへ切り替え（※ develop は例です。未作成の場合は git switch -c develop で作成）
+
+$ git switch -c cherry-test # cherry-test ブランチを作成して切り替え
+$ touch feature4.html  # feature4.html というファイルを作成（エディタ上でファイルを新規作成しても OK）
 $ git add . # 変更内容をインデックスに追加
-$ git commit -m "Add feature2"  # インデックスに追加した内容をコミット
-$ git reset --hard HEAD~2 # 2つ前のコミットの状態に戻す
-$ git reset --hard ORIG_HEAD # 直前の reset を取り消す
-$ git reset --hard develop # develop ブランチの状態に戻す
+$ git commit -m "Add feature4.html"  # "Add feature4.html" というメッセージを付けてインデックスに追加した内容をコミット
+
+$ touch feature5.html  # feature5.html というファイルを作成（エディタ上でファイルを新規作成しても OK）
+$ git add . # 変更内容をインデックスに追加
+$ git commit -m "Add feature5.html"  # "Add feature5.html" というメッセージを付けてインデックスに追加した内容をコミット
+$ git log # コミット履歴を確認。"Add feature5.html" のコミットID をコピーして控えおく
+
+$ git switch develop  # develop ブランチへ切り替え
+$ git switch -c pick-test # pick-test ブランチを作成して切り替え
+$ git cherry-pick <上記で控えたコミットID> # "Add feature5.html" のコミットを現在のブランチに取り込み
+$ git log # コミット履歴を確認。"Add feature5.html" のコミットが反映されていることを確認
+$ ls # ディレクトリ内のファイルを確認。feature5.html が作成されていることを確認
 ```
 
 ---
