@@ -691,7 +691,7 @@ $ $ git revert -m 1 <マージコミットID>  # マージコミットを打ち�
 
 ### コラム：reset と revert の違い
 
-![width:1000](../../assets/image/Git%E5%8B%89%E5%BC%B7%E4%BC%9A_%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E5%9B%B3-reset_vs_revert.drawio.png)
+![width:900](../../assets/image/Git%E5%8B%89%E5%BC%B7%E4%BC%9A_%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E5%9B%B3-reset_vs_revert.drawio.png)
 
 #### イメージ <!-- omit in toc -->
 
@@ -716,23 +716,24 @@ $ $ git revert -m 1 <マージコミットID>  # マージコミットを打ち�
 #### 参考
 
 - [Git revert と reset について - Qiita](https://qiita.com/Sammy_U/items/e37c7242544fd1da81be)
+- [【git】revert と reset の違い](https://leokun0210.hatenablog.com/entry/2017/11/15/004015)
 
 ---
 
 ### コラム：HEAD^ と HEAD~ の違い
 
-![width:600](../../assets/image/Git勉強会_HEAD^とHEAD~.png)
+![width:500](../../assets/image/Git勉強会_HEAD^とHEAD~.png)
 
-- HEAD: 今自分が作業しているブランチ（コミット）を示すポインタ
-- ^（キャレット）: 複数ある親コミットのなかからコミットを指定 （マージコミットの分岐元コミットを指定するときに使用）
-- ~（チルダ）: ~世代前のコミットを指定。`HEAD~N` で N 世代前のコミットを指定
+- `HEAD`: 今自分が作業しているブランチ（コミット）を示すポインタ（`@` は `HEAD` の別名（エイリアス）で同じ意味）
+- `^`（キャレット）: （複数分岐がある親コミットの中から）N 個前の親コミットを指定 （マージコミットの分岐元コミットを指定するときに使用）
+- `~`（チルダ）: （複数続いている直線コミットの中から）N 世代前のコミットを指定。`HEAD~N` で N 世代前のコミットを指定
   - `HEAD~~` と `HEAD~2` は同じコミットを指すが、`HEAD^^` と `HEAD^2` はそれぞれ違うコミットを指す
-    - `HEAD^2` は `HEAD` の 2 つ目の親を指すが、`HEAD^^` は `HEAD` の 1 つ目の親を指す
 
 #### 参考 <!-- omit in toc -->
 
 - [Git の HEAD とは何者なのか - Qiita](https://qiita.com/ymzkjpx/items/00ff664da60c37458aaa)
 - [【やっとわかった！】git の HEAD^と HEAD~の違い - Qiita](https://qiita.com/chihiro/items/d551c14cb9764454e0b9)
+- [7.1 Git のさまざまなツール - リビジョンの選択](https://git-scm.com/book/ja/v2/Git-%E3%81%AE%E3%81%95%E3%81%BE%E3%81%96%E3%81%BE%E3%81%AA%E3%83%84%E3%83%BC%E3%83%AB-%E3%83%AA%E3%83%93%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E9%81%B8%E6%8A%9E#_%E5%AE%B6%E7%B3%BB%E3%81%AE%E5%8F%82%E7%85%A7)
 
 ---
 
