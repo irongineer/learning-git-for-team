@@ -977,7 +977,7 @@ pull でもできますが、今回は fetch + merge を使ってやってみま
 
 1. GitHub/GitLab で事前準備したハンズオン用リポジトリをブラウザで表示
 2. 自分がどのブランチのコードを開いているかを確認（ハンズオンでは main を例にします）
-3. ファイル index.html を作成してコミット（中身は `<h1>Git Exercise</h1>` を書く）
+3. リモートリポジトリにファイル index.html を作成してコミット（中身は `<h1>Git Exercise</h1>` を書く）
    1. "Add file", もしくは "+" ボタンをクリックして追加
    2. "Edit file" でファイル内本文に `<h1>Git Exercise</h1>` を追記
    3. コミットメッセージに "Add index.html" と記載してコミット
