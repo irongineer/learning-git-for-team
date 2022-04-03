@@ -819,7 +819,7 @@ $ git config --local core.editor 'code --wait' # メインエディタを　Visu
 $ git config user.name
 $ git config user.email
 $ git config core.editor
-$ cat git-exercise /.git/config  # local の設定ファイルを確認（global の設定ファイルは ~/.gitconfig。※ git-exercise は例です）
+$ cat .git/config  # local の設定ファイルを確認（global の設定ファイルは ~/.gitconfig）
 ```
 
 ---
@@ -867,17 +867,16 @@ $ git branch -d temp2 # temp2 ブランチを削除
 
 1. ハンズオン用ディレクトリへ移動
 2. develop ブランチへ切り替え
-3. touch index.html
-4. index.html ファイルを作成
-5. Visual Studio Code でリポジトリを開く
-6. index.html に `<h1>develop での変更</h1>` と追記
-7. 状態を確認
+3. index.html ファイルを作成
+4. 任意のエディタでリポジトリを開く
+5. index.html に `<h1>develop での変更</h1>` と追記
+6. 状態を確認
    1. `Changes not staged for commit に modified: <ブランチ名>/index.html` と表示される
-8. ワークツリーとインデックスの差分を比較
-9. ワークツリーの全ての変更ファイルをインデックスに追加
-10. 状態を確認
-    1. `Changes to be committed に modified: <ブランチ名>/index.html` と表示される
-11. インデックスとローカルリポジトリの差分を比較
+7. ワークツリーとインデックスの差分を比較
+8. ワークツリーの全ての変更ファイルをインデックスに追加
+9. 状態を確認
+   1. `Changes to be committed に modified: <ブランチ名>/index.html` と表示される
+10. インデックスとローカルリポジトリの差分を比較
 
 ---
 
@@ -887,7 +886,7 @@ $ git branch -d temp2 # temp2 ブランチを削除
 $ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
 $ git switch develop  # develop ブランチへ切り替え
 $ touch index.html  # index.html ファイルを作成
-$ code git-exercise # Visual Studio Code でリポジトリを開く（※ git-exercise は例です）
+$ code . # 任意のエディタでリポジトリを開く（解答例は Visual Studio Code を使用）
 
 （index.html に「<h1>develop での変更</h1>」と追記）
 
@@ -926,7 +925,7 @@ $ git commit -m "develop を追記"  # 変更をローカルリポジトリに�
 $ git status  # 状態を確認。Your branch is ahead of 'origin/<ブランチ名>' by 1 commit. nothing to commit, working tree clean と表示される
 $ git log # 変更履歴を確認（エディタで vim が開いた場合は `:q` で終了）
 $ git push origin develop  # 記録した変更をリモートリポジトリに送信
-$ git statu  # 状態を確認。Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean と表示される
+$ git status  # 状態を確認。Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean と表示される
 ```
 
 ---
