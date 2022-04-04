@@ -155,10 +155,13 @@ $ git clone .  # 現在いるディレクトリをルートディレクトリと
 $ git config  # 現在いるリポジトリの Git 設定を表示
 $ git config --global user.name "<メインアカウントのユーザー名>" # デフォルトのユーザー名を設定
 $ git config --global user.email "<メインアカウントのメールアドレス>"  # デフォルトのメールアドレスを設定
+$ git config --global core.editor 'code --wait' # メインエディタを　Visual Studio Code (code) に設定。`--wait` はエディタを終了するまでプログラムの実行を待つというオプション。
 
 $ cd /path/to/repository # 特定のプロジェクトのローカルリポジトリへ移動
 $ git config --local user.name "<サブアカウントのユーザー名>" # 特定リポジトリのユーザー名を設定
 $ git config --local user.email "<サブアカウントのメールアドレス>" # 特定リポジトリのメールアドレスを設定
+$ git config --local --list # ローカルの設定一覧を表示。`--global` にすると全体のデフォルト設定を表示
+$ git config --local user.name  # ローカル設定のユーザー名を表示
 ```
 
 #### 備考 <!-- omit in toc -->
@@ -280,15 +283,18 @@ $ git remote remove <リモートリポジトリのURL> # リモートリポジ�
 #### 主なオプション <!-- omit in toc -->
 
 - `-a | --all`: リモート追跡ブランチを含んだブランチの一覧を表示
-- `-m | --move`: 現在チェックアウトしているブランチ名を指定したブランチ名で変更
-- `-d | --delete`: 指定したブランチを削除（`-D`で強制削除）
+- `-m | --move`: 現在チェックアウトしているブランチ名を指定したブランチ名で変更（`-M` で強制変更）
+  - 指定したブランチ名が既に存在する場合はエラーとなり変更できない
+  - その場合はいずれかのブランチ名を変更するか、`-M` で上書きによる強制変更
+- `-d | --delete`: 指定したブランチを削除（`-D` で強制削除）
   - 指定したブランチに push していないコミットが残っている場合はエラーとなり削除できない
-  - その場合は push するか、`-D`で強制削除
+  - その場合は push するか、`-D` で強制削除
 
 #### コマンド例 <!-- omit in toc -->
 
 ```bash
-$ git branch -a # ローカルとリモートにあるブランチ一覧を表示
+$ git fetch # リモートリポジトリの最新情報を取得
+$ git branch -a # ローカルとリモートにあるブランチ（リモート追跡ブランチ）一覧を表示。`remotes/origin/<ブランチ>` で表示されるブランチがリモート追跡ブランチ
 $ git branch <ブランチ名> # ブランチを作成
 $ git branch -m <変更後のブランチ名>  # 今いるブランチ名を変更
 $ git branch -d <ブランチ名>  # 指定したブランチを削除。-D で強制削除
@@ -298,6 +304,7 @@ $ git branch -d <ブランチ名>  # 指定したブランチを削除。-D で�
 
 - [git-branch – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-branch/)
 - [git branch コマンド - Qiita](https://qiita.com/chihiro/items/e178e45a7fd5a2fb4599)
+- [[Git]git branch コマンドの -m と -M オプションの違い](https://www.curict.com/item/58/58909e5.html)
 
 ---
 
@@ -802,7 +809,7 @@ $ ls -a　git-exercise # 複製してきたリポジトリに .git ディレク�
 1. 自身のプロジェクトのルートディレクトリへ移動
 2. ローカルリポジトリのユーザー名を設定
 3. ローカルリポジトリのメールアドレスを設定
-4. メインエディタを　 Visual Studio Code に設定。他のエディタでも OK（vim など）
+4. メインエディタを　 Visual Studio Code (code) に設定。他のエディタでも OK（vim など）
 5. 上記設定を確認
 
 ---
@@ -813,12 +820,13 @@ $ ls -a　git-exercise # 複製してきたリポジトリに .git ディレク�
 $ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
 $ git config --local user.name "<メインアカウントのユーザー名>" # ローカルリポジトリのユーザー名を設定
 $ git config --local user.email "<メインアカウントのメールアドレス>"  # ローカルリポジトリのメールアドレスを設定
-$ git config --local core.editor 'code --wait' # メインエディタを　Visual Studio Code に設定。他のエディタでも OK（vim など）
+$ git config --local core.editor 'code --wait' # メインエディタを　Visual Studio Code (code) に設定。他のエディタでも OK（vim など）
 
 # 設定の確認
-$ git config user.name
-$ git config user.email
-$ git config core.editor
+$ git config --local --list # ローカルの設定一覧を表示
+$ git config user.name # ローカルの個別設定を表示（ユーザー名）
+$ git config user.email # ローカルの個別設定を表示（メールアドレス）
+$ git config core.editor  # ローカルの個別設定を表示（メインエディタ）
 $ cat .git/config  # local の設定ファイルを確認（global の設定ファイルは ~/.gitconfig）
 ```
 
@@ -837,9 +845,10 @@ $ cat .git/config  # local の設定ファイルを確認（global の設定フ�
 3. develop ブランチに切り替え
 4. temp ブランチを作成して切り替え
 5. temp ブランチを temp2 ブランチに名前変更
-6. ローカルとリモートリポジトリにあるブランチ一覧を確認（エディタで vim が開いた場合は `:q` で終了）
-7. develop ブランチへ切り替え
-8. temp2 ブランチを削除
+6. リモートリポジトリの最新情報をローカルに取得
+7. ローカルとリモートリポジトリにあるブランチ（リモート追跡ブランチ）一覧を確認
+8. develop ブランチへ切り替え
+9. temp2 ブランチを削除
 
 ---
 
@@ -848,10 +857,11 @@ $ cat .git/config  # local の設定ファイルを確認（global の設定フ�
 ```bash
 $ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
 $ git branch develop # develop ブランチを作成
-$ git switch develop # develop ブランチに切り替え
-$ git switch -c temp # temp ブランチを作成して切り替え
-$ git branch -m temp2 # temp ブランチを temp2 ブランチに名前変更
-$ git branch -a # ローカルとリモートリポジトリにあるブランチ一覧を確認（エディタで vim が開いた場合は `:q` で終了
+$ git switch develop # develop ブランチに切り替え。git checkout develop でも可
+$ git switch -c temp # temp ブランチを作成して切り替え。git checkout -b temp でも可
+$ git branch -m temp2 # temp ブランチを temp2 ブランチに名前変更。`-M` の場合は同名のブランチがあっても上書きで強制変更
+$ git fetch # リモートリポジトリの最新情報をローカルに取得
+$ git branch -a # ローカルとリモートリポジトリにあるブランチ（リモート追跡ブランチ）一覧を確認（エディタで vim が開いた場合は `:q` で終了）
 $ git switch develop # develop ブランチへ切り替え
 $ git branch -d temp2 # temp2 ブランチを削除
 ```
@@ -888,7 +898,7 @@ $ git switch develop  # develop ブランチへ切り替え
 $ touch index.html  # index.html ファイルを作成
 $ code . # 任意のエディタでリポジトリを開く（解答例は Visual Studio Code を使用）
 
-（index.html に「<h1>develop での変更</h1>」と追記）
+（index.html に「<h1>develop での変更</h1>」と追記）# エディタを開かずに echo "<h1>develop での変更</h1>" >> index.html を実行しても OK
 
 $ git status # 状態を確認。Changes not staged for commit に modified: <ブランチ名>/index.html と表示される
 $ git diff  # ワークツリーとインデックスの差分を比較（エディタで vim が開いた場合は `:q` で終了）
