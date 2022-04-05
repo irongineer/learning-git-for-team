@@ -881,11 +881,11 @@ $ git branch -d temp2 # temp2 ブランチを削除
 4. 任意のエディタでリポジトリを開く
 5. index.html に `<h1>develop での変更</h1>` と追記
 6. 状態を確認
-   1. `Changes not staged for commit に modified: <ブランチ名>/index.html` と表示される
+   1. `Untracked files: index.html` と表示される
 7. ワークツリーとインデックスの差分を比較
 8. ワークツリーの全ての変更ファイルをインデックスに追加
 9. 状態を確認
-   1. `Changes to be committed に modified: <ブランチ名>/index.html` と表示される
+   1. `Changes to be committed: new file: index.html` と表示される
 10. インデックスとローカルリポジトリの差分を比較
 
 ---
@@ -900,11 +900,11 @@ $ code . # 任意のエディタでリポジトリを開く（解答例は Visua
 
 （index.html に「<h1>develop での変更</h1>」と追記）# エディタを開かずに echo "<h1>develop での変更</h1>" >> index.html を実行しても OK
 
-$ git status # 状態を確認。Changes not staged for commit に modified: <ブランチ名>/index.html と表示される
+$ git status # 状態を確認。Untracked files: index.html と表示される
 $ git diff  # ワークツリーとインデックスの差分を比較（エディタで vim が開いた場合は `:q` で終了）
 
 $ git add . # ワークツリーの全ての変更ファイルをインデックスに追加
-$ git status  # 状態を確認。Changes to be committed に modified: <ブランチ名>/index.html と表示される
+$ git status  # 状態を確認。Changes to be committed: new file: index.html と表示される
 $ git diff --staged # インデックスとローカルリポジトリの差分を比較（エディタで vim が開いた場合は `:q` で終了）
 ```
 
