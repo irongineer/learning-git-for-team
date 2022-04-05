@@ -491,7 +491,7 @@ $ git commit --amend -m "<修正後のメッセージ>"
 
 #### 主なオプション <!-- omit in toc -->
 
-- `-u | --set-upstream`: 上流ブランチを設定
+- `-u | --set-upstream`: 上流ブランチを設定 （`git config push.default current` が設定済なら不要）
 - `-f | --force`: プッシュを強制 **（できるだけ使わない！）**
 - `--force-with-lease`: プッシュを強制 **（リモートと比較してローカルが最新のときだけ成功する）**
 - `-d | --delete`: リモートリポジトリのブランチを削除
@@ -499,7 +499,7 @@ $ git commit --amend -m "<修正後のメッセージ>"
 #### コマンド例 <!-- omit in toc -->
 
 ```bash
-$ git push -u origin <ブランチ名>  # 上流ブランチを設定
+$ git push -u origin <ブランチ名>  # 上流ブランチを設定。git config push.default current で「カレントブランチを同名のリモートブランチにpushする」と一律設定することもできる
 $ git push origin <ブランチ名>  # 上流ブランチが設定されている状態なら git push でも可
 $ git push --force-with-lease origin <ブランチ名> # 強制プッシュ
 $ git push --delete origin <ブランチ名> # 指定したリモートリポジトリのブランチを削除。git push origin :<ブランチ名> でも可
@@ -514,6 +514,7 @@ $ git push --delete origin <ブランチ名> # 指定したリモートリポジ
 
 - [git-push – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-push/)
 - [git push コマンドの使い方と、主要オプションまとめ](https://www-creators.com/archives/1472)
+- [初心者必見！Git でやらかす前に設定しておきたい push.default](https://kuroeveryday.blogspot.com/2015/12/git-push-default.html)
 - [Git 用語：上流ブランチとは？](https://www-creators.com/archives/4931)
 - [git push -f をやめて --force-with-lease を使おう - Qiita](https://qiita.com/wMETAw/items/5f47dcc7cf57af8e449f)
 
