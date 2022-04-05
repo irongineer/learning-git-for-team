@@ -883,10 +883,12 @@ $ git branch -d temp2 # temp2 ブランチを削除
 6. 状態を確認
    1. `Untracked files: index.html` と表示される
 7. ワークツリーとインデックスの差分を比較
+   1. 差分が表示されない **（新規ファイル作成ではない（既に add 済で追跡対象であるファイルの）場合は差分が表示される）**
 8. ワークツリーの全ての変更ファイルをインデックスに追加
 9. 状態を確認
    1. `Changes to be committed: new file: index.html` と表示される
 10. インデックスとローカルリポジトリの差分を比較
+    1. 差分が表示される
 
 ---
 
@@ -901,11 +903,11 @@ $ code . # 任意のエディタでリポジトリを開く（解答例は Visua
 （index.html に「<h1>develop での変更</h1>」と追記）# エディタを開かずに echo "<h1>develop での変更</h1>" >> index.html を実行しても OK
 
 $ git status # 状態を確認。Untracked files: index.html と表示される
-$ git diff  # ワークツリーとインデックスの差分を比較（エディタで vim が開いた場合は `:q` で終了）
+$ git diff  # ワークツリーとインデックスの差分を比較。差分が表示されない（新規ファイル作成ではない（既に add 済で追跡対象であるファイルの）場合は差分が表示される）（エディタで vim が開いた場合は `:q` で終了）
 
 $ git add . # ワークツリーの全ての変更ファイルをインデックスに追加
 $ git status  # 状態を確認。Changes to be committed: new file: index.html と表示される
-$ git diff --staged # インデックスとローカルリポジトリの差分を比較（エディタで vim が開いた場合は `:q` で終了）
+$ git diff --cached # インデックスとローカルリポジトリの差分を比較。差分が表示される。git diff --staged でも OK（エディタで vim が開いた場合は `:q` で終了）
 ```
 
 ---
@@ -925,6 +927,7 @@ $ git diff --staged # インデックスとローカルリポジトリの差分�
 4. 記録した変更をリモートリポジトリに送信
 5. 状態を確認
    1. `Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean` と表示される
+6. リモートリポジトリ（GitHub / GitLab）にアクセスし、該当ブランチに変更が反映されていることを確認
 
 ---
 
@@ -934,8 +937,10 @@ $ git diff --staged # インデックスとローカルリポジトリの差分�
 $ git commit -m "develop を追記"  # 変更をローカルリポジトリに記録
 $ git status  # 状態を確認。Your branch is ahead of 'origin/<ブランチ名>' by 1 commit. nothing to commit, working tree clean と表示される
 $ git log # 変更履歴を確認（エディタで vim が開いた場合は `:q` で終了）
-$ git push origin develop  # 記録した変更をリモートリポジトリに送信
+$ git push origin develop  # 記録した変更をリモートリポジトリに送信。既に上流ブランチを現在チェックアウトしているブランチに設定している場合は省略可
 $ git status  # 状態を確認。Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean と表示される
+
+# （リモートリポジトリ（GitHub / GitLab）にアクセスし、該当ブランチに変更が反映されていることを確認）
 ```
 
 ---
