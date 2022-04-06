@@ -491,7 +491,7 @@ $ git commit --amend -m "<修正後のメッセージ>"
 
 #### 主なオプション <!-- omit in toc -->
 
-- `-u | --set-upstream`: 上流ブランチを設定
+- `-u | --set-upstream`: 上流ブランチを設定 （`git config push.default current` が設定済なら不要）
 - `-f | --force`: プッシュを強制 **（できるだけ使わない！）**
 - `--force-with-lease`: プッシュを強制 **（リモートと比較してローカルが最新のときだけ成功する）**
 - `-d | --delete`: リモートリポジトリのブランチを削除
@@ -499,7 +499,7 @@ $ git commit --amend -m "<修正後のメッセージ>"
 #### コマンド例 <!-- omit in toc -->
 
 ```bash
-$ git push -u origin <ブランチ名>  # 上流ブランチを設定
+$ git push -u origin <ブランチ名>  # 上流ブランチを設定。git config push.default current で「カレントブランチを同名のリモートブランチにpushする」と一律設定することもできる
 $ git push origin <ブランチ名>  # 上流ブランチが設定されている状態なら git push でも可
 $ git push --force-with-lease origin <ブランチ名> # 強制プッシュ
 $ git push --delete origin <ブランチ名> # 指定したリモートリポジトリのブランチを削除。git push origin :<ブランチ名> でも可
@@ -514,6 +514,7 @@ $ git push --delete origin <ブランチ名> # 指定したリモートリポジ
 
 - [git-push – Git コマンドリファレンス（日本語版）](https://tracpath.com/docs/git-push/)
 - [git push コマンドの使い方と、主要オプションまとめ](https://www-creators.com/archives/1472)
+- [初心者必見！Git でやらかす前に設定しておきたい push.default](https://kuroeveryday.blogspot.com/2015/12/git-push-default.html)
 - [Git 用語：上流ブランチとは？](https://www-creators.com/archives/4931)
 - [git push -f をやめて --force-with-lease を使おう - Qiita](https://qiita.com/wMETAw/items/5f47dcc7cf57af8e449f)
 
@@ -881,12 +882,14 @@ $ git branch -d temp2 # temp2 ブランチを削除
 4. 任意のエディタでリポジトリを開く
 5. index.html に `<h1>develop での変更</h1>` と追記
 6. 状態を確認
-   1. `Changes not staged for commit に modified: <ブランチ名>/index.html` と表示される
+   1. `Untracked files: index.html` と表示される
 7. ワークツリーとインデックスの差分を比較
+   1. 差分が表示されない **（新規ファイル作成ではない（既に add 済で追跡対象であるファイルの）場合は差分が表示される）**
 8. ワークツリーの全ての変更ファイルをインデックスに追加
 9. 状態を確認
-   1. `Changes to be committed に modified: <ブランチ名>/index.html` と表示される
+   1. `Changes to be committed: new file: index.html` と表示される
 10. インデックスとローカルリポジトリの差分を比較
+    1. 差分が表示される
 
 ---
 
@@ -900,12 +903,12 @@ $ code . # 任意のエディタでリポジトリを開く（解答例は Visua
 
 （index.html に「<h1>develop での変更</h1>」と追記）# エディタを開かずに echo "<h1>develop での変更</h1>" >> index.html を実行しても OK
 
-$ git status # 状態を確認。Changes not staged for commit に modified: <ブランチ名>/index.html と表示される
-$ git diff  # ワークツリーとインデックスの差分を比較（エディタで vim が開いた場合は `:q` で終了）
+$ git status # 状態を確認。Untracked files: index.html と表示される
+$ git diff  # ワークツリーとインデックスの差分を比較。差分が表示されない（新規ファイル作成ではない（既に add 済で追跡対象であるファイルの）場合は差分が表示される）（エディタで vim が開いた場合は `:q` で終了）
 
 $ git add . # ワークツリーの全ての変更ファイルをインデックスに追加
-$ git status  # 状態を確認。Changes to be committed に modified: <ブランチ名>/index.html と表示される
-$ git diff --staged # インデックスとローカルリポジトリの差分を比較（エディタで vim が開いた場合は `:q` で終了）
+$ git status  # 状態を確認。Changes to be committed: new file: index.html と表示される
+$ git diff --cached # インデックスとローカルリポジトリの差分を比較。差分が表示される。git diff --staged でも OK（エディタで vim が開いた場合は `:q` で終了）
 ```
 
 ---
@@ -925,6 +928,7 @@ $ git diff --staged # インデックスとローカルリポジトリの差分�
 4. 記録した変更をリモートリポジトリに送信
 5. 状態を確認
    1. `Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean` と表示される
+6. リモートリポジトリ（GitHub / GitLab）にアクセスし、該当ブランチに変更が反映されていることを確認
 
 ---
 
@@ -934,8 +938,10 @@ $ git diff --staged # インデックスとローカルリポジトリの差分�
 $ git commit -m "develop を追記"  # 変更をローカルリポジトリに記録
 $ git status  # 状態を確認。Your branch is ahead of 'origin/<ブランチ名>' by 1 commit. nothing to commit, working tree clean と表示される
 $ git log # 変更履歴を確認（エディタで vim が開いた場合は `:q` で終了）
-$ git push origin develop  # 記録した変更をリモートリポジトリに送信
+$ git push origin develop  # 記録した変更をリモートリポジトリに送信。origin develop の部分は、既に上流ブランチを現在チェックアウトしているブランチに設定している場合は省略可
 $ git status  # 状態を確認。Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean と表示される
+
+# （リモートリポジトリ（GitHub / GitLab）にアクセスし、該当ブランチに変更が反映されていることを確認）
 ```
 
 ---
