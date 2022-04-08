@@ -319,7 +319,7 @@ $ git pull -r origin <ブランチ名> # リモートリポジトリの内容を
 
 - `-p | --prune`: リモートリポジトリで削除されたブランチをローカルリポジトリのリモート追跡ブランチに反映
   - 常に `--prune` を有効にする場合は `git config --global fetch.prune true` を実行して設定を更新
-- `--all`: すべてのリモートリポジトリの内容を取得
+- `--all`: 全てのリモートリポジトリの内容を取得
   - リモートリポジトリが origin しかない場合は使うことはない
 
 #### コマンド例 <!-- omit in toc -->
@@ -531,12 +531,14 @@ $ git rebase -i HEAD~4  # 最新から 4 つ分のコミットを修正・統合
 #### コマンド例 <!-- omit in toc -->
 
 ```bash
+$ git stash # 変更中の全てのファイルを一時退避
 $ git stash -u  # 新規作成ファイルも含めて変更を退避
-$ git stash push -m "<メッセージ>" -u  # メッセージを付けて変更を退避
+$ git stash -- <ファイル名> # ファイル単位で一時退避
+$ git stash push -m "<メッセージ>" # メッセージを付けて変更を退避（新規作成ファイルを含めて退避する場合は末尾に `-u` を付ける）
 $ git stash list  # 退避した作業の一覧を見る
-$ git stash pop # 直前に退避した変更を戻す。退避していたデータは削除する。
-$ git stash apply stash@{N} # 直前の次から数えてN番目に退避した変更を戻す。直前の変更は N=0。stash@{N} を省略した場合は直前に stash した情報（N=0）を戻す
-$ git stash show stash@{N} -p # 直前の次から数えてN番目に退避した変更の詳細を見る。
+$ git stash apply stash@{N} # 直前の次から数えてN番目に退避した変更を復元。直前の変更は N=0。stash@{N} を省略した場合は直前に stash した情報（N=0）を戻す
+$ git stash pop stash@{N} # 直前の次から数えてN番目に退避した変更を復元。apply との違いは、退避していたデータは削除すること。
+$ git stash show stash@{N} -p # 直前の次から数えてN番目に退避した変更の詳細を見る。新規作成ファイルの変更を表示したい場合は `-u` を付ける
 $ git stash drop stash@{N} # 直前の次から数えてN番目に退避していたデータを削除する
 ```
 
@@ -1068,7 +1070,7 @@ $ ls # feature1 ブランチの内容が develop ブランチに反映されて�
 1. ハンズオン用ディレクトリへ移動
 2. develop ブランチへ切り替え
 3. stash-test ブランチを作成して切り替え
-4. "<p>stash test</p>" を既存の feature1.html の本文に追記 （feature1.html がない場合は作成・コミット）
+4. `<p>stash test</p>` を既存の feature1.html の本文に追記 （feature1.html がない場合は作成・コミット）
 5. 変更を一時退避
 6. stash.html というファイルを作成
 7. 新規作成ファイルも含めて変更を一時退避
@@ -1077,7 +1079,7 @@ $ ls # feature1 ブランチの内容が develop ブランチに反映されて�
 10. 直前から 2 番目に退避した変更の詳細を確認（※ 直前の変更は N=0）
 11. 直前から 2 番目に退避した変更を復元（※ 直前の変更は N=0）
 12. 現在の状態を確認。 `Changes not staged for commit: modified: feature1.html` となっていることを確認
-13. feature1.html の内容に "<p>stash test</p>" があることを確認
+13. feature1.html の内容に `<p>stash test</p>` があることを確認
 14. 直前に退避した変更を復元。その際に退避していたデータは削除する
 15. ディレクトリ内のファイルを確認
 16. 退避した作業の一覧を確認。直前の退避データが削除されていることを確認
@@ -1101,7 +1103,7 @@ $ git stash -u  # 新規作成ファイルも含めて変更を一時退避
 $ git status  # 現在の状態を確認。`nothing to commit, working tree clean` となっていることを確認
 $ git stash list  # 退避した作業の一覧を確認
 
-$ git stash show stash@{1} -p # 直前から2番目に退避した変更の詳細を確認（直前の変更は N=0）。"<p>stash test</p>" という差分が表示されている
+$ git stash show stash@{1} -p # 直前から2番目に退避した変更の詳細を確認（直前の変更は N=0）。"<p>stash test</p>" という差分が表示されている。新規作成ファイルの変更を表示したい場合は `-u` を付ける
 $ git stash apply stash@{1} # 直前から2番目に退避した変更を復元（直前の変更は N=0）
 $ git status  # 現在の状態を確認。`Changes not staged for commit: modified: feature1.html` となっていることを確認
 $ cat feature1.html # feature1.html の内容に "<p>stash test</p>" があることを確認
