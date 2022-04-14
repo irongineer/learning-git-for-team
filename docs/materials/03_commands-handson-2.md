@@ -910,9 +910,8 @@ $ git reset HEAD@{N} --hard # reflog 確認した元に戻したいコミット�
    1. 【参考】[Git インストール手順＜ Windows 向け＞](https://sukkiri.jp/technologies/devtools/git/git_win.html)
    2. 【参考】[Git Bash を手動でアップデートする方法【Git for Windows】](https://onoredekaiketsu.com/manually-update-git-bash/)
 2. ハンズオン用に GitHub や GitLab で個人用のリモートリポジトリを作成しておいてください。
-   1. 【参考】 [GitLab での個人リポジトリの作成方法（From 赤池さん）](https://works-hi.slack.com/archives/CNJKVLCS0/p1646982929353649?thread_ts=1646974757.179429&cid=CNJKVLCS0)
-   2. 【参考】[【GitLab】プロジェクト（リポジトリ）を作成する - Qiita](https://qiita.com/CUTBOSS/items/ce61bb6a8635c6918558)
-   3. 【参考】[【超入門】GitHub リポジトリの作り方 - Qiita](https://qiita.com/ucan-lab/items/d594404d0d2c64a85a38)
+   1. 【参考】[【GitLab】プロジェクト（リポジトリ）を作成する - Qiita](https://qiita.com/CUTBOSS/items/ce61bb6a8635c6918558)
+   2. 【参考】[【超入門】GitHub リポジトリの作り方 - Qiita](https://qiita.com/ucan-lab/items/d594404d0d2c64a85a38)
 3. 勉強会２日目スライドのハンズオン ①（既にリモートに存在するリポジトリをコピー - git clone）を完了してください。
 4. 勉強会２日目スライドのハンズオン ②（Git 開始時の基本設定 - git config）を完了してください。
 
