@@ -1128,13 +1128,17 @@ $ rm stash.html # stash.html を削除（エディタ上でファイルを削除
 4. feature2.html というファイルを作成
 5. 変更内容をインデックスに追加
 6. "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
-7. commit のみ取り消し。現在のファイル変更はそのまま
-8. 現在の状態を確認
+7. コミット履歴を確認。直前のコミットがコミット履歴に反映されていることを確認
+8. commit のみ取り消し。現在のファイル変更はそのまま
+9. 現在の状態を確認
    1. `Changes to be committed: new file: feature2.html` となっていることを確認
-9. "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
-10. commit, add, 現在のファイル変更も全部取り消し
-11. 現在の状態を確認
+10. コミット履歴を確認。直前のコミットが取り消されていることを確認
+11. "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
+12. コミット履歴を確認。直前のコミットがコミット履歴に反映されていることを確認
+13. commit, add, 現在のファイル変更も全部取り消し
+14. 現在の状態を確認
     1. `nothing to commit, working tree clean` となっていることを確認
+15. コミット履歴を確認。直前のコミットが取り消されていることを確認
 
 ---
 
@@ -1148,12 +1152,16 @@ $ git switch -c reset-test # reset-test ブランチを作成して切り替え
 $ touch feature2.html  # feature2.html というファイルを作成（エディタ上でファイルを新規作成しても OK）
 $ git add . # 変更内容をインデックスに追加
 $ git commit -m "Add feature2.html"  # "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
+$ git log # コミット履歴を確認。直前のコミットがコミット履歴に反映されていることを確認（エディタで vim が開いた場合は `:q` で終了）
 $ git reset --soft HEAD^ # commit のみ取り消し。現在のファイル変更はそのまま。HEAD^ は直前のコミットを意味する
 $ git status  # 現在の状態を確認。`Changes to be committed:	new file:   feature2.html` となっていることを確認
+$ git log # コミット履歴を確認。直前のコミットが取り消されていることを確認（エディタで vim が開いた場合は `:q` で終了）
 
 $ git commit -m "Add feature2.html"  # "Add feature2.html" というメッセージを付けてインデックスに追加した内容をコミット
+$ git log # コミット履歴を確認。直前のコミットがコミット履歴に反映されていることを確認（エディタで vim が開いた場合は `:q` で終了）
 $ git reset --hard HEAD^ # commit, add, 現在のファイル変更も全部取り消し（破壊的操作）
 $ git status  # 現在の状態を確認。`nothing to commit, working tree clean` となっていることを確認
+$ git log # コミット履歴を確認。直前のコミットが取り消されていることを確認（エディタで vim が開いた場合は `:q` で終了）
 ```
 
 ---
@@ -1175,13 +1183,13 @@ $ git status  # 現在の状態を確認。`nothing to commit, working tree clea
 6.  "Add feature3.html" というメッセージを付けてインデックスに追加した内容をコミット
 7.  コミット履歴を確認
     1.  2 つのコミットがコミット履歴に反映されていることを確認
-8.  2 つ前のコミットの状態へリセット
+8.  2 つ前のコミットの状態へリセット（commit, add, 現在のファイル変更も全部取り消し）
 9.  コミット履歴を確認
     1.  2 つのコミットがコミット履歴から消えていることを確認
-10. 直前の reset を取り消し
+10. 直前の reset を取り消し（commit, add, 現在のファイル変更も全部取り消し）
 11. コミット履歴を確認
     1.  2 つのコミットがコミット履歴に反映されていることを確認
-12. develop ブランチの状態へリセット
+12. develop ブランチの状態へリセット（commit, add, 現在のファイル変更も全部取り消し）
 13. develop ブランチ に切り替え
 
 ---
