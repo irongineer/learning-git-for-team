@@ -888,7 +888,7 @@ $ git tag -l  # タグを一覧表示する
 # $ git reset --hard を失敗してしまったとき
 $ git reflog  # コミット履歴や HEAD・ブランチの参照に関する変化ログを表示
 $ git reflog --date=default # 日時付きで表示
-$ git reset HEAD@{N} --hard # reflog 確認した元に戻したいコミットを指定し、reset --hard で戻す
+$ git reset HEAD@{N} --hard # reflog で確認した元に戻したいコミットを指定し、reset --hard で戻す
 ```
 
 #### 参考 <!-- omit in toc -->
@@ -1208,7 +1208,7 @@ $ git log # コミット履歴を確認。2つのコミットがコミット履�
 $ git reset --hard HEAD~2 # 2つ前のコミットの状態へリセット
 $ git log # コミット履歴を確認。2つのコミットがコミット履歴から消えていることを確認（エディタで vim が開いた場合は `:q` で終了）
 
-$ git reset --hard ORIG_HEAD # 直前の reset を取り消し
+$ git reset --hard ORIG_HEAD # 直前の reset を取り消し。reflog で元に戻したいコミットを確認し、git reset HEAD@{N} --hard で戻すことも可
 $ git log # コミット履歴を確認。2つのコミットがコミット履歴に反映されていることを確認（エディタで vim が開いた場合は `:q` で終了）
 
 $ git reset --hard develop  # develop ブランチの状態へリセット
