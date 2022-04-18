@@ -935,9 +935,9 @@ $ git diff --cached # インデックスとローカルリポジトリの差分�
 
 ```bash
 $ git commit -m "develop を追記"  # 変更をローカルリポジトリに記録
-$ git status  # 状態を確認。Your branch is ahead of 'origin/<ブランチ名>' by 1 commit. nothing to commit, working tree clean と表示される
+$ git status  # 状態を確認。nothing to commit, working tree clean と表示される
 $ git log # 変更履歴を確認（エディタで vim が開いた場合は `:q` で終了）
-$ git push origin develop  # 記録した変更をリモートリポジトリに送信。origin develop の部分は、既に上流ブランチを現在チェックアウトしているブランチに設定している場合は省略可
+$ git push -u origin develop  # 記録した変更をリモートリポジトリに送信し、同時に上流ブランチを設定。-u origin develop の部分は、既に上流ブランチを現在チェックアウトしているブランチに設定している場合は省略可
 $ git status  # 状態を確認。Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean と表示される
 
 # （リモートリポジトリ（GitHub / GitLab）にアクセスし、該当ブランチに変更が反映されていることを確認）
