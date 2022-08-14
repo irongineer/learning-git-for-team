@@ -6,10 +6,12 @@ theme: git
 # footer: '![width:100](../../marp-themes/logo.png)'
 ---
 
-# Git 勉強会 2 日目 <!-- omit in toc -->
+# Git 勉強会 Part 2 <!-- omit in toc -->
 
-基本コマンド ＆ ハンズオン ① 　〜個人開発編〜
-2022/03/25
+### 基本コマンド ＆ ハンズオン ① 　〜個人開発編〜 <!-- omit in toc -->
+
+作成日：2022/03/25
+更新日：2022/08/15
 
 ---
 
@@ -24,33 +26,99 @@ theme: git
 
 ---
 
-- [コマンド説明（★ 付きコマンドのみ当日説明します）](#コマンド説明-付きコマンドのみ当日説明します)
+- [ハンズオン説明](#ハンズオン説明)
+  - [【参考】ターミナルでよく使うコマンド ①](#参考ターミナルでよく使うコマンド-)
+  - [【参考】ターミナルでよく使うコマンド ②](#参考ターミナルでよく使うコマンド--1)
+- [コマンド説明（★ 付きのコマンドはハンズオンで使います）](#コマンド説明-付きのコマンドはハンズオンで使います)
   - [clone ★](#clone-)
+  - [ハンズオン ①：既にリモートに存在するリポジトリをコピー](#ハンズオン-既にリモートに存在するリポジトリをコピー)
   - [config ★](#config-)
+  - [ハンズオン ②：Git 開始時の基本設定](#ハンズオン-git-開始時の基本設定)
   - [init](#init)
   - [remote](#remote)
   - [branch ★](#branch-)
   - [switch (checkout) ★](#switch-checkout-)
+  - [ハンズオン ③：ブランチの作成・移動・名前変更・削除](#ハンズオン-ブランチの作成移動名前変更削除)
   - [status ★](#status-)
   - [add ★](#add-)
+  - [ハンズオン ④：変更をステージに追加](#ハンズオン-変更をステージに追加)
   - [commit ★](#commit-)
   - [push ★](#push-)
+  - [ハンズオン ⑤：変更を記録してリモートリポジトリへ送信](#ハンズオン-変更を記録してリモートリポジトリへ送信)
   - [mv](#mv)
   - [rm](#rm)
   - [log ★](#log-)
   - [diff](#diff)
-- [ハンズオン](#ハンズオン)
-  - [【参考】ターミナルでよく使うコマンド ①](#参考ターミナルでよく使うコマンド-)
-  - [【参考】ターミナルでよく使うコマンド ②](#参考ターミナルでよく使うコマンド--1)
-  - [ハンズオン ①：既にリモートに存在するリポジトリをコピー](#ハンズオン-既にリモートに存在するリポジトリをコピー)
-  - [ハンズオン ②：Git 開始時の基本設定](#ハンズオン-git-開始時の基本設定)
-  - [ハンズオン ③：ブランチの作成・移動・名前変更・削除](#ハンズオン-ブランチの作成移動名前変更削除)
-  - [ハンズオン ④：変更をステージに追加](#ハンズオン-変更をステージに追加)
-  - [ハンズオン ⑤：変更を記録してリモートリポジトリへ送信](#ハンズオン-変更を記録してリモートリポジトリへ送信)
 
 ---
 
-## コマンド説明（★ 付きコマンドのみ当日説明します）
+## ハンズオン説明
+
+### 事前準備 <!-- omit in toc -->
+
+以下が終わっていない人は実施をお願いします。
+
+1. ローカル端末 Git（`v2.23.0` 以上推奨） をインストールしておいてください。（ターミナルで `git --version` を実行して `v2.23.0` 以上が表示されれば OK です）
+   1. 【参考】[Git インストール手順＜ Windows 向け＞](https://sukkiri.jp/technologies/devtools/git/git_win.html)
+   2. 【参考】[Git Bash を手動でアップデートする方法【Git for Windows】](https://onoredekaiketsu.com/manually-update-git-bash/)
+2. ハンズオン用に GitHub や GitLab で個人用のリモートリポジトリを作成しておいてください。
+   1. 【参考】[【GitLab】プロジェクト（リポジトリ）を作成する - Qiita](https://qiita.com/CUTBOSS/items/ce61bb6a8635c6918558)
+   2. 【参考】[【超入門】GitHub リポジトリの作り方 - Qiita](https://qiita.com/ucan-lab/items/d594404d0d2c64a85a38)
+
+**利用するコマンドの説明スライドを復習しながら進めましょう！**
+
+---
+
+### 【参考】ターミナルでよく使うコマンド ①
+
+#### cd <!-- omit in toc -->
+
+- ディレクトリを移動します。
+
+#### ls <!-- omit in toc -->
+
+- ディレクトリの内容を表示します。 ls -a コマンドで、隠しファイルを含めたディレクトリ全内容を表示します。
+
+#### mkdir <!-- omit in toc -->
+
+- ディレクトリを新規作成します。
+
+#### touch <!-- omit in toc -->
+
+- ファイルを作成します
+
+#### rm <!-- omit in toc -->
+
+- ファイルを削除します。
+
+---
+
+### 【参考】ターミナルでよく使うコマンド ②
+
+#### cp <!-- omit in toc -->
+
+- ファイルをコピーします。
+
+#### mv <!-- omit in toc -->
+
+- ファイルの移動とファイル名の変更を行います。
+
+#### cat <!-- omit in toc -->
+
+- ファイルの中身を表示します。
+
+#### echo <!-- omit in toc -->
+
+- 画面に文字列を表示します。
+
+#### >> **（リダイレクト（追記））** <!-- omit in toc -->
+
+- コマンドの出力結果をファイルへ追記します。
+  - `echo` コマンドと組み合わせて、`echo "文字列" >> ファイル名` で指定した文字列をファイルに追記します。
+
+---
+
+## コマンド説明（★ 付きのコマンドはハンズオンで使います）
 
 ---
 
@@ -135,6 +203,33 @@ $ git clone .  # 現在いるディレクトリをルートディレクトリと
 
 ---
 
+### ハンズオン ①：既にリモートに存在するリポジトリをコピー
+
+リモートリポジトリをローカルに複製してみましょう
+（次頁に解答例があります）
+
+#### 操作手順例 <!-- omit in toc -->
+
+1. 自身のプロジェクト置き場（リモートリポジトリを複製する場所）へ移動
+2. リモートリポジトリをローカルに複製
+   1. 事前準備で用意した個人リモートリポジトリがない場合は、以下の本勉強会用のリモートリポジトリを複製してください
+      1. `git@github.com:irongineer/git-exercise.git`
+3. リモートリポジトリがローカルに複製されていることを確認
+4. 複製してきたリポジトリに .git ディレクトリがあることを確認
+
+---
+
+### ハンズオン ①：既にリモートに存在するリポジトリをコピー（解答例） <!-- omit in toc -->
+
+```bash
+$ cd workspace # 自身のプロジェクト置き場（リモートリポジトリを複製する場所）へ移動（※ workspace は例です）
+$ git clone git@github.com:irongineer/git-exercise.git  # リモートリポジトリをローカルに複製（※ git-exercise は例です）
+$ ls -a # リモートリポジトリがローカルに複製されていることを確認
+$ ls -a　git-exercise # 複製してきたリポジトリに .git ディレクトリがあることを確認（※ git-exercise は例です）
+```
+
+---
+
 ### config ★
 
 #### 機能 <!-- omit in toc -->
@@ -175,6 +270,39 @@ $ git config --local user.name  # ローカル設定のユーザー名を表示
 - [git-config Documentation](https://git-scm.com/docs/git-config)
 - [Git をインストールしたら真っ先にやっておくべき初期設定 - Qiita](https://qiita.com/wnoguchi/items/f7358a227dfe2640cce3)
 - [複数の git アカウントを使い分ける - Qiita](https://qiita.com/0084ken/items/f4a8b0fbff135a987fea)
+
+---
+
+### ハンズオン ②：Git 開始時の基本設定
+
+自身のプロジェクトで Git のローカル設定を行ってみましょう
+（次頁に解答例があります）
+
+#### 操作手順例 <!-- omit in toc -->
+
+1. 自身のプロジェクトのルートディレクトリへ移動
+2. ローカルリポジトリのユーザー名を設定
+3. ローカルリポジトリのメールアドレスを設定
+4. メインエディタを　 Visual Studio Code (code) に設定。他のエディタでも OK（vim など）
+5. 上記設定を確認
+
+---
+
+### ハンズオン ②：Git 開始時の基本設定（解答例） <!-- omit in toc -->
+
+```bash
+$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
+$ git config --local user.name "<メインアカウントのユーザー名>" # ローカルリポジトリのユーザー名を設定
+$ git config --local user.email "<メインアカウントのメールアドレス>"  # ローカルリポジトリのメールアドレスを設定
+$ git config --local core.editor 'code --wait' # メインエディタを　Visual Studio Code (code) に設定。他のエディタでも OK（vim など）
+
+# 設定の確認
+$ git config --local --list # ローカルの設定一覧を表示
+$ git config user.name # ローカルの個別設定を表示（ユーザー名）
+$ git config user.email # ローカルの個別設定を表示（メールアドレス）
+$ git config core.editor  # ローカルの個別設定を表示（メインエディタ）
+$ cat .git/config  # local の設定ファイルを確認（global の設定ファイルは ~/.gitconfig）
+```
 
 ---
 
@@ -350,6 +478,42 @@ $ git switch -c <ブランチ>  # <ブランチ>  で指定したブランチを
 
 ---
 
+### ハンズオン ③：ブランチの作成・移動・名前変更・削除
+
+ローカルリポジトリにブランチを作成し、移動や名前変更などを行ってみましょう
+（次頁に解答例があります）
+**なお、ハンズオン ① で本勉強会用のリモートリポジトリを複製している場合は、他の人との重複防止のため、作成するすべてのブランチ名に `-<社員番号>` を付けてください (ex: develop-1234)**
+
+#### 操作手順例 <!-- omit in toc -->
+
+1. ハンズオン用ディレクトリへ移動
+2. develop ブランチを作成
+3. develop ブランチに切り替え
+4. temp ブランチを作成して切り替え
+5. temp ブランチを temp2 ブランチに名前変更
+6. リモートリポジトリの最新情報をローカルに取得
+7. ローカルとリモートリポジトリにあるブランチ（リモート追跡ブランチ）一覧を確認
+8. develop ブランチへ切り替え
+9. temp2 ブランチを削除
+
+---
+
+### ハンズオン ③：ブランチの作成・移動・名前変更・削除（解答例） <!-- omit in toc -->
+
+```bash
+$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
+$ git branch develop # develop ブランチを作成
+$ git switch develop # develop ブランチに切り替え。git checkout develop でも可
+$ git switch -c temp # temp ブランチを作成して切り替え。git checkout -b temp でも可
+$ git branch -m temp2 # temp ブランチを temp2 ブランチに名前変更。`-M` の場合は同名のブランチがあっても上書きで強制変更
+$ git fetch # リモートリポジトリの最新情報をローカルに取得
+$ git branch -a # ローカルとリモートリポジトリにあるブランチ（リモート追跡ブランチ）一覧を確認（エディタで vim が開いた場合は `:q` で終了）
+$ git switch develop # develop ブランチへ切り替え
+$ git branch -d temp2 # temp2 ブランチを削除
+```
+
+---
+
 ### status ★
 
 #### 機能 <!-- omit in toc -->
@@ -426,6 +590,50 @@ $ git add -p ./src/index.html  # ./src/index.html の一部の変更行をイン
 - [【 git add 】コマンド――変更内容をインデックスに追加してコミット対象にする](https://atmarkit.itmedia.co.jp/ait/articles/2003/13/news031.html)
 - [git add -p 使ってますか？](https://qiita.com/cotton_desu/items/bf08ac57d59b37dd5188)
 - [VSCode で git add -p を快適に行う](https://qiita.com/shotana/items/3690d1c913fc0d8fdb4d)
+
+---
+
+### ハンズオン ④：変更をステージに追加
+
+ファイルを変更し、ステージに追加してみましょう
+（次頁に解答例があります）
+
+#### 操作手順例 <!-- omit in toc -->
+
+1. ハンズオン用ディレクトリへ移動
+2. develop ブランチへ切り替え
+3. index.html ファイルを作成
+4. 任意のエディタでリポジトリを開く
+5. index.html に `<h1>develop での変更</h1>` と追記
+6. 状態を確認
+   1. `Untracked files: index.html` と表示される
+7. ワークツリーとインデックスの差分を比較
+   1. 差分が表示されない **（新規ファイル作成ではない（既に add 済で追跡対象であるファイルの）場合は差分が表示される）**
+8. ワークツリーの全ての変更ファイルをインデックスに追加
+9. 状態を確認
+   1. `Changes to be committed: new file: index.html` と表示される
+10. インデックスとローカルリポジトリの差分を比較
+    1. 差分が表示される
+
+---
+
+### ハンズオン ④：変更をステージに追加（解答例） <!-- omit in toc -->
+
+```bash
+$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
+$ git switch develop  # develop ブランチへ切り替え
+$ touch index.html  # index.html ファイルを作成
+$ code . # 任意のエディタでリポジトリを開く（解答例は Visual Studio Code を使用）
+
+（index.html に「<h1>develop での変更</h1>」と追記）# エディタを開かずに echo "<h1>develop での変更</h1>" >> index.html を実行しても OK
+
+$ git status # 状態を確認。Untracked files: index.html と表示される
+$ git diff  # ワークツリーとインデックスの差分を比較。差分が表示されない（新規ファイル作成ではない（既に add 済で追跡対象であるファイルの）場合は差分が表示される）（エディタで vim が開いた場合は `:q` で終了）
+
+$ git add . # ワークツリーの全ての変更ファイルをインデックスに追加
+$ git status  # 状態を確認。Changes to be committed: new file: index.html と表示される
+$ git diff --cached # インデックスとローカルリポジトリの差分を比較。差分が表示される。git diff --staged でも OK（エディタで vim が開いた場合は `:q` で終了）
+```
 
 ---
 
@@ -517,6 +725,39 @@ $ git push --delete origin <ブランチ名> # 指定したリモートリポジ
 - [初心者必見！Git でやらかす前に設定しておきたい push.default](https://kuroeveryday.blogspot.com/2015/12/git-push-default.html)
 - [Git 用語：上流ブランチとは？](https://www-creators.com/archives/4931)
 - [git push -f をやめて --force-with-lease を使おう - Qiita](https://qiita.com/wMETAw/items/5f47dcc7cf57af8e449f)
+
+---
+
+### ハンズオン ⑤：変更を記録してリモートリポジトリへ送信
+
+ハンズオン ④ で変更したファイルをローカルリポジトリに記録し、リモートリポジトリに送信してみましょう
+（次頁に解答例があります）
+
+#### 操作手順例 <!-- omit in toc -->
+
+0. （ハンズオン ④ の続きから）
+1. 変更をローカルリポジトリに記録
+2. 状態を確認
+   1. `Your branch is ahead of 'origin/<ブランチ名>' by 1 commit. nothing to commit, working tree clean` と表示される
+3. 変更履歴を確認
+4. 記録した変更をリモートリポジトリに送信
+5. 状態を確認
+   1. `Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean` と表示される
+6. リモートリポジトリ（GitHub / GitLab）にアクセスし、該当ブランチに変更が反映されていることを確認
+
+---
+
+### ハンズオン ⑤：変更を記録してリモートリポジトリへ送信（解答例） <!-- omit in toc -->
+
+```bash
+$ git commit -m "develop を追記"  # 変更をローカルリポジトリに記録
+$ git status  # 状態を確認。nothing to commit, working tree clean と表示される
+$ git log # 変更履歴を確認（エディタで vim が開いた場合は `:q` で終了）
+$ git push -u origin develop  # 記録した変更をリモートリポジトリに送信し、同時に上流ブランチを設定。-u origin develop の部分は、既に上流ブランチを現在チェックアウトしているブランチに設定している場合は省略可
+$ git status  # 状態を確認。Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean と表示される
+
+# （リモートリポジトリ（GitHub / GitLab）にアクセスし、該当ブランチに変更が反映されていることを確認）
+```
 
 ---
 
@@ -703,245 +944,6 @@ $ git diff -- <ファイルパスA> <ファイルパスB> # 別ファイル同�
 - [【やっとわかった！】git の HEAD^と HEAD~の違い - Qiita](https://qiita.com/chihiro/items/d551c14cb9764454e0b9)
 - [github でブランチ・commit 間の diff を見る - Qiita](https://qiita.com/fantasista_21jp/items/9419ca4ab3bb8e1ee4c5)
 - [vscode で git の異なる branch 間の差分を確認する方法 - Qiita](https://qiita.com/nabenabe0928/items/9f36ee4fe1af92c215f6)
-
----
-
-## ハンズオン
-
-### 事前準備 <!-- omit in toc -->
-
-以下が終わっていない人は実施をお願いします。
-
-1. ローカル端末 Git（`v2.23.0` 以上推奨） をインストールしておいてください。（ターミナルで `git --version` を実行して `v2.23.0` 以上が表示されれば OK です）
-   1. 【参考】[Git インストール手順＜ Windows 向け＞](https://sukkiri.jp/technologies/devtools/git/git_win.html)
-   2. 【参考】[Git Bash を手動でアップデートする方法【Git for Windows】](https://onoredekaiketsu.com/manually-update-git-bash/)
-2. ハンズオン用に GitHub や GitLab で個人用のリモートリポジトリを作成しておいてください。
-   1. 【参考】[【GitLab】プロジェクト（リポジトリ）を作成する - Qiita](https://qiita.com/CUTBOSS/items/ce61bb6a8635c6918558)
-   2. 【参考】[【超入門】GitHub リポジトリの作り方 - Qiita](https://qiita.com/ucan-lab/items/d594404d0d2c64a85a38)
-
-**利用するコマンドの説明スライドを復習しながら進めましょう！**
-
----
-
-### 【参考】ターミナルでよく使うコマンド ①
-
-#### cd <!-- omit in toc -->
-
-- ディレクトリを移動します。
-
-#### ls <!-- omit in toc -->
-
-- ディレクトリの内容を表示します。 ls -a コマンドで、隠しファイルを含めたディレクトリ全内容を表示します。
-
-#### mkdir <!-- omit in toc -->
-
-- ディレクトリを新規作成します。
-
-#### touch <!-- omit in toc -->
-
-- ファイルを作成します
-
-#### rm <!-- omit in toc -->
-
-- ファイルを削除します。
-
----
-
-### 【参考】ターミナルでよく使うコマンド ②
-
-#### cp <!-- omit in toc -->
-
-- ファイルをコピーします。
-
-#### mv <!-- omit in toc -->
-
-- ファイルの移動とファイル名の変更を行います。
-
-#### cat <!-- omit in toc -->
-
-- ファイルの中身を表示します。
-
-#### echo <!-- omit in toc -->
-
-- 画面に文字列を表示します。
-
-#### >> **（リダイレクト（追記））** <!-- omit in toc -->
-
-- コマンドの出力結果をファイルへ追記します。
-  - `echo` コマンドと組み合わせて、`echo "文字列" >> ファイル名` で指定した文字列をファイルに追記します。
-
----
-
-### ハンズオン ①：既にリモートに存在するリポジトリをコピー
-
-リモートリポジトリをローカルに複製してみましょう
-（次頁に解答例があります）
-
-#### 操作手順例 <!-- omit in toc -->
-
-1. 自身のプロジェクト置き場（リモートリポジトリを複製する場所）へ移動
-2. リモートリポジトリをローカルに複製
-   1. 事前準備で用意した個人リモートリポジトリがない場合は、以下の本勉強会用のリモートリポジトリを複製してください
-      1. `git@github.com:irongineer/git-exercise.git`
-3. リモートリポジトリがローカルに複製されていることを確認
-4. 複製してきたリポジトリに .git ディレクトリがあることを確認
-
----
-
-### ハンズオン ①：既にリモートに存在するリポジトリをコピー（解答例） <!-- omit in toc -->
-
-```bash
-$ cd workspace # 自身のプロジェクト置き場（リモートリポジトリを複製する場所）へ移動（※ workspace は例です）
-$ git clone git@github.com:irongineer/git-exercise.git  # リモートリポジトリをローカルに複製（※ git-exercise は例です）
-$ ls -a # リモートリポジトリがローカルに複製されていることを確認
-$ ls -a　git-exercise # 複製してきたリポジトリに .git ディレクトリがあることを確認（※ git-exercise は例です）
-```
-
----
-
-### ハンズオン ②：Git 開始時の基本設定
-
-自身のプロジェクトで Git のローカル設定を行ってみましょう
-（次頁に解答例があります）
-
-#### 操作手順例 <!-- omit in toc -->
-
-1. 自身のプロジェクトのルートディレクトリへ移動
-2. ローカルリポジトリのユーザー名を設定
-3. ローカルリポジトリのメールアドレスを設定
-4. メインエディタを　 Visual Studio Code (code) に設定。他のエディタでも OK（vim など）
-5. 上記設定を確認
-
----
-
-### ハンズオン ②：Git 開始時の基本設定（解答例） <!-- omit in toc -->
-
-```bash
-$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
-$ git config --local user.name "<メインアカウントのユーザー名>" # ローカルリポジトリのユーザー名を設定
-$ git config --local user.email "<メインアカウントのメールアドレス>"  # ローカルリポジトリのメールアドレスを設定
-$ git config --local core.editor 'code --wait' # メインエディタを　Visual Studio Code (code) に設定。他のエディタでも OK（vim など）
-
-# 設定の確認
-$ git config --local --list # ローカルの設定一覧を表示
-$ git config user.name # ローカルの個別設定を表示（ユーザー名）
-$ git config user.email # ローカルの個別設定を表示（メールアドレス）
-$ git config core.editor  # ローカルの個別設定を表示（メインエディタ）
-$ cat .git/config  # local の設定ファイルを確認（global の設定ファイルは ~/.gitconfig）
-```
-
----
-
-### ハンズオン ③：ブランチの作成・移動・名前変更・削除
-
-ローカルリポジトリにブランチを作成し、移動や名前変更などを行ってみましょう
-（次頁に解答例があります）
-**なお、ハンズオン ① で本勉強会用のリモートリポジトリを複製している場合は、他の人との重複防止のため、作成するすべてのブランチ名に `-<社員番号>` を付けてください (ex: develop-1234)**
-
-#### 操作手順例 <!-- omit in toc -->
-
-1. ハンズオン用ディレクトリへ移動
-2. develop ブランチを作成
-3. develop ブランチに切り替え
-4. temp ブランチを作成して切り替え
-5. temp ブランチを temp2 ブランチに名前変更
-6. リモートリポジトリの最新情報をローカルに取得
-7. ローカルとリモートリポジトリにあるブランチ（リモート追跡ブランチ）一覧を確認
-8. develop ブランチへ切り替え
-9. temp2 ブランチを削除
-
----
-
-### ハンズオン ③：ブランチの作成・移動・名前変更・削除（解答例） <!-- omit in toc -->
-
-```bash
-$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
-$ git branch develop # develop ブランチを作成
-$ git switch develop # develop ブランチに切り替え。git checkout develop でも可
-$ git switch -c temp # temp ブランチを作成して切り替え。git checkout -b temp でも可
-$ git branch -m temp2 # temp ブランチを temp2 ブランチに名前変更。`-M` の場合は同名のブランチがあっても上書きで強制変更
-$ git fetch # リモートリポジトリの最新情報をローカルに取得
-$ git branch -a # ローカルとリモートリポジトリにあるブランチ（リモート追跡ブランチ）一覧を確認（エディタで vim が開いた場合は `:q` で終了）
-$ git switch develop # develop ブランチへ切り替え
-$ git branch -d temp2 # temp2 ブランチを削除
-```
-
----
-
-### ハンズオン ④：変更をステージに追加
-
-ファイルを変更し、ステージに追加してみましょう
-（次頁に解答例があります）
-
-#### 操作手順例 <!-- omit in toc -->
-
-1. ハンズオン用ディレクトリへ移動
-2. develop ブランチへ切り替え
-3. index.html ファイルを作成
-4. 任意のエディタでリポジトリを開く
-5. index.html に `<h1>develop での変更</h1>` と追記
-6. 状態を確認
-   1. `Untracked files: index.html` と表示される
-7. ワークツリーとインデックスの差分を比較
-   1. 差分が表示されない **（新規ファイル作成ではない（既に add 済で追跡対象であるファイルの）場合は差分が表示される）**
-8. ワークツリーの全ての変更ファイルをインデックスに追加
-9. 状態を確認
-   1. `Changes to be committed: new file: index.html` と表示される
-10. インデックスとローカルリポジトリの差分を比較
-    1. 差分が表示される
-
----
-
-### ハンズオン ④：変更をステージに追加（解答例） <!-- omit in toc -->
-
-```bash
-$ cd git-exercise # ハンズオン用ディレクトリへ移動（※ git-exercise は例です）
-$ git switch develop  # develop ブランチへ切り替え
-$ touch index.html  # index.html ファイルを作成
-$ code . # 任意のエディタでリポジトリを開く（解答例は Visual Studio Code を使用）
-
-（index.html に「<h1>develop での変更</h1>」と追記）# エディタを開かずに echo "<h1>develop での変更</h1>" >> index.html を実行しても OK
-
-$ git status # 状態を確認。Untracked files: index.html と表示される
-$ git diff  # ワークツリーとインデックスの差分を比較。差分が表示されない（新規ファイル作成ではない（既に add 済で追跡対象であるファイルの）場合は差分が表示される）（エディタで vim が開いた場合は `:q` で終了）
-
-$ git add . # ワークツリーの全ての変更ファイルをインデックスに追加
-$ git status  # 状態を確認。Changes to be committed: new file: index.html と表示される
-$ git diff --cached # インデックスとローカルリポジトリの差分を比較。差分が表示される。git diff --staged でも OK（エディタで vim が開いた場合は `:q` で終了）
-```
-
----
-
-### ハンズオン ⑤：変更を記録してリモートリポジトリへ送信
-
-ハンズオン ④ で変更したファイルをローカルリポジトリに記録し、リモートリポジトリに送信してみましょう
-（次頁に解答例があります）
-
-#### 操作手順例 <!-- omit in toc -->
-
-0. （ハンズオン ④ の続きから）
-1. 変更をローカルリポジトリに記録
-2. 状態を確認
-   1. `Your branch is ahead of 'origin/<ブランチ名>' by 1 commit. nothing to commit, working tree clean` と表示される
-3. 変更履歴を確認
-4. 記録した変更をリモートリポジトリに送信
-5. 状態を確認
-   1. `Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean` と表示される
-6. リモートリポジトリ（GitHub / GitLab）にアクセスし、該当ブランチに変更が反映されていることを確認
-
----
-
-### ハンズオン ⑤：変更を記録してリモートリポジトリへ送信（解答例） <!-- omit in toc -->
-
-```bash
-$ git commit -m "develop を追記"  # 変更をローカルリポジトリに記録
-$ git status  # 状態を確認。nothing to commit, working tree clean と表示される
-$ git log # 変更履歴を確認（エディタで vim が開いた場合は `:q` で終了）
-$ git push -u origin develop  # 記録した変更をリモートリポジトリに送信し、同時に上流ブランチを設定。-u origin develop の部分は、既に上流ブランチを現在チェックアウトしているブランチに設定している場合は省略可
-$ git status  # 状態を確認。Your branch is up to date with 'origin/<ブランチ名>'. nothing to commit, working tree clean と表示される
-
-# （リモートリポジトリ（GitHub / GitLab）にアクセスし、該当ブランチに変更が反映されていることを確認）
-```
 
 ---
 
